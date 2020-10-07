@@ -1,1 +1,36 @@
-# walk
+# Walk 
+Walk is a project aiming to create a first ever social media app specifically for dogs.
+Targetted Audience are 
+- dog owners who want to have a dog walk together, or have someone help walk their dogs.
+- pet enthusiasts who volunteer to walk dogs 
+
+## Features
+- User register & login with email / password or social media - Facebook / Google
+- Dog profile  information and multiple pictures
+- Feeds of doggy profiles nearby map provides geolocation views
+- Application for a dog walk calendar checks avaliability 
+- Message or live chat between applicant and dog owner
+- Rating System: Multi-factors rating (owner, doggy, walker)
+
+
+# Technologies Stack
+- Frontend: 
+  - React Framework
+    - Map: React Map 2.0 
+    - Live chat / Message: react-chat-widget
+    - Register / login
+    - UI Material
+
+- Backend
+  - Server: 
+    - ExpressJS
+    - AWS S3 public domain: static content hosting (images)
+  - Database:
+    - MongoDB Atlas
+    - Firebase
+  - Storage
+    - AWS S3 bucket
+    - 
+
+
+
