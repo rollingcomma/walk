@@ -1,10 +1,11 @@
 # Walk 
 Walk is a project aiming to create a first ever social media app specifically for dogs.
 Targetted Audience are 
-- dog owners who want to have a dog walk together, or have someone help walk their dogs.
+- dog owners who want to have a dog walk together, or have someone help walking their dogs.
 - pet enthusiasts who volunteer to walk dogs 
 
 ## Features
+---
 - User register & login with email / password or social media - Facebook / Google
 - Dog profile  information and multiple pictures
 - Feeds of doggy profiles nearby map provides geolocation views
@@ -13,7 +14,8 @@ Targetted Audience are
 - Rating System: Multi-factors rating (owner, doggy, walker)
 
 
-# Technologies Stack
+## Technologies Stack
+---
 - Frontend: 
   - React Framework
     - Map: React Map 2.0 
@@ -30,7 +32,14 @@ Targetted Audience are
     - Firebase
   - Storage
     - AWS S3 bucket
-    - 
+
+## Installation & Development
+---
+### Dependency
+Run npm install
+
+### Development server
+Run nmp start for a dev server. Navigate to http://localhost:3000/. The app will automatically reload if you change any of the source files.
 
 
 
