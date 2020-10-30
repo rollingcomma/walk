@@ -1,6 +1,7 @@
 node_modules/**/*
 .expo/*
 npm-debug.*
+._*
 *.jks
 *.p8
 *.p12
@@ -9,10 +10,6 @@ npm-debug.*
 *.orig.*
 web-build/
 src/db/firebase.js
-<<<<<<< HEAD
-=======
-
->>>>>>> 1d26ab02401351b89eb050c9d03cde9c1bedc269
 # macOS
 .DS_Store
 
