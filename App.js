@@ -5,8 +5,6 @@ import { StyleSheet } from 'react-native';
 
 import Index from './src/screens/Index';
 
-const Stack = createStackNavigator();
-
 export default function App() {
   return (
     <Index />

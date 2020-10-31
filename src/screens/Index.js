@@ -6,7 +6,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from './Login';
 import DogProfile from './DogProfile';
 import ChatChannel from './ChatChannel';
-import Dashboard from './DashboardOwner';
+import DashboardOwner from './DashboardOwner';
+import DashboardWalker from './DashboardWalker';
 import WalkerProfile from './WalkerProfile';
 import Event from './Event';
 import Inbox from './Inbox';
@@ -64,12 +65,12 @@ export default function Index() {
           options={{ title: "Walker Dashboard" }}>
         </Stack.Screen>
         <Stack.Screen
-          name="Chat"
+          name="ChatChannel"
           component={ ChatChannel }
           options={{ title: "Chat Room" }}>
         </Stack.Screen>
         <Stack.Screen
-          name="Events"
+          name="Event"
           component={ Event }
           options={{ title: "Coming Events" }}>
         </Stack.Screen>

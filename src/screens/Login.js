@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { auth, firestore, googleProvider, facebookProvider } from '../firebase';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { auth, firestore, googleProvider, facebookProvider } from '../db/firebase';
 
 
 export default SignIn = () => {
@@ -22,8 +22,12 @@ export default SignIn = () => {
 
   return (
     <View >
-      <View onClick={signInWithGoogle}>Sign in with Google</View>
-      <View onClick={signInWithFacebook}>Sign in with Facebook</View>
+      <Button 
+        title="Sign in with Google"
+        onPress={signInWithGoogle} />
+      <Button
+        title="Sign in with Facebook" 
+        onPress={signInWithFacebook} />
     </View>
   )
 }
