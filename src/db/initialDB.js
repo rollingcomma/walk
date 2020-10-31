@@ -1,6 +1,6 @@
 import { useIdentifyRef } from 'react-firebase-hooks/auth/dist/util';
 import { firestore } from '../firebase';
-
+import { user, dogProfile, walkerProfile} from './DBUtils';
 const usersRef = firestore.collection('users');
 
 await usersRef.doc('').set(
@@ -19,9 +19,7 @@ await usersRef.doc('').set(
   }
 )
 
-const dogProfilesRef = firestore.collection('dogProfiles');
-
-await dogProfilesRef.add(
+const newDogProfile1 = 
   {
     owner: uid,
     name: "Milly",
@@ -35,10 +33,10 @@ await dogProfilesRef.add(
     Address: "1234, 123A ave Burnaby",
     postalCode: "M1M 9Q9",
     createdAt: new Date(),
-  }
-)
+  };
 
-await dogProfilesRef.add(
+
+const newDogProfile2 = 
   {
     owner: uid,
     name: "Mole",
@@ -53,11 +51,11 @@ await dogProfilesRef.add(
     postalCode: "M1M 9Q9",
     createdAt: new Date(),
   }
-)
+
 
 const walkerProfileRef = firestore.collection("walkerProfiles");
 
-await walkerProfileRef.add(
+const newWalkerProfile1 = 
   {
     walker: uid,
     name: "Ethan P.",
@@ -73,7 +71,7 @@ await walkerProfileRef.add(
     emergencyContactTel: "604-123-4567",
     createdAt: new Date(),
   }
-)
+
 
 const postsRef = firestore.collection("posts");
 

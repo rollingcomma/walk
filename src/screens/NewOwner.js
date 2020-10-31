@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 export default NewOwner = () => {
   return(
     <View>
-      <Text> Create New Onwer </Text>
+      <Text> Create New Owner </Text>
     </View>
   )
 }
