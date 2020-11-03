@@ -14,6 +14,9 @@ export default Links = ({ navigation }) => {
         title="Dog Profile"
         onPress={() => navigation.navigate("DogProfile")} />
       <Button
+        title="Choose Account Type"
+        onPress={() => navigation.navigate("Types")} />
+      <Button
         title="Walker Profile"
         onPress={() => navigation.navigate("WalkerProfile")} />
       <Button

@@ -17,6 +17,7 @@ import ReviewForm from './ReviewForm';
 import Home from './Home';
 import EventForm from './EventForm';
 import Links from './Links';
+import Types from './Types';
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,11 @@ export default function Index() {
           name="Login"
           component={ Login }
           options={{ title: "Login" }}>
+        </Stack.Screen>
+         <Stack.Screen
+          name="Types"
+          component={ Types }
+          options={{ title: "Choose an account type" }}>
         </Stack.Screen>
         <Stack.Screen
           name="Home"

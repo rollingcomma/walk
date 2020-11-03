@@ -1,10 +1,18 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 
-export default TypeForm = () => {
-  return(
-    <View>
-      <Text> Choose Type of account </Text>
+import React from 'react';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { auth, firestore, googleProvider, facebookProvider } from '../db/firebase';
+import { findUser } from '../db/DBUtils'
+
+export default Types = ({ navigation }) => {
+  return (
+    <View >
+      <Button 
+        title="Dog Owner"
+        onPress={() => navigation.navigate("NewOwner")} />
+      <Button
+        title="Walker " 
+        onPress={() => navigation.navigate("NewWalker")}/>
     </View>
   )
 }

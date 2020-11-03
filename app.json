@@ -16,13 +16,38 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "facebookScheme": "fb2719816824957835",
+    "facebookAppID": "2719816824957835",
+    "facebookDisplayName": "Walk",
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "host.exp.Exponent",
+      "buildNumber" : "1.0.0",
+      "supportsTablet": false,
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "location",
+          "fetch"
+        ]
+      },
+      "config":{
+        "googleSignIn": {
+          "reversedClientId": "com.googleusercontent.apps.855049434388-lg44s04igmic2jh4bl3ud1iq4ne3np4m"
+        },
+        "googleMapsApiKey":"KEY"
+      },
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
+
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey":"Your_API_KEY"
+        }
       }
     },
     "web": {

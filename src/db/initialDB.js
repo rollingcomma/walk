@@ -1,23 +1,22 @@
 import { useIdentifyRef } from 'react-firebase-hooks/auth/dist/util';
 import { firestore } from '../firebase';
 import { user, dogProfile, walkerProfile} from './DBUtils';
+
 const usersRef = firestore.collection('users');
+const walkerProfileRef = firestore.collection("walkerProfiles");
 
-await usersRef.doc('').set(
-  {
-    username: "Sherlyn",
-    email: "rollingcomma@gmail.com",
-    createdAt: new Date(),
-  }
-)
+const postsRef = firestore.collection("posts");
+const requestRef = firestore.collection("requests");
+const chatChannelsRef = firestore.collection("channels");
+const eventsRef = firestore.collection("events");
 
-await usersRef.doc('').set(
+const user1 =
   {
     username: "Ethan",
     email: "rollingcomma@gmail.com",
     createdAt: new Date(),
   }
-)
+
 
 const newDogProfile1 = 
   {
@@ -53,7 +52,7 @@ const newDogProfile2 =
   }
 
 
-const walkerProfileRef = firestore.collection("walkerProfiles");
+
 
 const newWalkerProfile1 = 
   {
@@ -73,26 +72,23 @@ const newWalkerProfile1 =
   }
 
 
-const postsRef = firestore.collection("posts");
-
-await postsRef.add(
+const dogProfile = 
   {
     dogProfileId:dogProfileID,
     pictures:["", "", ""],
   }
-)
-await postsRef.add(
+
+const newPost =
   {
     dogProfileId: dogProfileID,
     pictures:["", "", ""],
     liked:[],
     messageChannel:[],
   }
-)
 
-const requestRef = firestore.collection("requests");
 
-await requestRef.add(
+
+const request =
   {
     owner: dogProfileId,
     walker: walerProfileId,
@@ -100,20 +96,20 @@ await requestRef.add(
     timeStamp: new Date(),
     status:"active"
   }
-)
 
-const chatChannelsRef = firestore.collection("channels");
-await chatChannelsRef.add(
-  {
+
+
+const msg = 
+{
     sender: uid,
     receiver: uid,
     message: "testing",
     timeStamp: new Date(),
   }
-)
 
-const eventsRef = firestore.collection("events");
-await eventsRef.add(
+
+
+const event =
   {
     organizer: uid,
     address: "21801 Allard Crescent",
@@ -124,4 +120,4 @@ await eventsRef.add(
     timeStamp: new Date(),
     picture: "pic.jpg"
   }
-)
+
