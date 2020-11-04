@@ -1,4 +1,3 @@
-import { firestore } from './firebase';
 import { 
   usersRef, 
   dogProfilesRef, 
@@ -6,8 +5,8 @@ import {
   eventsRef,
   postsRef,
   requestsRef,
-  channelsRef,
-  eventsRef  } from './DBRefs';
+  channelsRef
+} from './DBRefs';
 
 export const findUser = async (uid) => {
   return usersRef.doc(uid).get()
@@ -25,7 +24,7 @@ export const findUser = async (uid) => {
   });
 }
 
-export const createUser =  (uid, newUser) => {
+export const createUser =  async (uid, newUser) => {
   if(newUser !== undefined) {
     console.log(newUser);
     return usersRef.doc(newUser.uid).set(newUser)
@@ -54,7 +53,7 @@ export const dogProfile = (uid, newDogProfile) => {
     .catch(err => {
       console.log("Error create or update dog profile", err);
     });
-  } else {
+  } else { 
     return dogProfilesRef.doc(uid).get()
     .then(doc => {
       if(doc) {
