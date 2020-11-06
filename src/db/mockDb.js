@@ -1,27 +1,21 @@
 import { useIdentifyRef } from 'react-firebase-hooks/auth/dist/util';
 import { firestore } from '../firebase';
-import { user, dogProfile, walkerProfile} from './DBUtils';
-
-const usersRef = firestore.collection('users');
-const walkerProfileRef = firestore.collection("walkerProfiles");
-
-const postsRef = firestore.collection("posts");
-const requestRef = firestore.collection("requests");
-const chatChannelsRef = firestore.collection("channels");
-const eventsRef = firestore.collection("events");
-
+const uid1 = "goUizOwXY4SzXYGhLtFPguDTfQC3";
+const uid2 = "nyu0mD8lTvQDH85orbcglhe3elf2";
 const user1 =
   {
     username: "Ethan",
     email: "rollingcomma@gmail.com",
+    photoURl:"https://lh3.googleusercontent.com/a-/AOh14Gjl6awFmG57u8JxHrpxUJm_h-WMR1PokxPeqHmD=s96-c",
     createdAt: new Date(),
   }
 
 
 const newDogProfile1 = 
   {
-    owner: uid,
+    owner: uid1,
     name: "Milly",
+    photoUrl: "",
     age: 6,
     breed: "Border Collie",
     bio: "testing purpose description",
@@ -37,14 +31,15 @@ const newDogProfile1 =
 
 const newDogProfile2 = 
   {
-    owner: uid,
+    owner: uid2,
     name: "Mole",
+    photoUrl: "",
     age: 3,
     breed: "Border Collie",
     bio: "testing purpose description",
     likes: ["Swimming", "Playing Catch", ""],
     dislikes: ["Touching her paws", "Smell of Oranges", ""],
-    phone:"778-999-9999",
+    phone:"604-111-1111",
     province: "BC",
     Address: "1234, 123A ave Burnaby",
     postalCode: "M1M 9Q9",

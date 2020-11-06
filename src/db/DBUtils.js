@@ -1,4 +1,3 @@
-import { firestore } from './firebase';
 import { 
   usersRef, 
   dogProfilesRef, 
@@ -7,7 +6,10 @@ import {
   postsRef,
   requestsRef,
   channelsRef,
-  eventsRef  } from './DBRefs';
+  storageRef
+} from './DBRefs';
+import "react-native-get-random-values";
+import {v4 as uuidv4} from 'uuid';
 
 /**
  * description: fetch user by uid
@@ -99,17 +101,20 @@ export const createDogProfile = (newDogProfile) => {
 }
 
 export const dogProfile = (uid, newDogProfile) => {
+  console.log("add dog profile")
   if(newDogProfile !== undefined) { //create or update dog profile
     return dogProfilesRef.doc(uid).set(newDogProfile)
     .then(doc => {
+      console.log(doc);
       if(doc) {
+        
         return doc.data()
       }
     })
     .catch(err => {
       console.log("Error create or update dog profile", err);
     });
-  } else {
+  } else { 
     return dogProfilesRef.doc(uid).get()
     .then(doc => {
       if(doc) {
@@ -323,28 +328,30 @@ export const getChannelByUid = (uid) => {
     console.log("Error get all events", err);
   });
 }
-// firestore.collection("dogProfile").add(
-  
-// )
 
-// firestore.collection("walker").add(
-//   {}
-// )
+export const uploadImageAsync = async (uri) => {
+  // Why are we using XMLHttpRequest? See:
+  // https://github.com/expo/expo/issues/2402#issuecomment-443726662
+  const blob = await new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+      resolve(xhr.response);
+    };
+    xhr.onerror = function(e) {
+      console.log(e);
+      reject(new TypeError('Network request failed'));
+    };
+    xhr.responseType = 'blob';
+    xhr.open('GET', uri, true);
+    xhr.send(null);
+  });
+  const name = uuidv4();
+  const ref = storageRef
+    .child(`postImages/${name}`);
+  const snapshot = await ref.put(blob);
 
-// firestore.collection("posts").add(
-//   {
+  // We're done with the blob, close and release it
+  blob.close();
 
-//   }
-// )
-
-// firestore.collection("events").add(
-//   {
-
-//   }
-// )
-
-// firestore.collection("requests").add(
-//   {
-    
-//   }
-// )
+  return await snapshot.ref.getDownloadURL();
+}

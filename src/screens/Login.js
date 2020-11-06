@@ -1,13 +1,11 @@
-
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import {  auth, firestore } from '../db/firebase';
 import { createUser, findUser } from '../db/DBUtils';
 import * as Facebook from 'expo-facebook';
-//import * as GoogleSignIn from 'expo-google-sign-in';
 import * as Google from 'expo-google-app-auth';
 
-export default Login = ({ navigation }) => {
+export default Login = ({navigation}) => {
 
   const signInWithGoogle = async () => {
     const config = {
@@ -32,7 +30,7 @@ export default Login = ({ navigation }) => {
             email: auth().currentUser.email,
             photoURL:auth().currentUser.photoURL
           }
-          await loginUser(currentUser);
+          // await loginUser(currentUser);
         }
       } else {
         console.log("login failed");
