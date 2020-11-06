@@ -9,6 +9,17 @@ import {
   channelsRef,
   eventsRef  } from './DBRefs';
 
+/**
+ * description: fetch user by uid
+ * 
+ * @param {uid: string}
+ * @returns { uid: string
+ *            username: sting
+ *            email: string
+ *            photoURL: string
+ *            createdAt: date
+ *           }
+ */
 export const findUser = async (uid) => {
   return usersRef.doc(uid).get()
   .then(doc => {
@@ -25,23 +36,67 @@ export const findUser = async (uid) => {
   });
 }
 
-export const createUser =  (uid, newUser) => {
-  if(newUser !== undefined) {
-    console.log(newUser);
-    return usersRef.doc(newUser.uid).set(newUser)
+/**
+ * description: create new user
+ * 
+ * @param { uid: string
+ *          username: sting
+ *          email: string
+ *          photoURL: string
+ *          createdAt: date
+ *         }
+ * @returns true if succeed otherwise false
+ */
+export const createUser =  (newUser) => {
+  return usersRef.doc(newUser.uid).set(newUser)
+  .then(() => {
+    return true;
+  })
+  .catch(err => {
+    console.log("Error create user", err);
+    return false;
+  });
+}
+
+/**
+ * description: delete user by uid
+ * 
+ * @param {uid: string}
+ * @returns true if succeed otherwise false
+ */
+export const deleteUser = (uid) => {
+  return usersRef.doc(uid).delete()
+  .then(() => {
+    return true;
+  })
+  .catch(err => {
+    console.log("Error delete user", err);
+    return false;
+  });
+}
+
+export const createDogProfile = (newDogProfile) => {
+  if(newDogProfile !== undefined) { //create or update dog profile
+    return dogProfilesRef.doc(newDogProfile.uid).set(newDogProfile)
+    .then(() => {
+      return true;
+    })
+    .catch(err => {
+      console.log("Error create or update dog profile", err);
+      return false;
+    });
+  } else {
+    return dogProfilesRef.doc(uid).get()
     .then(doc => {
       if(doc) {
-        return doc.data();
+        return doc.data()
       }
     })
     .catch(err => {
-      console.log("Error create or update user", err);
+      console.log("Error get dog profile", err);
     });
-  } else {
-    return await findUser(uid);
   }
 }
-
 
 export const dogProfile = (uid, newDogProfile) => {
   if(newDogProfile !== undefined) { //create or update dog profile
