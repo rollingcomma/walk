@@ -1,5 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import AppText from '../components/AppText';
+import colors from './colors';
 
 export default AppButton = ({
   title,
@@ -22,23 +24,8 @@ export default AppButton = ({
       {isSubmitting ? (
         <ActivityIndicator color={indicatorColor} />
       ) : (
-        <Text style={textStyle}>{title}</Text>
+        <AppText textStyle={textStyle}>{title}</AppText>
       )}
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  containerStyle: {
-    margin: 10,
-    paddingVertical: 10,
-    borderRadius: 5
-    
-  },
-  textStyle: {
-    textAlign: "center",
-    color: "lightblue",
-    fontSize: 16,
-    fontWeight: "bold"
-  }
-});

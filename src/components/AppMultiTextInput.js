@@ -1,5 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
+import Heading from '../components/Heading';
+import AppText from '../components/AppText';
 
 export default AppMultiTextInput = ({
   label,
@@ -12,15 +14,15 @@ export default AppMultiTextInput = ({
   return (
     <View style={styles.containerStyle}>
       <View style={styles.label}>
-        <Text>{label}</Text>
-        <Text>Choose up to 3</Text>
+        <Heading>{label}</Heading>
+        <AppText>Choose up to 3</AppText>
       </View>
       <View style={styles.inputContainer} >
         <TextInput style={styles.textInput} {...props} />
         <TextInput style={styles.textInput} {...props} />
         <TextInput style={styles.textInput} {...props} />
       </View>
-      <Text style={styles.errorInput}>{touched && error}</Text>
+      <AppText textStyle={styles.errorInput}>{touched && error}</AppText>
     </View>
   );
 };

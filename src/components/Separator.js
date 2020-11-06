@@ -1,11 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View} from 'react-native';
+import colors from '../components/colors';
+import AppText from '../components/AppText';
 
 export default Separator = ({ text }) => {
   return(
     <View style={styles.container}>
       <View style={styles.line}/>
-      {text? (<Text>{text}</Text>) : null}
+      {text? (<AppText>{text}</AppText>) : null}
       <View style={styles.line}/>
     </View>
   )
@@ -16,12 +18,8 @@ const styles = StyleSheet.create({
     marginVertical:10
   },
   line: {
-    borderBottomColor: "darkgray",
-    borderBottomWidth:StyleSheet.hairlineWidth
-  },
-  text: {
-    color:"#a2a2a2",
+    borderBottomColor: colors.secondary,
+    borderBottomWidth: StyleSheet.hairlineWidth
   }
-
 });
 

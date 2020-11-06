@@ -1,27 +1,17 @@
 import React from 'react';
-import {  Text, StyleSheet } from 'react-native';
+import {  Text, StyleSheet, Platform } from 'react-native';
 
-export default AppText = ({ children }) => {
+export default AppText = ({ textStyle, children }) => {
   return(
-    <Text style={styles.text}>
+    <Text style={[styles.text, textStyle]}>
       {children}
     </Text>
   )
 }
 
-export const AppLabel = ({children}) => {
-  return(
-    <Text tyle={styles.label}>
-      {children}
-    </Text>
-  )
-}
 const styles = StyleSheet.create({
   text: {
     fontSize: 12,
-  },
-  label: {
-    fontSize: 18,
-    fontWeight: "bold"
-  } 
+    fontFamily: Platform.OS === "android"? "serif":"Helvetica Neue"
+  }
 })

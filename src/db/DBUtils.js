@@ -5,9 +5,24 @@ import {
   eventsRef,
   postsRef,
   requestsRef,
-  channelsRef
+  channelsRef,
+  storageRef
 } from './DBRefs';
+import "react-native-get-random-values";
+import {v4 as uuidv4} from 'uuid';
 
+import { storage } from './firebase';
+
+/**
+ * 
+ * @param {*} uid 
+ * @returns return an user object or null if non exist
+ * {
+ *  uid: uid,
+ *  email: user email add,
+ * 
+ * }
+ */
 export const findUser = async (uid) => {
   return usersRef.doc(uid).get()
   .then(doc => {
@@ -24,29 +39,37 @@ export const findUser = async (uid) => {
   });
 }
 
-export const createUser =  async (uid, newUser) => {
-  if(newUser !== undefined) {
-    console.log(newUser);
-    return usersRef.doc(newUser.uid).set(newUser)
-    .then(doc => {
-      if(doc) {
-        return doc.data();
-      }
-    })
-    .catch(err => {
-      console.log("Error create or update user", err);
-    });
-  } else {
-    return await findUser(uid);
-  }
+export const createUser = (newUser) => {
+  return usersRef.doc(newUser.uid).set(newUser)
+  .then(() => {
+    return true;
+  })
+  .catch(err => {
+    console.log("Error create or update user", err);
+    return false
+  });
+}
+
+export const updateUser =  (uid, user) => {
+  return usersRef.doc(uid).update(user)
+  .then(doc => {
+    return true;
+  })
+  .catch(err => {
+    console.log("Error create or update user", err);
+    return false;
+  });
 }
 
 
 export const dogProfile = (uid, newDogProfile) => {
+  console.log("add dog profile")
   if(newDogProfile !== undefined) { //create or update dog profile
     return dogProfilesRef.doc(uid).set(newDogProfile)
     .then(doc => {
+      console.log(doc);
       if(doc) {
+        
         return doc.data()
       }
     })
@@ -267,28 +290,30 @@ export const getChannelByUid = (uid) => {
     console.log("Error get all events", err);
   });
 }
-// firestore.collection("dogProfile").add(
-  
-// )
 
-// firestore.collection("walker").add(
-//   {}
-// )
+export const uploadImageAsync = async (uri) => {
+  // Why are we using XMLHttpRequest? See:
+  // https://github.com/expo/expo/issues/2402#issuecomment-443726662
+  const blob = await new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+      resolve(xhr.response);
+    };
+    xhr.onerror = function(e) {
+      console.log(e);
+      reject(new TypeError('Network request failed'));
+    };
+    xhr.responseType = 'blob';
+    xhr.open('GET', uri, true);
+    xhr.send(null);
+  });
+  const name = uuidv4();
+  const ref = storageRef
+    .child(`postImages/${name}`);
+  const snapshot = await ref.put(blob);
 
-// firestore.collection("posts").add(
-//   {
+  // We're done with the blob, close and release it
+  blob.close();
 
-//   }
-// )
-
-// firestore.collection("events").add(
-//   {
-
-//   }
-// )
-
-// firestore.collection("requests").add(
-//   {
-    
-//   }
-// )
+  return await snapshot.ref.getDownloadURL();
+}

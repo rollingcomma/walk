@@ -1,9 +1,11 @@
-import { CardAnimationContext } from '@react-navigation/stack';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, Modal } from 'react-native';
-import  Colors  from './Colors';
-import Button from './AppButton';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import  colors  from './colors';
+import AppButton from './AppButton';
 import FormModal from './FormModal';
+import ProfileImage from './ProfileImage';
+import Heading from './Heading';
+import { FontAwesome } from '@expo/vector-icons';
 
 export default Card = ({
   name, 
@@ -11,26 +13,45 @@ export default Card = ({
   imageUrl}) => {
 
   const [modalVisible, setModalVisible] = useState(false);
+  const handleModalClose = () => {
+    setModalVisible(!modalVisible);
+  }
   return(
     <>
       <View style={styles.card}>
         <View style={styles.header}>
-          <ProfileImage source={profileImageUrl} />
-          <Text>{name}</Text>
+          <ProfileImage 
+            profileImageUrl={profileImageUrl} />
+            <View style={styles.profileName}>
+              <Heading>{name}</Heading>
+              <AppButton 
+                title="View Profile"
+                onPress={() => console.log("view profile")}
+                containerStyle={styles.profileBtnContainerStyle}
+                textStyle={styles.requestBtnTextStyle}/>
+            </View>
+          
         </View>
-        <Image style={styles.image} source={imageUrl} />
+        <Image style={styles.image} source={{uri:imageUrl}} />
         <View style={styles.footer}>
-          <View>
-            <Heart />
-            <MessageIcon />
+          <View style={{flexDirection:"row"}}>
+            <FontAwesome.Button backgroundColor="transparent" name="heart-o" size={24} color="red" />
+            <FontAwesome.Button 
+              name="comment-o" 
+              size={24} 
+              color="black"
+              backgroundColor="transparent" 
+              onPress={() => {
+                console.log("open modal clicked"); 
+                setModalVisible(true)}}/>
           </View>
-          <Button 
+          <AppButton 
             title="Send Walk Request"
-            instructions={() => console.log("open modal clicked")}
-            containerStyle={styles.btnContainerStyle}
-            textStyle={styles.btnTextStyle}/>
+            onPress={() => console.log("request send")}
+            containerStyle={styles.requestBtnContainerStyle}
+            textStyle={styles.requestBtnTextStyle}/>
         </View>
-        
+        <FormModal modalVisible={ modalVisible } handleModalClose={handleModalClose} />
       </View>
     </>
     
@@ -40,13 +61,17 @@ export default Card = ({
 const styles = StyleSheet.create({
   card: {
     borderRadius: 10,
-    backgroundColor: Colors.white,
+    backgroundColor: colors.white,
     marginBottom: 10
   },
   header: {
     flexDirection:"row",
     justifyContent:"flex-start",
     margin:10,
+  },
+  profileName: {
+    marginStart: 10,
+    justifyContent: "center",
   },
   image:{
     width:"100%",
@@ -57,15 +82,24 @@ const styles = StyleSheet.create({
     justifyContent:"space-between",
     margin:10,
   },
-  btnContainerStyle: {
-    margin: 10,
+  requestBtnContainerStyle: {
     paddingVertical: 10,
     borderRadius: 5,
-    backgroundColor: Colors.secondary
+    backgroundColor: colors.primary
   },
-  btnTextStyle: {
+  requestBtnTextStyle: {
     textAlign: "center",
-    color: Colors.white,
+    color: colors.primary,
+    fontSize: 16
+  },
+  profileBtnContainerStyle: {
+    paddingVertical: 10,
+    color: colors.primary
+  },
+  requestBtnTextStyle: {
+    marginHorizontal:10,
+    textAlign: "center",
+    color: colors.white,
     fontSize: 16,
     fontWeight: "bold"
   }

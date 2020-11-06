@@ -5,13 +5,12 @@ import Screen from '../components/Screen';
 import AppTextInput from '../components/AppTextInput';
 import AppButton from '../components/AppButton';
 import Separator from '../components/Separator';
-
+import Heading from '../components/Heading';
+import AppText from '../components/AppText';
 import { walkerProfile } from "../db/DBUtils";
-
+import colors from "../components/colors";
 export default NewWalker = ({user}) => {
-  const validate = (values) => {
-    
-  }
+  
   return(
      <Screen style={styles.container}>
       <Formik 
@@ -29,8 +28,8 @@ export default NewWalker = ({user}) => {
         }}
         onSubmit = {async values => {
           console.log("form submitted", values);
-          const dogProfile = await dogProfile(user.uid, values);
-          console.log("dog profile created", dogProfile)
+          const walkerProfile = await walkerProfile(user.uid, values);
+          console.log("walker profile created", walkerProfile)
           }}>
         {({handleChange, handleBlur, handleReset, handleSubmit, values, touched, errors, isSubmitting}) => {
           return(
@@ -39,7 +38,7 @@ export default NewWalker = ({user}) => {
                 <AppButton 
                   title="Cancel"
                   onPress={ handleReset }/>
-                <Text style={styles.label}>Edit Profile</Text>
+                <Heading>Edit Profile</Heading>
                 <AppButton
                   title="Done"
                   onPress={ handleSubmit }/>
@@ -49,25 +48,25 @@ export default NewWalker = ({user}) => {
                 style={styles.scrollView}>
                 <View style={{alignItems:"center"}}>
                   <Image style={styles.imageContainerStyle}/>
-                  <Text> Change Profile Photo </Text>
+                  <AppText> Change Profile Photo </AppText>
                 </View>
                 <Separator />
                 <View>
-                  <AppTextInput label="Name" placeholder="Your name"/>
+                  <AppTextInput inputStyle={styles.textInput} label="Name" placeholder="Your name"/>
                   <AppTextInput label="Age" placeholder="Your age"/>
                   <AppTextInput label="Bio" multiline={true}/>
                   <Separator />
-                  <Text style={styles.label}>Personal Information</Text>
-                  <AppTextInput label="Email" placeholder="example@gmail.com"/>
-                  <AppTextInput label="Phone" placeholder="###-###-####"/>
-                  <AppTextInput label="Birthday"/>
-                  <AppTextInput label="Province" placeholder="BC"/>
-                  <AppTextInput label="Address" placeholder="1234 A st"/>
-                  <AppTextInput label="Zip Code" placeholder="A1A 1A1"/>
+                  <Heading >Personal Information</Heading>
+                  <AppTextInput inputStyle={styles.textInput} label="Email" placeholder="example@gmail.com"/>
+                  <AppTextInput inputStyle={styles.textInput} label="Phone" placeholder="###-###-####"/>
+                  <AppTextInput inputStyle={styles.textInput} label="Birthday"/>
+                  <AppTextInput inputStyle={styles.textInput} label="Province" placeholder="BC"/>
+                  <AppTextInput inputStyle={styles.textInput} label="Address" placeholder="1234 A st"/>
+                  <AppTextInput inputStyle={styles.textInput} label="Zip Code" placeholder="A1A 1A1"/>
                   <Separator />
-                  <Text style={styles.label}> Emergency Contact </Text>
-                  <AppTextInput label="Name"/>
-                  <AppTextInput label="Phone" placeholder="###-###-####"/>
+                  <Heading headingStyle={styles.emgHeading}> Emergency Contact </Heading>
+                  <AppTextInput inputStyle={styles.textInput} label="Name"/>
+                  <AppTextInput inputStyle={styles.textInput} label="Phone" placeholder="###-###-####"/>
                 </View>
               </ScrollView>
             </>
@@ -79,19 +78,27 @@ export default NewWalker = ({user}) => {
 }
 
 const styles = StyleSheet.create({
-  
   imageContainerStyle: {
     width: 100, 
     height: 100, 
     borderWidth: 1, 
-    borderColor:"lightgray"
+    borderColor: colors.primary
   },
-  label: {
-    fontSize: 18,
+  emgHeading: {
     fontWeight: "bold",
+    color: colors.primary
   },
   scrollView: {
     marginHorizontal: 20
-  }
+  },
+  textInput: {
+    borderWidth: 1,
+    borderColor: colors.secondary,
+    margin: 15,
+    minHeight: 40,
+    width: "70%",
+    padding: 10,
+    backgroundColor: colors.white
+  },
 
 });
