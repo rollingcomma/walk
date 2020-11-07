@@ -1,7 +1,3 @@
-import { storage } from './firebase';
-
-// export const postsStorageRef = storage.ref() 
-
 
 export const uploadImageAsync = async (uri) => {
   // Why are we using XMLHttpRequest? See:

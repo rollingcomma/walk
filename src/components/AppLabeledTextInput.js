@@ -6,8 +6,8 @@ import {
   TextInput } from 'react-native';
 import { AppText } from './index1';
 
-
-export default AppTextInput = ({
+export default AppLabeledTextInput = ({
+  label,
   inputStyle,
   containerStyle,
   touched,
@@ -16,12 +16,23 @@ export default AppTextInput = ({
 }) => {
   return (
     <View style={containerStyle}>
-      <TextInput style={inputStyle} {...props} />
+      <View style={styles.inputContainer}>
+        <AppText textStyle={styles.label}>{label}</AppText>
+        <TextInput style={inputStyle} {...props} />
+      </View>
       <AppText textStyle={styles.errorInput}>{touched && error}</AppText>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  inputContainer: {
+    flexDirection: "row",
+    justifyContent:"center",
+    alignItems: "center",
+  },
+  label: {
+    width: "20%"
+  },
   errorInput: { color: colors.red, fontSize: 12 },
 });

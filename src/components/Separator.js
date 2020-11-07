@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View} from 'react-native';
-import colors from '../components/colors';
-import AppText from '../components/AppText';
+import colors from '../styles/colors';
+import { AppText } from './index1';
 
 export default Separator = ({ text }) => {
   return(

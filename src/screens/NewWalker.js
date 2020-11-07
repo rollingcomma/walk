@@ -1,14 +1,23 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView} from 'react-native';
+import { StyleSheet, View, Image, ScrollView} from 'react-native';
 import { Formik } from 'formik';
-import Screen from '../components/Screen'; 
-import AppTextInput from '../components/AppTextInput';
-import AppButton from '../components/AppButton';
-import Separator from '../components/Separator';
-import Heading from '../components/Heading';
-import AppText from '../components/AppText';
+import {
+  Screen,
+  AppButton,
+  AppLabeledTextInput,
+  Separator,
+  AppText,
+  Heading
+} from '../components';
+// import Screen from '../components/Screen'; 
+// import AppTextInput from '../components/AppLabeledTextInput';
+// import AppButton from '../components/AppButton';
+// import Separator from '../components/Separator';
+// import Heading from '../components/Heading';
+// import AppText from '../components/AppText';
 import { walkerProfile } from "../db/DBUtils";
-import colors from "../components/colors";
+import colors from "../styles/colors";
+
 export default NewWalker = ({user}) => {
   
   return(
@@ -52,21 +61,21 @@ export default NewWalker = ({user}) => {
                 </View>
                 <Separator />
                 <View>
-                  <AppTextInput inputStyle={styles.textInput} label="Name" placeholder="Your name"/>
-                  <AppTextInput label="Age" placeholder="Your age"/>
-                  <AppTextInput label="Bio" multiline={true}/>
+                  <AppLabeledTextInput inputStyle={styles.textInput} label="Name" placeholder="Your name"/>
+                  <AppLabeledTextInput label="Age" placeholder="Your age"/>
+                  <AppLabeledTextInput label="Bio" multiline={true}/>
                   <Separator />
                   <Heading >Personal Information</Heading>
-                  <AppTextInput inputStyle={styles.textInput} label="Email" placeholder="example@gmail.com"/>
-                  <AppTextInput inputStyle={styles.textInput} label="Phone" placeholder="###-###-####"/>
-                  <AppTextInput inputStyle={styles.textInput} label="Birthday"/>
-                  <AppTextInput inputStyle={styles.textInput} label="Province" placeholder="BC"/>
-                  <AppTextInput inputStyle={styles.textInput} label="Address" placeholder="1234 A st"/>
-                  <AppTextInput inputStyle={styles.textInput} label="Zip Code" placeholder="A1A 1A1"/>
+                  <AppLabeledTextInput inputStyle={styles.textInput} label="Email" placeholder="example@gmail.com"/>
+                  <AppLabeledTextInput inputStyle={styles.textInput} label="Phone" placeholder="###-###-####"/>
+                  <AppLabeledTextInput inputStyle={styles.textInput} label="Birthday"/>
+                  <AppLabeledTextInput inputStyle={styles.textInput} label="Province" placeholder="BC"/>
+                  <AppLabeledTextInput inputStyle={styles.textInput} label="Address" placeholder="1234 A st"/>
+                  <AppLabeledTextInput inputStyle={styles.textInput} label="Zip Code" placeholder="A1A 1A1"/>
                   <Separator />
                   <Heading headingStyle={styles.emgHeading}> Emergency Contact </Heading>
-                  <AppTextInput inputStyle={styles.textInput} label="Name"/>
-                  <AppTextInput inputStyle={styles.textInput} label="Phone" placeholder="###-###-####"/>
+                  <AppLabeledTextInput inputStyle={styles.textInput} label="Name"/>
+                  <AppLabeledTextInput inputStyle={styles.textInput} label="Phone" placeholder="###-###-####"/>
                 </View>
               </ScrollView>
             </>

@@ -1,14 +1,23 @@
 import React from 'react';
 import { StyleSheet,  View, Image, ScrollView } from 'react-native';
 import { Formik } from 'formik';
-import Screen from '../components/Screen';
-import AppTextInput from '../components/AppTextInput';
-import AppMultiTextInput from '../components/AppMultiTextInput';
-import AppButton from '../components/AppButton';
-import Separator from '../components/Separator';
-import AppText from '../components/AppText';
-import Heading from '../components/Heading';
-import colors from '../components/colors';
+import {
+  Screen,
+  AppButton,
+  AppLabeledTextInput,
+  AppMultiTextInput,
+  Separator,
+  AppText,
+  Heading
+} from '../components';
+// import Screen from '../components/Screen';
+// import AppTextInput from '../components/AppLabeledTextInput';
+// import AppMultiTextInput from '../components/AppMultiTextInput';
+// import AppButton from '../components/AppButton';
+// import Separator from '../components/Separator';
+// import AppText from '../components/AppText';
+// import Heading from '../components/Heading';
+import colors from '../styles/colors';
 import { dogProfile } from "../db/DBUtils";
 
 export default NewOwner = ({user}) => {
@@ -59,21 +68,21 @@ export default NewOwner = ({user}) => {
                 </View>
                 <Separator />
                 <View>
-                  <AppTextInput inputStyle={styles.textInput} label="Name" placeHolder="Name"/>
-                  <AppTextInput inputStyle={styles.textInput} label="Age"/>
-                  <AppTextInput inputStyle={styles.textInput} label="Breed"/>
+                  <AppLabeledTextInput inputStyle={styles.textInput} label="Name" placeHolder="Name"/>
+                  <AppLabeledTextInput inputStyle={styles.textInput} label="Age"/>
+                  <AppLabeledTextInput inputStyle={styles.textInput} label="Breed"/>
                   <Separator />
                   <Heading>Dog Information</Heading>
-                  <AppTextInput inputStyle={styles.textInput} label="Bio" multiline={true}/>
+                  <AppLabeledTextInput inputStyle={styles.textInput} label="Bio" multiline={true}/>
                   <AppMultiTextInput label="Likes"/>
                   <AppMultiTextInput label="Dislikes"/>
                   <Separator />
                   <Heading> Personal Information </Heading>
-                  <AppTextInput inputStyle={styles.textInput} label="Email"/>
-                  <AppTextInput inputStyle={styles.textInput} label="Phone"/>
-                  <AppTextInput inputStyle={styles.textInput} label="Province"/>
-                  <AppTextInput inputStyle={styles.textInput} label="Address"/>
-                  <AppTextInput inputStyle={styles.textInput} label="Zip Code"/>
+                  <AppLabeledTextInput inputStyle={styles.textInput} label="Email"/>
+                  <AppLabeledTextInput inputStyle={styles.textInput} label="Phone"/>
+                  <AppLabeledTextInput inputStyle={styles.textInput} label="Province"/>
+                  <AppLabeledTextInput inputStyle={styles.textInput} label="Address"/>
+                  <AppLabeledTextInput inputStyle={styles.textInput} label="Zip Code"/>
                 </View>
                 <Separator />
                 <View>

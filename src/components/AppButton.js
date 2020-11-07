@@ -1,7 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
-import AppText from '../components/AppText';
-import colors from './colors';
+// import colors from '../styles/colors';
+import { 
+  TouchableOpacity, 
+  ActivityIndicator } from 'react-native';
+import {AppText} from './index1';
 
 export default AppButton = ({
   title,

@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Modal } from 'react-native';
 import { Formik } from 'formik';
-import AppButton from './AppButton';
-import Heading from './Heading';
-import AppTextInput from './AppTextInput';
 import { FontAwesome } from '@expo/vector-icons';
-import colors from './colors';
+import colors from '../styles/colors';
+import { 
+  StyleSheet, 
+  View, 
+  Modal } from 'react-native';
+import {
+  Heading,
+  AppTextInput 
+} from './index1';
+// import AppButton from './AppButton';
+// import Heading from './Heading';
+// import AppTextInput from './AppLabeledTextInput';
 
 export default FormModal = ({
   modalVisible,

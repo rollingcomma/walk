@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
-import  colors  from './colors';
-import AppButton from './AppButton';
-import FormModal from './FormModal';
-import ProfileImage from './ProfileImage';
-import Heading from './Heading';
 import { FontAwesome } from '@expo/vector-icons';
+import  colors  from '../styles/colors';
+import { 
+  StyleSheet, 
+  View, 
+  Image } from 'react-native';
+import {
+  AppButton,
+  FormModal,
+  Avatar,
+  Heading
+} from './index1'
+// import AppButton from './AppButton';
+// import FormModal from './FormModal';
+// import ProfileImage from './Avatar';
+// import Heading from './Heading';
+
 
 export default Card = ({
   name, 
@@ -20,7 +30,7 @@ export default Card = ({
     <>
       <View style={styles.card}>
         <View style={styles.header}>
-          <ProfileImage 
+          <Avatar 
             profileImageUrl={profileImageUrl} />
             <View style={styles.profileName}>
               <Heading>{name}</Heading>

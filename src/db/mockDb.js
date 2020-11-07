@@ -1,21 +1,65 @@
-import { useIdentifyRef } from 'react-firebase-hooks/auth/dist/util';
-import { firestore } from '../firebase';
-const uid1 = "goUizOwXY4SzXYGhLtFPguDTfQC3";
-const uid2 = "nyu0mD8lTvQDH85orbcglhe3elf2";
-const user1 =
+export const uids = {
+  uid1: "goUizOwXY4SzXYGhLtFPguDTfQC3",
+  uid2: "nyu0mD8lTvQDH85orbcglhe3elf2",
+  uid3: "goUizOwXY4SzXYGhLtFPgGDifQC3",
+  uid4: "nyu0mD8lTvQDh75orbcglhe3elf2",
+  uid5: "goUioooXY4SzXYGhLtFPguDTfQC3",
+  uid6: "Ynu0mD8lTvQDH85orbcglhe3elf2",
+  uid7: "uyu0nD8lTvQDH85orbcglhe3elf2",
+  uid8: "Ynu0mD8lTvQDH99orbcglhe3elf2",
+  uid9: "boUizOwXY4SzXYGhLtFPguDTfQC3",
+  uid10: "ddUizOwXY4SzXYGhLtFPguDTfQC3"
+};
+
+export const users = {
+  uid2: {
+    uid:uids.uid2,
+    username: "Alex",
+    email:"shallowgrass@gmail.com",
+    createAt: new Date(),
+  },
+  uid3: {
+    uid: uids.uid3,
+    username: "Lucy",
+    email:"test@gmail.com",
+    createAt: new Date(2019, 12, 15),
+  },
+  uid4:
   {
+    uid: uids.uid4,
     username: "Ethan",
-    email: "rollingcomma@gmail.com",
-    photoURl:"https://lh3.googleusercontent.com/a-/AOh14Gjl6awFmG57u8JxHrpxUJm_h-WMR1PokxPeqHmD=s96-c",
-    createdAt: new Date(),
-  }
-
-
-const newDogProfile1 = 
+    email: "test1@gmail.com",
+    createdAt: new Date(2020, 2, 15),
+  },
+  uid5:
   {
-    owner: uid1,
+    uid: uids.uid5,
+    username: "Jim",
+    email: "test2@gmail.com",
+    createdAt: new Date(2020, 3, 1),
+  },
+  uid6:
+  {
+    uid: uids.uid6,
+    username: "Tim",
+    email: "test3@example.ca",
+    createdAt: new Date(2020, 7, 10)
+  },
+  uid7:
+  {
+    uid: uids.uid7,
+    username: "Jarry",
+    email: "test4@example.ca",
+    createdAt: new Date(2020, 10, 10)
+  }
+};
+
+export const dogProfiles = {
+  dogProfile1: 
+  {
+    owner: uids.uid1,
     name: "Milly",
-    photoUrl: "",
+    avatarUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fprofile1.jpeg?alt=media&token=2903d149-aad0-4768-b9a0-cda1120a54b3",
     age: 6,
     breed: "Border Collie",
     bio: "testing purpose description",
@@ -23,90 +67,346 @@ const newDogProfile1 =
     dislikes: ["Touching her paws", "Smell of Oranges", ""],
     phone:"778-999-9999",
     province: "BC",
-    Address: "1234, 123A ave Burnaby",
-    postalCode: "M1M 9Q9",
-    createdAt: new Date(),
-  };
-
-
-const newDogProfile2 = 
+    city: "Surrey",
+    address: "15930 Fraser Hwy",
+    postalCode: "V4N 0X8",
+    createdAt: new Date(2019, 8, 19),
+  },
+  dogProfile2:
   {
-    owner: uid2,
+    owner: uids.uid2,
     name: "Mole",
-    photoUrl: "",
+    avatarUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fprofile2.jpg?alt=media&token=ed3b8457-927e-4bf7-8119-04030f09edd2",
     age: 3,
-    breed: "Border Collie",
+    breed: "Golden Retriever",
     bio: "testing purpose description",
     likes: ["Swimming", "Playing Catch", ""],
     dislikes: ["Touching her paws", "Smell of Oranges", ""],
     phone:"604-111-1111",
     province: "BC",
-    Address: "1234, 123A ave Burnaby",
-    postalCode: "M1M 9Q9",
-    createdAt: new Date(),
-  }
-
-
-
-
-const newWalkerProfile1 = 
+    city: "Burnaby",
+    address: "8683 10th Ave",
+    postalCode: "V3N 2S9",
+    createdAt: new Date(2019, 10, 10),
+  },
+  dogProfile3:
   {
-    walker: uid,
-    name: "Ethan P.",
-    age: 24,
+    owner: uids.uid3,
+    name: "Coco",
+    avatarUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fprofile3.jpg?alt=media&token=0a492293-2646-4f56-88a6-79c4361f682a",
+    age: 3,
+    breed: "Beagle",
+    bio: "testing purpose description",
+    likes: ["Swimming", "Discovering in woods", ""],
+    dislikes: ["Touching her paws", "Smell of Oranges", ""],
+    phone:"604-111-1111",
+    province: "BC",
+    city: "Burnaby",
+    address: "4208 Dawson St",
+    postalCode: "V5C 0A4",
+    createdAt: new Date(2020, 2, 15),
+  },
+  dogProfile4: 
+  {
+    owner: uids.uid4,
+    name: "Ace",
+    avatarUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fprofile4.jpg?alt=media&token=aee1d77e-1647-48b4-9727-3f1a262007f8",
+    age: 5,
+    breed: "Golden Retriever",
+    bio: "testing purpose description",
+    likes: ["Swimming", "Discovering in woods", ""],
+    dislikes: ["Touching her paws", "Smell of Oranges", ""],
+    phone:"604-111-1111",
+    province: "BC",
+    city: "Vancouver",
+    address: "650 W 41st Ave",
+    postalCode: "V5Z 2M9",
+    createdAt: new Date(2020, 2, 28),
+  },
+  dogProfile5:
+  {
+    owner: uids.uid5,
+    name: "Finn",
+    avatarUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fprofile5.jpeg?alt=media&token=d57d9d54-41b5-47a3-9e36-b6f2bee0ddcc",
+    age: 3,
+    breed: "bolognese",
+    bio: "testing purpose description",
+    likes: ["Swimming", "Discovering in woods", ""],
+    dislikes: ["Touching her paws", "Smell of Oranges", ""],
+    phone:"604-111-1111",
+    province: "BC",
+    city: "Richmond",
+    address: "2351 No 6 Rd #170",
+    postalCode: "V6V 1P3",
+    createdAt: new Date(2020, 5, 28),
+  },
+  dogProfile6:
+  {
+    owner: uids.uid6,
+    name: "Rocky",
+    avatarUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fprofile6.jpeg?alt=media&token=924d0868-6dc3-45a9-b806-197b1fdff2f1",
+    age: 5,
+    breed: "corgi",
+    bio: "testing purpose description",
+    likes: ["Swimming", "Discovering in woods", ""],
+    dislikes: ["Touching her paws", "Smell of Oranges", ""],
+    phone:"604-111-1111",
+    province: "BC",
+    city: "Surrey",
+    address: "7350 120 St",
+    postalCode: "V3W 3M9",
+    createdAt: new Date(2020, 7, 10),
+  },
+  dogProfile7: 
+  {
+    owner: uids.uid7,
+    name: "Boomer",
+    avatarUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fprofile7.jpg?alt=media&token=ed6e5a8e-a0db-45a3-9b6a-a6c22482060a",
+    age: 2,
+    breed: "pug",
+    bio: "testing purpose description",
+    likes: ["Swimming", "Discovering in woods", ""],
+    dislikes: ["Touching her paws", "Smell of Oranges", ""],
+    phone:"604-111-1111",
+    province: "BC",
+    city: "Maple Ridge",
+    address: "11811 224 St",
+    postalCode: "V2X 0P1",
+    createdAt: new Date(2020, 10, 10),
+  }
+};
+
+export const dogIds = {
+  dogId1: "eC3Dofgik4VlUIfD28jY",
+  dogId2: "aZBYkMwmSl4S0B5QEL0f",
+  dogId3: "gvSEqX5S2qWsprot0z0c",
+  dogId4: "3PiFet5BcRa4JQqzPQoD",
+  dogId5: "b4JYVYIvS10vemZS10TS",
+  dogId6: "vt1vjCpaxdKBcGAyI2sY",
+  dogId7: "ZUZ9YYc78OdeL8mQX4kJ",
+};
+
+export const walkerProfiles = {
+  walkerProfile1:
+  {
+    uid:uids.uid8,
+    name: "Bob P.",
+    age: 48,
+    avatarUrl:"https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fwalker1.jpg?alt=media&token=e924f6b9-1b23-4155-99a9-d6b844c1369e",
     bio: "Hi there! My name is Ethan and I love all animals. Dogs, cates, birds, you name it. I really love...",
     phone: "778-999-9999",
     province: "BC",
     country: "CA",
-    Address: "1234, 123A ave Burnaby",
-    postalCode: "M1M 9Q9",
+    city: "Surrey",
+    address: "15146 100 Ave #101",
+    postalCode: "V3R 0J8",
+    birthday: "03-01-1972",
+    emergencyContactPerson: "Bob Ross",
+    emergencyContactTel: "604-123-4567",
+    createdAt: new Date(2020, 9, 10),
+  },
+  walkerProfile2:
+  {
+    uid: uids.uid9,
+    name: "Josh M",
+    age: 24,
+    avatarUrl:"https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fwalker2.jpg?alt=media&token=94f35d65-9b84-4e72-a749-2235355f9005",
+    bio: "Hi there! My name is Josh. ",
+    phone: "778-999-9999",
+    province: "BC",
+    country: "CA",
+    city: "Burnaby",
+    address: "4886 Marine Dr",
+    postalCode: "V5J 3G6",
     birthday: "03-01-1996",
     emergencyContactPerson: "Bob Ross",
     emergencyContactTel: "604-123-4567",
-    createdAt: new Date(),
-  }
-
-
-const dogProfile = 
+    createdAt: new Date(2020, 10, 8),
+  },
+  walkerProfile3:
   {
-    dogProfileId:dogProfileID,
-    pictures:["", "", ""],
+    uid: uids.uid10,
+    name: "Katy Lee",
+    age: 25,
+    avatarUrl:"https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fwalker3.jpg?alt=media&token=d9ec8c4e-5d0b-4793-8db8-cb685b6f1ce2",
+    bio: "Hi there! I'm katy. ",
+    phone: "778-999-9999",
+    province: "BC",
+    country: "CA",
+    city: "Richmond",
+    Address: "8291 Ackroyd Rd Unit 100",
+    postalCode: "V6X 3K5",
+    birthday: "03-01-1995",
+    emergencyContactPerson: "Bob Ross",
+    emergencyContactTel: "604-123-4567",
+    createdAt: new Date(2020, 7, 7),
   }
+};
 
-const newPost =
+export const posts ={
+  post1: 
   {
-    dogProfileId: dogProfileID,
-    pictures:["", "", ""],
-    liked:[],
-    messageChannel:[],
+    dogId: dogIds.dogId1,
+    name: "Milly",
+    avatarUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fprofile1.jpeg?alt=media&token=2903d149-aad0-4768-b9a0-cda1120a54b3",
+    picsUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/postImages%2Fpost1.jpeg?alt=media&token=28fad765-6247-4925-83f6-7ae58436ead5",
+    createdAt:new Date(2019, 9, 19),
+    likes: [uids.uid2]
+  },
+  post2:
+  {
+    dogId: dogIds.dogId2,
+    name: "Mole",
+    avatarUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fprofile2.jpg?alt=media&token=ed3b8457-927e-4bf7-8119-04030f09edd2",
+    picsUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/postImages%2Fpost2_1.jpg?alt=media&token=dd440ec7-3b60-46b5-8ca3-6fd774721ea2",
+    createdAt:new Date(2020, 3, 19),
+    likes: [uids.uid1]
+  },
+  post3:
+  {
+    dogId: dogIds.dogId2,
+    name: "Mole",
+    avatarUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fprofile2.jpg?alt=media&token=ed3b8457-927e-4bf7-8119-04030f09edd2",
+    picsUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/postImages%2Fpost2_2.jpeg?alt=media&token=265dc309-e6d1-409f-8f41-c868399dd426",
+    createdAt:new Date(2020, 5, 19),
+    likes: []
+  },
+  post4:
+  {
+    dogId: dogIds.dogId3,
+    name: "Coco",
+    avatarUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fprofile3.jpg?alt=media&token=0a492293-2646-4f56-88a6-79c4361f682a",
+    picsUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/postImages%2Fpost3_1.jpeg?alt=media&token=66828442-34da-4f71-bb4d-67f3da4afbec",
+    createdAt:new Date(2020, 5, 19),
+    likes: [uids.uid1]
+  },
+  post5:
+  {
+    dogId: dogIds.dogId3,
+    name: "Coco",
+    avatarUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fprofile3.jpg?alt=media&token=0a492293-2646-4f56-88a6-79c4361f682a",
+    picsUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/postImages%2Fpost3_2.jpg?alt=media&token=92d8c1b2-01a9-4224-8279-9d60dbb11390",
+    createdAt:new Date(2020, 3, 10),
+    likes: []
+  },
+  post6:
+  {
+    dogId: dogIds.dogId4,
+    name: "Ace",
+    avatarUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fprofile4.jpg?alt=media&token=aee1d77e-1647-48b4-9727-3f1a262007f8",
+    picsUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/postImages%2Fpost4.jpeg?alt=media&token=b69edfa1-be0d-4b99-8402-cb3af40607f4",
+    createdAt:new Date(2020, 5, 10),
+    likes: [uids.uid2]
+  },
+  post7:
+  {
+    dogId: dogIds.dogId5,
+    name: "Finn",
+    avatarUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fprofile5.jpeg?alt=media&token=d57d9d54-41b5-47a3-9e36-b6f2bee0ddcc",
+    picsUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/postImages%2Fpost5.jpg?alt=media&token=87cdc9df-583a-41ad-9349-961c6f4f8876",
+    createdAt:new Date(2020, 6, 15),
+    likes: []
+  },
+  post7:
+  {
+    dogId: dogIds.dogId6,
+    name: "Rocky",
+    avatarUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fprofile6.jpeg?alt=media&token=924d0868-6dc3-45a9-b806-197b1fdff2f1",
+    picsUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/postImages%2Fpost6_1.jpg?alt=media&token=5d083bfa-7062-47e4-8be4-7a63c152edbf",
+    createdAt:new Date(2020, 7, 15),
+    likes: [uids.uid1]
+  },
+  post8:
+  {
+    dogId: dogIds.dogId6,
+    name: "Rocky",
+    avatarUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fprofile6.jpeg?alt=media&token=924d0868-6dc3-45a9-b806-197b1fdff2f1",
+    picsUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/postImages%2Fpost6_2.jpg?alt=media&token=9b7b8a58-5d0e-4349-b559-9248a54871d0",
+    createdAt: new Date(2020, 8, 7),
+    likes: []
+  },
+  post9:
+  {
+    dogId: dogIds.dogId7,
+    name: "Boomer",
+    avatarUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fprofile7.jpg?alt=media&token=ed6e5a8e-a0db-45a3-9b6a-a6c22482060a",
+    picsUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/postImages%2Fpost7.jpg?alt=media&token=6bbd54c0-b12c-4a6e-87d0-1c2aedd42bb5",
+    createdAt: new Date(2020, 6, 10),
+    likes: []
+  },
+  post10:
+  {
+    dogId: dogIds.dogId7,
+    name: "Boomer",
+    avatarUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/profileImages%2Fprofile7.jpg?alt=media&token=ed6e5a8e-a0db-45a3-9b6a-a6c22482060a",
+    picsUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/postImages%2Fpost7_2.jpg?alt=media&token=1b9644ad-a445-4ba5-9d87-a4b2d0c8124f",
+    createdAt: new Date(2020, 10, 23),
+    likes: [uids.uid2]
   }
+};
 
+export const channels = {
+  ch1: {
+    user1: uids.uid9,
+    user2: uids.uid1,
+    createdAt: new Date(2019, 12, 10)
+  },
+  ch2: {
+    user1: uids.uid10,
+    user2: uids.uid2,
+    createdAt: new Date(2020, 3, 12)
+  }
+};
 
-
-const request =
+export const requests = {
+  req1:
   {
-    owner: dogProfileId,
-    walker: walerProfileId,
+    owner: uids.uid1,
+    walker: uids.uid9,
     message:"Cute pup! I want to walk him/her!",
     timeStamp: new Date(),
     status:"active"
-  }
+  },
+}
 
 
-
-const msg = 
+export const messages = 
 {
-    sender: uid,
-    receiver: uid,
-    message: "testing",
+  msg1: {
+    channelId:"",
+    sender: uids.uid9,
+    message: "Hello, your dog's so cute! I'd like to walk your dog",
     timeStamp: new Date(),
-  }
+  },
+  msg2: {
+    channelId: "",
+    sender: uids.uid1,
+    message: "Hi, thank you. I'm glad you like my boy",
+    timeStamp: new Date(),
+  },
+  msg3: {
+    channelId:"",
+    sender: uids.uid9,
+    message: "When is it convenient for you?",
+    timeStamp: new Date(),
+  },
+  msg4: {
+    channelId:"",
+    sender: uids.uid9,
+    message: "I'm available every day after 7pm",
+    timeStamp: new Date(),
+  },
+  msg5: {
+    channelId: "",
+    sender: uids.uid1,
+    message: "I'll be back",
+    timeStamp: new Date(),
+  },
+}
 
-
-
-const event =
+export const events =
   {
-    organizer: uid,
+    organizer: uids.uid1,
     address: "21801 Allard Crescent",
     city: "Langley",
     startTime: "1:00pm",

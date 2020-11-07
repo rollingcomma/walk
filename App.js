@@ -1,11 +1,21 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
-import Index from './src/screens/Index';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Button } from 'react-native';
+import AppButton from './src/components/AppButton';
+import Screen from './src/components/Screen';
 import ImageUpload from './src/components/ImageUpload';
 import { 
-  dogProfile, 
-  walkerProfile, 
+  findUser,
+  createUser,
+  getDogProfile,
+  createDogProfile, 
+  updateDogProfileByProfileId,
+  updateDogProfileByUid,
+  getWalkerProfile,
+  setWalkerProfile, 
+  createPost,
+  getPost,
   getAllPosts,
+  getPostsByDogId,
   getPostsByUid,
   post,
   request,
@@ -16,57 +26,34 @@ import {
   channel,
   getChannelByUid
 } from './src/db/DBUtils';
-const uid1 = "goUizOwXY4SzXYGhLtFPguDTfQC3";
-const uid2 = "nyu0mD8lTvQDH85orbcglhe3elf2";
 
-const newDogProfile1 = 
-  {
-    owner: uid1,
-    name: "Milly",
-    photoUrl: "",
-    age: 6,
-    breed: "Border Collie",
-    bio: "testing purpose description",
-    likes: ["Swimming", "Playing Catch", ""],
-    dislikes: ["Touching her paws", "Smell of Oranges", ""],
-    phone:"778-999-9999",
-    province: "BC",
-    Address: "1234, 123A ave Burnaby",
-    postalCode: "M1M 9Q9",
-    createdAt: new Date(),
-  };
+import {uids, users, dogProfiles, dogIds, walkerProfiles, posts, requests} from "./src/db/mockDb";
 
-  const newDogProfile2 = 
-  {
-    owner: uid2,
-    name: "Mole",
-    photoUrl: "",
-    age: 3,
-    breed: "Border Collie",
-    bio: "testing purpose description",
-    likes: ["Swimming", "Playing Catch", ""],
-    dislikes: ["Touching her paws", "Smell of Oranges", ""],
-    phone:"604-111-1111",
-    province: "BC",
-    Address: "1234, 123A ave Burnaby",
-    postalCode: "M1M 9Q9",
-    createdAt: new Date(),
-  }
+const test = {
+    uid: uids.uid10,
+    name: "Kate Lee",
+    age: 26,}
 
 export default App= () => {
-  useEffect(() => {
-    async function testDb( ) {
-      console.log("app loading");
-      const profile = await dogProfile(uid2, newDogProfile2);
-      console.log(profile);
-    }
-    // testDb();
-  }, [])
+  
+  // useEffect(() => {
+  //   async function testDb( ) {
+  //     console.log("app loading");
+  //     const result = createDogProfile(dogProfiles.dogProfile8);
+  //     console.log(result);
+  // }
+  //   testDb();
+  // }, [])
 
+  async function testDb( ) {
+      console.log("app loading");
+      const result = await getPost("0fX106u71W5sjxThmPVS");
+      console.log(result);
+  }
   return (
-    // <View></View>
-    // <Index />
-    <ImageUpload />
+    <Screen>
+      <AppButton title="add data" onPress={async() => await testDb()}/>
+    </Screen>
   );
 }
 
