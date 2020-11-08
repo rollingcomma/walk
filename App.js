@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Button } from 'react-native';
 import AppButton from './src/components/AppButton';
 import Screen from './src/components/Screen';
+import Login from './src/screens/Login';
 import ImageUpload from './src/components/ImageUpload';
 import { 
   findUser,
@@ -18,41 +19,53 @@ import {
   getPostsByDogId,
   getPostsByUid,
   post,
-  request,
-  getRequestReceived,
+  likePost,
+  unlikePost,
+  createRequest,
+  updateRequest,
+  getRequestsReceived,
+  getRequestsSent,
   getAllEvents,
-  event,
+  createEvent,
+  getEvent,
+  updateEvent,
+  markEvent,
+  unmarkEvent,
+  createChannel,
   getAllChannelsByUid,
-  channel,
-  getChannelByUid
+  createMessage,
+  getMessagesByChannelId,
+  createReview,
+  updateReview,
+  getReviewsByUid
 } from './src/db/DBUtils';
 
-import {uids, users, dogProfiles, dogIds, walkerProfiles, posts, requests} from "./src/db/mockDb";
+import {
+  uids, 
+  users, 
+  dogProfiles, 
+  dogIds, 
+  walkerProfiles, 
+  posts, 
+  requests, 
+  events,
+  channels,
+  messages,
+  reviews} from "./src/db/mockDb";
 
-const test = {
-    uid: uids.uid10,
-    name: "Kate Lee",
-    age: 26,}
 
 export default App= () => {
   
-  // useEffect(() => {
-  //   async function testDb( ) {
-  //     console.log("app loading");
-  //     const result = createDogProfile(dogProfiles.dogProfile8);
-  //     console.log(result);
-  // }
-  //   testDb();
-  // }, [])
-
   async function testDb( ) {
       console.log("app loading");
-      const result = await getPost("0fX106u71W5sjxThmPVS");
+      const result = await getReviewsByUid(uids.uid9);
       console.log(result);
   }
+  //getAllMessagesByChannelId("yHaVVNT7ItVrypOdE31V")
   return (
     <Screen>
       <AppButton title="add data" onPress={async() => await testDb()}/>
+      {/* <Login /> */}
     </Screen>
   );
 }

@@ -10,7 +10,7 @@ import {
 } from './DBRefs';
 import "react-native-get-random-values";
 import {v4 as uuidv4} from 'uuid';
-import { firestore, firestoreFieldValue } from './firebase';
+import { batch, firestoreFieldValue } from './firebase';
 
 
 /**
@@ -18,15 +18,17 @@ import { firestore, firestoreFieldValue } from './firebase';
  * 
  * @param { string } uid
  * 
- * @returns { user} 
+ * @return { user} 
  *          { 
  *            uid: string
- *            username: sting
+ *            username: string
  *            email: string
  *            createdAt: date
  *          }
  */
 export const findUser = (uid) => {
+  if(!uid) return;
+
   return usersRef.doc(uid).get()
   .then(doc => {
     if(doc.exists) {
@@ -51,16 +53,17 @@ export const findUser = (uid) => {
  *          createdAt: date
  *        }
  * 
- * @returns { boolean } true if succeed otherwise false
+ * @return { boolean } true if succeed 
  */
 export const createUser =  (newUser) => {
+  if(!newUser) return;
+
   return usersRef.doc(newUser.uid).set(newUser)
   .then(() => {
     return true;
   })
   .catch(err => {
     console.log("Error create user", err);
-    return false;
   });
 }
 
@@ -69,16 +72,17 @@ export const createUser =  (newUser) => {
  * 
  * @param { string } uid
  * 
- * @returns { boolean } true if succeed otherwise false
+ * @return { boolean } true if succeed 
  */
 export const deleteUser = (uid) => {
+  if(!uid) return;
+
   return usersRef.doc(uid).delete()
   .then(() => {
     return true;
   })
   .catch(err => {
     console.log("Error delete user", err);
-    return false;
   });
 }
 
@@ -87,7 +91,7 @@ export const deleteUser = (uid) => {
  * 
  * @param { string } uid
  * 
- * @returns { dogProfile } 
+ * @return { dogProfile } 
  *          {
  *            owner: string,
  *            name: string,
@@ -105,13 +109,12 @@ export const deleteUser = (uid) => {
  *            createdAt: date,
  *          }
  */
-export const getDogProfile = async (dogId) => {
-  return dogProfilesRef.where("id", "==", dogId).get()
-  // return dogProfilesRef.doc(dogId).get()
-  .then((data) => {
-    let result = null;
-    data.forEach((doc) => result = {...doc.data()});
-    return result; 
+export const getDogProfile = (dogId) => {
+  if(!dogId) return;
+
+  return dogProfilesRef.doc(dogId).get()
+  .then((doc) => {
+    return doc.data();
   })
   .catch(err => {
     console.log("Error get dog profile", err);
@@ -139,19 +142,20 @@ export const getDogProfile = async (dogId) => {
  *          createdAt: date,
  *        }
  *  
- * @returns {string / boolean} profile id if succeed otherwise false
+ * @return {string / boolean} profile id if succeed
  */
-export const createDogProfile = async (newDogProfile) => {
+export const createDogProfile = (newDogProfile) => {
+  if(!newDogProfile) return;
+
   return dogProfilesRef.add(newDogProfile)
   .then((doc) => {
     if(doc.id) {
-      updateDogProfileByProfileId(doc.id, {id: doc.id});
+      //updateDogProfileByProfileId(doc.id, {id: doc.id});
       return doc.id;
     }
   })
   .catch(err => {
     console.log("Error create or update dog profile", err);
-    return false;
   });
 }
 
@@ -179,16 +183,17 @@ export const createDogProfile = async (newDogProfile) => {
  *        }
  * key-value pair of dog profile properties that need to update 
  *
- * @returns {boolean} true if succeed otherwise false
+ * @return {boolean} true if succeed
  */
 export const updateDogProfileByProfileId = (profileId, updateProfile) => {
+  if(!profileId || !updateProfile) return;
+
   return dogProfilesRef.doc(profileId).update(updateProfile)
   .then(() => {
     return true;
   })
   .catch(err => {
     console.log("Error create or update dog profile", err);
-    return false
   });
 }
 
@@ -216,9 +221,11 @@ export const updateDogProfileByProfileId = (profileId, updateProfile) => {
  *        }
  * key-value pair of dog profile properties that need to update 
  *
- * @returns {boolean} true if succeed otherwise false
+ * @return {boolean} true if succeed 
  */
 export const updateDogProfileByUid = (uid, updateProfile) => {
+  if(!uid || !updateProfile) return;
+
   return dogProfilesRef.where("owner", "==", uid).get()
   .then((data) => {
     return data.forEach(doc => dogProfilesRef.doc(doc.id).update(updateProfile)
@@ -228,7 +235,6 @@ export const updateDogProfileByUid = (uid, updateProfile) => {
   })
   .catch(err => {
     console.log("Error create or update dog profile", err);
-    return false
   });
 }
 
@@ -237,16 +243,17 @@ export const updateDogProfileByUid = (uid, updateProfile) => {
  * 
  * @param { string } profileId
  * 
- * @returns { boolean } true if succeed otherwise false
+ * @return { boolean } true if succeed
  */
 export const deleteDogProfile = (profileId) => {
+  if(!profileId) return;
+
   return dogProfilesRef.doc(profileId).delete()
   .then(() => {
     return true;
   })
   .catch(err => {
     console.log("Error delete dog profile", err);
-    return false;
   });
 }
 
@@ -255,7 +262,7 @@ export const deleteDogProfile = (profileId) => {
  * 
  * @param { string } uid
  * 
- * @returns { walkerProfile } if exists
+ * @return { walkerProfile } if exists
  *          {
  *            uid: string,
  *            name: string,
@@ -274,13 +281,15 @@ export const deleteDogProfile = (profileId) => {
  *          }
  */
 export const getWalkerProfile = (uid) => {
+  if(!uid) return;
+
   return walkerProfilesRef.doc(uid).get()
   .then((doc) => {
     if(doc.exists) {
-        return doc.data();
-      } else{
-        console.log("not exist");
-      }
+      return doc.data();
+    } else{
+      console.log("not exist");
+    }
   })
   .catch(err => {
     console.log("Error get dog profile", err);
@@ -310,16 +319,17 @@ export const getWalkerProfile = (uid) => {
   *         createdAt: date,
   *       }
  *  
- * @returns { string / boolean } true if succeed otherwise false
+ * @return { string / boolean } true if succeed
  */
 export const setWalkerProfile = (walkerProfile) => {
+  if(!walkerProfile) return;
+
   return walkerProfilesRef.doc(walkerProfile.uid).set(walkerProfile)
   .then(() => {
     return true;
   })
   .catch(err => {
     console.log("Error create or update dog profile", err);
-    return false;
   });
 }
 
@@ -328,30 +338,35 @@ export const setWalkerProfile = (walkerProfile) => {
  * 
  * @param { string } uid
  * 
- * @returns { boolean } true if succeed otherwise false
+ * @return { boolean } true if succeed
  */
 export const deleteWalkerProfile = (uid) => {
+  if(!uid) return;
+
   return walkerProfilesRef.doc(uid).delete()
   .then(() => {
     return true;
   })
   .catch(err => {
     console.log("Error delete dog profile", err);
-    return false;
   });
 }
-
 
 /**
  * description: fetch all posts
  *  
- * @returns { array } true if succeed otherwise false
+ * @return { array }  [{id:postId, value:post}...] single post format refers to getPost
  */
 export const getAllPosts = () => {
-  return postsRef.get()
+  return postsRef.orderBy("createdAt", "asc").get()
   .then(querySnapshot => {
     let posts = [];
-    querySnapshot.forEach(doc => posts.push(doc.data()))
+    querySnapshot.forEach(doc => 
+                            posts.push({
+                              id: doc.id,
+                              value: doc.data()
+                            })
+                          )
     return posts;
   })
   .catch(err => {
@@ -363,14 +378,21 @@ export const getAllPosts = () => {
  * Description: fetch all posts by dog id
  * @param {string} dogId 
  * 
- * @returns {array} posts
- * list of post, format for single post refers to getPost
+ * @return {array} [{id:postId, value:post}...]  single post format refers to getPost
+ * 
  */
 export const getPostsByDogId = (dogId) => {
+  if(!dogId) return;
+
   return postsRef.where("dogId", "==", dogId).get()
   .then(querySnapshot => {
     let posts = [];
-    querySnapshot.forEach(doc => posts.push(doc.data()))
+    querySnapshot.forEach(doc => 
+                            posts.push({
+                              id: doc.id,
+                              value: doc.data()
+                            })
+                          )
     return posts;
   })
   .catch(err => {
@@ -383,7 +405,7 @@ export const getPostsByDogId = (dogId) => {
  * 
  * @param { string } postId 
  * 
- * @returns { post }
+ * @return { post }
  *          {
  *            dogId: string,
  *            name: string,
@@ -391,9 +413,11 @@ export const getPostsByDogId = (dogId) => {
  *            picsUrl: string,
  *            createAt: date,
  *            likes: array, - list of uid liked the post 
- *          }
+ *           }
  */
 export const getPost = (postId) => {
+  if(!postId) return;
+
   return postsRef.doc(postId).get()
     .then(doc => {
       if(doc.exists) {
@@ -420,9 +444,12 @@ export const getPost = (postId) => {
  *         }
  */
 export const createPost = (newPost) => {
+  if(!newPost) return;
+
   return postsRef.add(newPost) 
   .then(doc => {
-    return doc.id;
+    if(doc.exists) 
+      return doc.id;
   })
   .catch(err => {
     console.log("Error create the new post", err);
@@ -443,6 +470,8 @@ export const createPost = (newPost) => {
 *         }
  */
 export const updatePost = (postId, newPost) => {
+  if(!postId || !newPost) return;
+
   return postsRef.doc(postId).update(newPost)
   .then(() => {
     return true;
@@ -453,141 +482,509 @@ export const updatePost = (postId, newPost) => {
 }
 
 /**
+ * Description: like a post, push uid into likes array field of given post
  * 
- * @param {string} uid 
  * @param {string} postId 
+ * @param {string} uid 
  */
-export const likePost = (uid, postId) => {
+export const likePost = (postId, uid) => {
+  if(!postId || !uid) return;
+
   postsRef.doc(postId).update({likes: firestoreFieldValue.arrayUnion(uid)})
 }
 
 /**
+ * Description: unlike a post, remove uid from likes array field of given post
  * 
- * @param {string} uid 
  * @param {string} postId 
+ * @param {string} uid 
  */
-export const unlikePost = (uid, postId) => {
+export const unlikePost = (postId, uid) => {
+  if(!postId || !uid) return;
+
   postsRef.doc(postId).update({likes: firestoreFieldValue.arrayRemove(uid)})
 }
 
-export const request = (requestId, newRequest) => {
-  // if(requestId !== undefined) {
-  //   return requestsRef.doc(requestId).update(newRequest)
-  //   .then(doc => {
-  //     if(doc.exists) {
-  //       return doc.data();
-  //     }
-  //   })
-  //   .catch(err => {
-  //     console.log("Error update the post", err);
-  //   });
-  // } else {
-  //   return requestsRef.add(newRequest)
-  //   .then(doc => {
-  //     if(doc.exists) {
-  //       return doc.data();
-  //     }
-  //   })
-  //   .catch(err => {
-  //     console.log("Error create the new post", err);
-  //   });
-  // }
+/**
+ * 
+ * @param {request} newRequest 
+ *        {
+ *          owner: string, 
+ *          walker: string,
+ *          message: string,
+ *          status: string, (value options: active, declined, expired)
+ *          createdAt: date
+ *        }
+ * @return { string } id if operation succeed 
+ */
+export const createRequest = (newRequest) => {
+  if(!newRequest) return;
+
+  return requestsRef.add(newRequest)
+  .then(doc => {
+    if(doc.exists)
+      return doc.id;
+  })
+  .catch(err => {
+    console.log("Error create the new post", err);
+  });
 }
 
-export const getRequestReceived = (uid) => {
-  // return requestsRef.where("receiver", "==", uid).get()
-  // .then(querySnapshot => {
-  //   if(querySnapshot.length > 0)
-  //   return querySnapshot;
-  // })
-  // .catch(err => {
-  //   console.log("Error get user's received requests", err);
-  // });
+/**
+ * Description: get a request by request Id
+ * 
+ * @param {string} requestId 
+ *
+ * @return { boolean } true if succeed otherwise false
+ */
+export const getRequest = (requestId) => {
+  if(!requestId) return;
+
+  return requestsRef.doc(requestId).get()
+  .then((doc) => {
+    return doc.data();
+  })
+  .catch(err => {
+    console.log("Error get the request", err);
+    return false;
+  });
 }
 
-export const getRequestSent = (uid) => {
-  // return requestsRef.where("sender", "==", uid).get()
-  // .then(querySnapshot => {
-  //   if(querySnapshot.length > 0)
-  //   return querySnapshot;
-  // })
-  // .catch(err => {
-  //   console.log("Error get user's sent requests", err);
-  // });
+/**
+ * Description: update a request by request Id
+ * 
+ * @param {string} requestId 
+ * @param {request} newRequest 
+ *        {
+ *          owner: string, (optional)
+ *          walker: string, (optional)
+ *          message: string, (optional)
+ *          status: string, (optional)
+ *        }
+ * @return { boolean } true if succeed otherwise false
+ */
+export const updateRequest = (requestId, newRequest) => {
+  if(!requestId || !newRequest) return;
+
+  return requestsRef.doc(requestId).update(newRequest)
+  .then(() => {
+    return true;
+  })
+  .catch(err => {
+    console.log("Error update the post", err);
+    return false;
+  });
 }
 
+/**
+ * Description: fetch all requests an user received
+ * 
+ * @param { string } uid 
+ * 
+ * @return { array } [{id:requestId, value:request}...]
+ */
+export const getRequestsReceived = (uid) => {
+  if(!uid) return;
+  return requestsRef.where("owner", "==", uid).orderBy("timeStamp", "asc").get()
+  .then(querySnapshot => {
+    let requests = [];
+    querySnapshot.forEach(doc => 
+                          requests.push({
+                            id: doc.id, 
+                            value: doc.data()
+                          }))
+    return requests;
+  })
+  .catch(err => {
+    console.log("Error get user's received requests", err);
+  });
+}
+
+/**
+ * Description: fetch all requests an user sent
+ * 
+ * @param { string } uid 
+ * 
+ * @return { array } [{id:requestId, value:request}...]
+ */
+export const getRequestsSent = (uid) => {
+  if(!uid) return;
+
+  return requestsRef.where("walker", "==", uid).orderBy("timeStamp", "asc").get()
+  .then(querySnapshot => {
+    let requests = [];
+    querySnapshot.forEach(doc => 
+                          requests.push({
+                            id: doc.id,
+                            value: doc.data()
+                          }))
+    return requests;
+  })
+  .catch(err => {
+    console.log("Error get user's sent requests", err);
+  });
+}
+
+/**
+ * Description: create a new event
+ * 
+ * @param {event} newEvent 
+ *        {
+ *          organizer: "string",
+ *          name: "string", - location name
+ *          address: "string",
+ *          city: "string",
+ *          postalCode:"string",
+ *          startTime": "string",
+ *          endTime: "string",
+ *          date: "date",
+ *          createdAt: "date",
+ *          pictureUrl: "string",
+ *          status:"string",
+ *          details: "string",
+ *          participants: "array", - list of uids who is interested
+ *        }
+ * 
+ * @return {string} id - new event id
+ * 
+ */
+export const createEvent = (newEvent) => {
+  if(!newEvent) return;
+  return eventsRef.add(newEvent)
+    .then(doc => {
+      if(doc.id)
+        return doc.id;
+    })
+    .catch(err => {
+      console.log("Error create a new event", err);
+    });
+}
+
+/**
+ * Description: fetch an event by eventId
+ * 
+ * @param { string } eventId 
+ * 
+ * @return { event } event 
+ *        {
+ *          organizer: "string",
+ *          name: "string", - location name
+ *          address: "string",
+ *          city: "string",
+ *          postalCode:"string",
+ *          startTime": "string",
+ *          endTime: "string",
+ *          date: "date",
+ *          createdAt: "date",
+ *          pictureUrl: "string",
+ *          status:"string",
+ *          details: "string",
+ *          participants: "array", - list of uids who is interested
+ *        }
+ */
+export const getEvent = (eventId) => {
+  if(!eventId) return;
+
+  return eventsRef.doc(eventId).get()
+    .then(doc => {
+      // if(doc.exists) {
+        return doc.data();
+      // } 
+    })
+    .catch(err => {
+      console.log("Error to get the event", err);
+    });
+}
+
+/**
+ * Description: fetch all events
+ * 
+ * @return { array } [{id: eventId, value: event}...]
+ */
 export const getAllEvents = () => {
-  // return eventsRef.get()
-  // .then(querySnapshot => {
-  //   if(querySnapshot.length > 0)
-  //   return querySnapshot;
-  // })
-  // .catch(err => {
-  //   console.log("Error get all events", err);
-  // });
+  return eventsRef.orderBy("createdAt", "asc").get()
+  .then(querySnapshot => {
+    let events = [];
+    querySnapshot.forEach(doc => 
+                          events.push({
+                            id: doc.id, 
+                            value: doc.data()}));
+    return events;
+  })
+  .catch(err => {
+    console.log("Error get all events", err);
+  });
 }
 
-export const event = (eventId, newEvent) => {
-//   if(eventId !== undefined && newEvent !== undefined ) { // update an existing post
-//     return postsRef.doc(eventId).update(newEvent)
-//     .then(doc => {
-//       if(doc.exists) {
-//         return doc.data();
-//       } 
-//     })
-//     .catch(err => {
-//       console.log("Error update the post", err);
-//       return;
-//     });
-//   } else if (eventId !== undefined) { // get a event by eventId
-//     return postsRef.doc(eventId).get()
-//     .then(doc => {
-//       if(doc.exists) {
-//         return doc.data();
-//       } 
-//     })
-//     .catch(err => {
-//       console.log("Error to get the post", err);
-//       return;
-//     });
-//   } else {
-//     return postsRef.add(newEvent) // create a new event
-//     .then(doc => {
-//       if(doc.exists) {
-//         return doc.data();
-//       }
-//     })
-//     .catch(err => {
-//       console.log("Error create the new post", err);
-//     });
-//   }
-// }
+/**
+ * 
+ * @param { string } eventId 
+ * @param { event } updateEvent 
+ *        {
+ *          organizer: "string", (optional)
+ *          name: "string", (optional)
+ *          address: "string", (optional)
+ *          city: "string", (optional)
+ *          postalCode:"string", (optional)
+ *          startTime": "string", (optional)
+ *          endTime: "string", (optional)
+ *          date: "date", (optional)
+ *          pictureUrl: "string", (optional)
+ *          status:"string", (optional)
+ *          details: "string", (optional)
+ *          participants: "array",  (optional)
+ *        }
+ * 
+ * @return { boolean } true if succeed otherwise false
+ */
+export const updateEvent = (eventId, newEvent) => {
+  if(!eventId || !newEvent) return;
 
-// export const getAllChannelsByUid = (uid) => {
-//   return usersRef.where("receiver", "==", uid || "sender", "==", uid).get()
-//   .then(querySnapshot => {
-//     if(querySnapshot.length > 0)
-//     return querySnapshot;
-//   })
-//   .catch(err => {
-//     console.log("Error get all events", err);
-//   });
+  return eventsRef.doc(eventId).update(newEvent)
+  .then(() => {
+    return true;
+  })
+  .catch(err => {
+    console.log("Error to update the event", err);
+    return false;
+  });
 }
 
-export const channel = (channelId) => {
-  // if(channelId.exists) {
-  //   return 
-  // }
+/**
+ * Description: mark interested of an event, push uid into participants array field of given event
+ * 
+ * @param { string } eventId 
+ * @param { string } uid 
+ */
+export const markEvent = (eventId, uid) => {
+  if(!eventId || !uid) return;
+  eventsRef.doc(eventId).update({participants: firestoreFieldValue.arrayUnion(uid)})
 }
-export const getChannelByUid = (uid) => {
-  // return channelsRef.where("receiver", "==", uid || "sender", "==", uid).get()
-  // .then(querySnapshot => {
-  //   if(querySnapshot.length > 0)
-  //   return querySnapshot;
-  // })
-  // .catch(err => {
-  //   console.log("Error get all events", err);
-  // });
+
+/**
+ * Description: unmark interested of an event, remove uid into participants array field of given event
+ * 
+ * @param { string } eventId 
+ * @param { string } uid 
+ */
+export const unmarkEvent = (eventId, uid) => {
+  if(!eventId || !uid) return;
+  eventsRef.doc(eventId).update({participants: firestoreFieldValue.arrayRemove(uid)})
+}
+
+/**
+ * Description: Create a channel and insert the first message
+ * 
+ * @param { channel } newChannel 
+ *        {
+ *          user1: "string", -uid
+ *          user2: "string", -uid
+ *          createdAt: "date",
+ *        }
+ * @param { message } firstMessage 
+ *        {
+ *          sender: "string", -uid
+ *          message: "string",
+ *          timeStamp: "date",
+ *        }
+ * @return { string } channelId
+ */
+export const createChannel = (newChannel, firstMessage) => {
+  if(!newChannel || !firstMessage) return;
+
+  const chRef = channelsRef.doc();
+  batch.set(chRef, newChannel);
+  const msgRef = chRef.collection("messages").doc();
+  batch.set(msgRef, firstMessage);
+  const user1Ref = usersRef.doc(newChannel.user1);
+  const user2Ref = usersRef.doc(newChannel.user2);
+  batch.update(user1Ref, {"channels": firestoreFieldValue.arrayUnion(chRef.id)});
+  batch.update(user2Ref, {"channels": firestoreFieldValue.arrayUnion(chRef.id)});
+  return batch.commit()
+  .then(() => {
+    return chRef.id;
+  })
+  .catch((err) => {
+    console.log("Error", err);
+  })
+};
+
+/**
+ * Description: insert a message into given channel
+ * 
+ * @param { string } channelId 
+ * @param { message } message 
+ *        {
+ *          sender: "string", -uid
+ *          message: "string",
+ *          timeStamp: "date",
+ *        }
+ * @return { string } messageId if succeed
+ */
+export const createMessage = (channelId, message) => {
+  if(!channelId || !message) return;
+  
+  return channelsRef.doc(channelId).collection("messages").add(message)
+  .then((doc) => {return doc.id})
+  .catch(err => {
+    console.log("Error create message", err);
+  });
+};
+
+/**
+ * Description: update a message by given channel id and message id
+ * 
+ * @param { string } channelId 
+ * @param { string } messageId 
+ * 
+ * @return true if succeed
+ */
+export const updateMessage = (channelId, messageId, newMessage) => {
+  if(!channelsId || !messageId || !newMessage) return;
+
+  return channelsRef.doc(channelId).collection("messages").doc(messageId).update(newMessage)
+  .then(() => {return true;})
+  .catch(err => {
+    console.log("Error update message", err);
+  })
+}
+
+/**
+ * Description: fetch messages of a given channel
+ * 
+ * @param { string } channelId 
+ * @param { int } maxMsg (optional) when absent, return all messages in the channel
+ * 
+ * @return { array } [{id: messageId, message: message}...] - list of message objects, format refers to createMessage
+ */
+export const getMessagesByChannelId = (channelId, maxMsg) => {
+  if (!channelId) return;
+
+  let ref;
+  if(maxMsg) {
+    ref = channelsRef.doc(channelId).collection("messages").orderBy("createdAt", "asc").limit(maxMsg);
+  } else {
+    ref = channelsRef.doc(channelId).collection("messages").orderBy("createdAt", "asc");
+  }
+  return ref.get()
+  .then(querySnapshot => {
+    let messages = [];
+    querySnapshot.forEach(doc => 
+                            messages.push({
+                              id: doc.id,
+                              message: doc.data()
+                            })
+                          )
+    return messages;
+  })
+  .catch(err => {
+    console.log("Error to read message", err);
+  })
+}
+/**
+ * Description: 
+ * 
+ * @param { string } uid
+ * @param { int } maxMsg (optional)
+ * 
+ * @return { array } [{id: channelId, channel: [{id: messageId, message: message}...]}...] 
+ * single message format refers to createMessage
+ */
+export const getAllChannelsByUid = (uid, maxMsg) => {
+  if(!uid) return;
+
+  return usersRef.doc(uid).get()
+  .then(async doc => {
+    let channels = [];
+    const user = doc.data();
+    for( const channelId of user.channels) {
+      if(channelId) {
+        const channel = await getMessagesByChannelId(channelId, maxMsg);
+        channels.push({
+                        id: channelId, 
+                        channel:channel
+                      });
+      }
+    }
+    return channels;
+  })
+  .catch(err => {
+    console.log("Error get all events", err);
+  });
+}
+
+/**
+ * Description: create a review for a given user
+ * 
+ * @param { string } uid - receiver's uid
+ * @param { review } newReview 
+ *        {
+ *          sender: "string", - sender's uid
+ *          stars: "int",
+ *          review: "string",
+ *          createdAt: "date"
+ *        }
+ * 
+ * @return { string } reviewId if succeed
+ */
+export const createReview = (uid, newReview) => {
+  if(!uid || !newReview) return;
+
+  return usersRef.doc(uid).collection("reviews").add(newReview)
+  .then((doc) => {
+    if(doc) return doc.id})
+  .catch(err => {
+    console.log("Error create review", err);
+  });
+}
+
+/**
+ * Description: create a review for a given user
+ * 
+ * @param { string } uid - receiver's uid
+ * @param { review } newReview 
+ *        {
+ *          sender: "string", (optional)
+ *          stars: "int", (optional)
+ *          review: "string", (optional)
+ *          createAt: "date" (optional)
+ *        }
+ * 
+ * @return { boolean } true if succeed
+ */
+export const updateReview = (uid, reviewId, newReview) => {
+  if(!uid || !reviewId || !newReview) return;
+
+  return usersRef.doc(uid).collection("reviews").doc(reviewId).update(newReview)
+  .then(() => {return true})
+  .catch(err => {
+    console.log("Error update review", err);
+  });
+}
+
+/**
+ * Description: fetch reviews received by a given uid
+ * 
+ * @param { string } uid 
+ * 
+ * @return { array } [{id: reviewId, value: review}] review format refers to createReview
+ */
+export const getReviewsByUid = (uid) => {
+  if (!uid) return;
+  return usersRef.doc(uid).collection("reviews").orderBy("createdAt", "asc").get()
+  .then(querySnapshot => {
+    let reviews = [];
+    querySnapshot.forEach(doc => 
+                            reviews.push({
+                              id: doc.id,
+                              value: doc.data()
+                            })
+                          );
+    return reviews;
+  })
+  .catch(err => {
+    console.log("Error to read message", err);
+  })
 }
 
 export const uploadImageAsync = async (uri) => {
@@ -611,7 +1008,7 @@ export const uploadImageAsync = async (uri) => {
     .child(`postImages/${name}`);
   const snapshot = await ref.put(blob);
 
-  // We're done with the blob, close and release it
+  // close and release blob
   blob.close();
 
   return await snapshot.ref.getDownloadURL();

@@ -7,7 +7,7 @@ export const uids = {
   uid6: "Ynu0mD8lTvQDH85orbcglhe3elf2",
   uid7: "uyu0nD8lTvQDH85orbcglhe3elf2",
   uid8: "Ynu0mD8lTvQDH99orbcglhe3elf2",
-  uid9: "boUizOwXY4SzXYGhLtFPguDTfQC3",
+  uid9: "eCx3sm3nJPVO4SEYLpyhIaKXIl33",
   uid10: "ddUizOwXY4SzXYGhLtFPguDTfQC3"
 };
 
@@ -51,7 +51,27 @@ export const users = {
     username: "Jarry",
     email: "test4@example.ca",
     createdAt: new Date(2020, 10, 10)
+  },
+  uid8: {
+    uid: uids.uid8,
+    username:"Bob",
+    email:"bobfake@gmail.com",
+    createAt: new Date(2020, 9, 10)
+  },
+  uid9:{
+    uid: uids.uid9,
+    username:"Josh",
+    email:"joshtester2222@gmail.com",
+    createAt: new Date(2020, 10, 8)
+  },
+  uid10:{
+    uid: uids.uid10,
+    username:"Katy",
+    email:"katyfake@gmail.com",
+    channels:[],
+    createAt: new Date(2020, 7, 7)
   }
+
 };
 
 export const dogProfiles = {
@@ -345,74 +365,148 @@ export const posts ={
   }
 };
 
-export const channels = {
-  ch1: {
-    user1: uids.uid9,
-    user2: uids.uid1,
-    createdAt: new Date(2019, 12, 10)
-  },
-  ch2: {
-    user1: uids.uid10,
-    user2: uids.uid2,
-    createdAt: new Date(2020, 3, 12)
-  }
-};
-
 export const requests = {
   req1:
   {
     owner: uids.uid1,
     walker: uids.uid9,
-    message:"Cute pup! I want to walk him/her!",
-    timeStamp: new Date(),
+    message:"Cute puppy! I want to walk him/her!",
+    timeStamp: new Date(2020, 4, 15),
+    status:"active"
+  },
+  req2:
+  {
+    owner: uids.uid1,
+    walker: uids.uid8,
+    message:"So cute, please let me take a walk with him/her!",
+    timeStamp: new Date(2020, 6, 10),
+    status:"declined"
+  },
+  req3:
+  {
+    owner: uids.uid2,
+    walker: uids.uid9,
+    message:"Cute puppy! I want to walk him/her!",
+    timeStamp: new Date(2020, 3, 15),
+    status:"active"
+  },
+  req4:
+  {
+    owner: uids.uid1,
+    walker: uids.uid9,
+    message:"Great experience! may I request for another walk",
+    timeStamp: new Date(2020, 6, 15),
     status:"active"
   },
 }
 
+export const events = {
+  event1:
+  {
+    organizer: uids.uid1,
+    name: "Rocky Point Park",
+    address: "2800 Murray St",
+    city: "Port Moody",
+    postalCode:"V3H 1X2",
+    startTime: "2:00pm",
+    endTime: "3:00pm",
+    date: new Date(2020, 11, 15),
+    createdAt: new Date(2020, 10, 3),
+    pictureUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/eventsImages%2Frocky_point_park.jpg?alt=media&token=5e6c2658-c0ec-4b1d-bed1-e1623affb846",
+    status:"active",
+    details: "",
+    participants: []
+  },
+  
+  event2:
+  {
+    organizer: uids.uid2,
+    name: "Queen Elizabeth Dog Park",
+    address: "4600 Cambie St",
+    city: "Vancouver",
+    postalCode:"V5Z 2Z1",
+    startTime: "12:00pm",
+    endTime: "3:00pm",
+    date: new Date(2020, 11, 10),
+    pictureUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/eventsImages%2Fqueen_elizabeth.jpg?alt=media&token=240a187b-1b95-4dc8-9c79-8cefdfab3c16",
+    status:"active",
+    details: "",
+    participants: [],
+    createdAt: new Date(2020, 10, 10),
+  },
+  event3:
+  {
+    organizer: uids.uid3,
+    name: "Derby Reach Regional Park",
+    address: "21801 Allard Crescent",
+    city: "Langley",
+    postalCode:"V1M 3W1",
+    startTime: "2:00pm",
+    endTime: "3:00pm",
+    date: new Date(2020, 11, 10),
+    pictureUrl: "https://firebasestorage.googleapis.com/v0/b/walk-dccd4.appspot.com/o/eventsImages%2Fderby_park.jpg?alt=media&token=2e80697a-7360-4d2f-92d8-9f11db319024",
+    status:"active",
+    details: "",
+    participants: [],
+    createdAt: new Date(2020, 11, 3),
+  }
+}
+
+export const channels = {
+  ch1: {
+    user1: uids.uid9,
+    user2: uids.uid1,
+    createdAt: new Date(2020, 10, 25)
+  },
+  ch2: {
+    user1: uids.uid10,
+    user2: uids.uid2,
+    createdAt: new Date(2020, 9, 12)
+  }
+};
 
 export const messages = 
 {
   msg1: {
-    channelId:"",
     sender: uids.uid9,
     message: "Hello, your dog's so cute! I'd like to walk your dog",
-    timeStamp: new Date(),
+    createdAt: new Date("2020-10-25T12:00:00Z"),
   },
   msg2: {
-    channelId: "",
     sender: uids.uid1,
     message: "Hi, thank you. I'm glad you like my boy",
-    timeStamp: new Date(),
+    createdAt: new Date("2020-10-25T12:01:00Z"),
   },
   msg3: {
-    channelId:"",
     sender: uids.uid9,
     message: "When is it convenient for you?",
-    timeStamp: new Date(),
+    createdAt: new Date("2020-10-25T12:02:00Z"),
   },
   msg4: {
-    channelId:"",
     sender: uids.uid9,
     message: "I'm available every day after 7pm",
-    timeStamp: new Date(),
+    createdAt: new Date("2020-10-25T12:03:00Z"),
   },
   msg5: {
-    channelId: "",
     sender: uids.uid1,
-    message: "I'll be back",
-    timeStamp: new Date(),
+    message: "I'm a little busy now, I'll get back to you soon",
+    createdAt: new Date("2020-10-25T12:05:00Z"),
   },
 }
 
-export const events =
-  {
-    organizer: uids.uid1,
-    address: "21801 Allard Crescent",
-    city: "Langley",
-    startTime: "1:00pm",
-    endTime: "3:00pm",
-    date: new Date("November 10, 2020"),
-    timeStamp: new Date(),
-    picture: "pic.jpg"
+export const reviews = {
+  rv1: {
+    sender: uids.uid1,
+    stars: 5,
+    review: "Josh is very friendly, he is definitely a dog lover.",
+    createdAt: new Date(2020, 10, 8)
+  },
+  rv2: {
+    sender: uids.uid2,
+    stars: 5,
+    review: "Lucky to have Josh help walking my dog, nice guy.",
+    createdAt: new Date(2020, 10, 15)
   }
+}
+
 

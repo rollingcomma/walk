@@ -2,7 +2,8 @@
 //           "CFBundleURLSchemes": ["fb2719816824957835"]
 //         }]
 //         }
-
+//email: joshtester2222@gmail.com
+//pw: tester1234..
 
 import React from 'react';
 import {

@@ -1,0 +1,100 @@
+{
+  "users":
+  {
+    "uid": "string",
+    "username": "string",
+    "email": "string",
+    "createdAt": "date",
+    "channels": []
+  },
+  "dogProfiles":
+  {
+    "owner": "string",
+    "name": "string",
+    "photoUrl": "string",
+    "age": "int",
+    "breed": "string",
+    "bio": "string",
+    "likes": "array",
+    "dislikes": "array",
+    "phone": "string",
+    "province": "string",
+    "city": "string",
+    "address": "string",
+    "postalCode": "string",
+    "createdAt": "date"
+  },
+  "walkerProfiles":
+  {
+    "uid": "string",
+    "name": "string",
+    "age": "int",
+    "photoUrl": "string",
+    "bio": "string",
+    "phone": "string",
+    "province": "string",
+    "country": "string",
+    "address": "string",
+    "postalCode": "string",
+    "birthday": "date",
+    "emergencyContactPerson": "string",
+    "emergencyContactTel": "string",
+    "createdAt": "date"
+  },
+  "posts":
+  {
+    "dogId": "string",
+    "name": "string",
+    "avatarUrl": "string",
+    "picsUrl": "string",
+    "createAt": "date",
+    "likes": "array"
+  },
+  "requests":
+  {
+    "owner": "string", 
+    "walker": "string",
+    "message": "string",
+    "status": "string", 
+    "createdAt": "date"
+  },
+  "events": 
+  {
+    "organizer": "string",
+    "name": "string",
+    "address": "string",
+    "city": "string",
+    "postalCode":"string",
+    "startTime": "string",
+    "endTime": "string",
+    "date": "date",
+    "createdAt": "date",
+    "pictureUrl": "string",
+    "status":"string",
+    "details": "string",
+    "participants": "array"
+  },
+  "channels":
+  {
+    "user1": "string",
+    "user2": "string",
+    "createdAt": "date",
+    "messages":
+    {
+      "message": {
+        "sender": "string",
+        "message": "string",
+        "createdAt": "date"
+      }
+    }
+  },
+  
+  "reviews":
+  {
+    "sender": "string",
+    "receiver": "string",
+    "stars": "int",
+    "review": "string",
+    "createdAt": "date"
+  }
+}
