@@ -61,7 +61,7 @@ export default App= () => {
       const result = await getReviewsByUid(uids.uid9);
       console.log(result);
   }
-  //getAllMessagesByChannelId("yHaVVNT7ItVrypOdE31V")
+  
   return (
     <Screen>
       <AppButton title="add data" onPress={async() => await testDb()}/>
