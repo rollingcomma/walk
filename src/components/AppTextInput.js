@@ -4,7 +4,7 @@ import {
   StyleSheet, 
   View, 
   TextInput } from 'react-native';
-import { AppText } from './index1';
+import AppText from './AppText';
 
 
 export default AppTextInput = ({

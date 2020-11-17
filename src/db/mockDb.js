@@ -12,16 +12,25 @@ export const uids = {
 };
 
 export const users = {
+  uid1: {
+    uid:uids.uid1,
+    username: "Sherlyn",
+    email:"shallowgrass@gmail.com",
+    type:"dog owner",
+    createAt: new Date(),
+  },
   uid2: {
     uid:uids.uid2,
     username: "Alex",
     email:"shallowgrass@gmail.com",
+    type:"dog owner",
     createAt: new Date(),
   },
   uid3: {
     uid: uids.uid3,
     username: "Lucy",
     email:"test@gmail.com",
+    type:"dog owner",
     createAt: new Date(2019, 12, 15),
   },
   uid4:
@@ -56,18 +65,21 @@ export const users = {
     uid: uids.uid8,
     username:"Bob",
     email:"bobfake@gmail.com",
+    type:"walker",
     createAt: new Date(2020, 9, 10)
   },
   uid9:{
     uid: uids.uid9,
     username:"Josh",
     email:"joshtester2222@gmail.com",
+    type:"walker",
     createAt: new Date(2020, 10, 8)
   },
   uid10:{
     uid: uids.uid10,
     username:"Katy",
     email:"katyfake@gmail.com",
+    type:"walker",
     channels:[],
     createAt: new Date(2020, 7, 7)
   }

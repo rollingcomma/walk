@@ -1,22 +1,22 @@
 import React from 'react';
 import { StyleSheet,  View, Image, ScrollView } from 'react-native';
 import { Formik } from 'formik';
-import {
-  Screen,
-  AppButton,
-  AppLabeledTextInput,
-  AppMultiTextInput,
-  Separator,
-  AppText,
-  Heading
-} from '../components';
-// import Screen from '../components/Screen';
-// import AppTextInput from '../components/AppLabeledTextInput';
-// import AppMultiTextInput from '../components/AppMultiTextInput';
-// import AppButton from '../components/AppButton';
-// import Separator from '../components/Separator';
-// import AppText from '../components/AppText';
-// import Heading from '../components/Heading';
+// import {
+//   Screen,
+//   AppButton,
+//   AppLabeledTextInput,
+//   AppMultiTextInput,
+//   Separator,
+//   AppText,
+//   Heading
+// } from '../components/';
+import Screen from '../components/Screen';
+import AppLabeledTextInput from '../components/AppLabeledTextInput';
+import AppMultiTextInput from '../components/AppMultiTextInput';
+import AppButton from '../components/AppButton';
+import Separator from '../components/Separator';
+import AppText from '../components/AppText';
+import Heading from '../components/Heading';
 import colors from '../styles/colors';
 import { dogProfile } from "../db/DBUtils";
 

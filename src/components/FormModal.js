@@ -6,13 +6,13 @@ import {
   StyleSheet, 
   View, 
   Modal } from 'react-native';
-import {
-  Heading,
-  AppTextInput 
-} from './index1';
+// import {
+//   Heading,
+//   AppTextInput 
+// } from '.';
 // import AppButton from './AppButton';
-// import Heading from './Heading';
-// import AppTextInput from './AppLabeledTextInput';
+import Heading from './Heading';
+import AppTextInput from './AppTextInput';
 
 export default FormModal = ({
   modalVisible,

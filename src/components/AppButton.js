@@ -3,7 +3,7 @@ import React from 'react';
 import { 
   TouchableOpacity, 
   ActivityIndicator } from 'react-native';
-import {AppText} from './index1';
+import AppText from './AppText';
 
 export default AppButton = ({
   title,

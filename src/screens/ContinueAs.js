@@ -4,7 +4,7 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import { auth, firestore, googleProvider, facebookProvider } from '../db/firebase';
 import { findUser } from '../db/DBUtils'
 
-export default Types = ({ navigation }) => {
+export default ContinueAs = ({ navigation }) => {
   return (
     <View >
       <Button 

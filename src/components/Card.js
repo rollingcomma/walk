@@ -5,16 +5,16 @@ import {
   StyleSheet, 
   View, 
   Image } from 'react-native';
-import {
-  AppButton,
-  FormModal,
-  Avatar,
-  Heading
-} from './index1'
-// import AppButton from './AppButton';
-// import FormModal from './FormModal';
-// import ProfileImage from './Avatar';
-// import Heading from './Heading';
+// import {
+//   AppButton,
+//   FormModal,
+//   Avatar,
+//   Heading
+// } from '.'
+import AppButton from './AppButton';
+import FormModal from './FormModal';
+import Avatar from './Avatar';
+import Heading from './Heading';
 
 
 export default Card = ({

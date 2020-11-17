@@ -1,10 +1,20 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-
+import React from "react";
+import { Container, Tab, Tabs } from "native-base";
+import  Request from "./Request";
+import MessageBox from "./MessageBox"
 export default Inbox = () => {
   return(
-    <View>
-      <Text> Placeholder for Inbox </Text>
-    </View>
+    <Container>
+      <Tabs>
+        <Tab
+          heading="Messages">
+          <MessageBox />
+        </Tab>
+        <Tab
+          heading="Requests">
+          <Request />
+        </Tab>
+      </Tabs>
+    </Container>
   )
 }

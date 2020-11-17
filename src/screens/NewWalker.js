@@ -1,20 +1,20 @@
 import React from 'react';
 import { StyleSheet, View, Image, ScrollView} from 'react-native';
 import { Formik } from 'formik';
-import {
-  Screen,
-  AppButton,
-  AppLabeledTextInput,
-  Separator,
-  AppText,
-  Heading
-} from '../components';
-// import Screen from '../components/Screen'; 
-// import AppTextInput from '../components/AppLabeledTextInput';
-// import AppButton from '../components/AppButton';
-// import Separator from '../components/Separator';
-// import Heading from '../components/Heading';
-// import AppText from '../components/AppText';
+// import {
+//   Screen,
+//   AppButton,
+//   AppLabeledTextInput,
+//   Separator,
+//   AppText,
+//   Heading
+// } from '../components/';
+import Screen from '../components/Screen'; 
+import AppLabeledTextInput from '../components/AppLabeledTextInput';
+import AppButton from '../components/AppButton';
+import Separator from '../components/Separator';
+import Heading from '../components/Heading';
+import AppText from '../components/AppText';
 import { walkerProfile } from "../db/DBUtils";
 import colors from "../styles/colors";
 

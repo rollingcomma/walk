@@ -32,8 +32,7 @@
       "config":{
         "googleSignIn": {
           "reversedClientId": "com.googleusercontent.apps.855049434388-lg44s04igmic2jh4bl3ud1iq4ne3np4m"
-        },
-        "googleMapsApiKey":"KEY"
+        }
       },
       "googleServicesFile": "./GoogleService-Info.plist"
     },
@@ -43,11 +42,6 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      },
-      "config": {
-        "googleMaps": {
-          "apiKey":"Your_API_KEY"
-        }
       }
     },
     "web": {

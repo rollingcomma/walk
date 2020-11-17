@@ -12,5 +12,4 @@ export { default as MsgIcon } from './MsgIcon';
 export { default as Avatar } from './Avatar';
 export { default as Screen } from './Screen';
 export { default as Separator } from './Separator';
-
- 
+export { default as Map } from './Map';
