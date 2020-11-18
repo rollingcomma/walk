@@ -6,6 +6,7 @@ import ChatChannel from "../screens/ChatChannel";
 import Inbox from "../screens/Inbox";
 import DashboardOwner from "../screens/DashboardOwner";
 import DashboardWalker from "../screens/DashboardWalker";
+import WalkerDashPage from '../Pages/WalkerDashPage';
 const Stack = createStackNavigator();
 
 export default InboxNavigator = () => {
@@ -30,7 +31,7 @@ export default InboxNavigator = () => {
       :
         <Stack.Screen 
           name="Dashboard"
-          component={DashboardWalker}
+          component={WalkerDashPage}
           options={{title:"Walker"}}
         />
       }

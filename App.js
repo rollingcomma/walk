@@ -13,10 +13,7 @@ export default App= () => {
   const [userState] = useUserState();
     return (
     <UserStateProvider>
-      
       <Screen>
-        {/* <Text>hello</Text> */}
-      {/* <AppButton title="add data" onPress={async() => await testDb()}/> */}
         <NavigationContainer>
           {userState? <AppNavigator />: <AuthNavigator /> } 
         </NavigationContainer>

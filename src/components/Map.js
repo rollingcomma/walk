@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import MapView , { Marker } from 'react-native-maps';
-import { StyleSheet, Text, Dimensions, Image } from 'react-native';
+import { StyleSheet, Dimensions, Image } from 'react-native';
 
 export default function Map() {
   const initialRegion = {
@@ -12,7 +12,6 @@ export default function Map() {
   const [region, setRegion] = useState(initialRegion);
 
     return (
-      // <Text>Map test</Text>
       <MapView 
         style={styles.mapStyle}
         region={region}>
@@ -30,11 +29,11 @@ export default function Map() {
     );
 }
 
-// image={require("../../assets/paw.png")}
-// onRegionChangeComplete={region => setRegion(region) }
 const styles = StyleSheet.create({
   mapStyle: {
+  //  flex: 1,
+  //  alignItems: "center"
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    height: (Dimensions.get('window').height)/2.2,
   },
 });

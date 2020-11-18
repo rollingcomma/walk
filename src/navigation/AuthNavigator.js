@@ -5,6 +5,8 @@ import Login from "../screens/Login";
 import ContinueAs from "../screens/ContinueAs";
 import NewOwner from "../screens/NewOwner";
 import NewWalker from "../screens/NewWalker";
+import SignIn from "../Pages/SignIn";
+import ContinueAsPage from "../Pages/ContinueAsPage";
 
 const Stack = createStackNavigator();
 
@@ -13,11 +15,11 @@ export default AuthNavigator = () => {
     <Stack.Navigator>
         <Stack.Screen
           name="Welcome"
-          component={Login}
+          component={SignIn}
           options={{headerShown: false}} />
         <Stack.Screen 
           name="ContinueAs"
-          component={ContinueAs}
+          component={ContinueAsPage}
           options={{title:"continue as"}}
         />
         <Stack.Screen 
