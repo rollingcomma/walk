@@ -37,16 +37,16 @@ const WalkerDashPage = ({}) => {
   return (
       <View style={styles.app}>
         <ScrollView>
-            {/* <TopBar title="Dashboard" /> */}
+            
           <View style={styles.container}>
-            <MapPlaceholder />
+            <MapPlaceholder text="Return Address"/>
             <View style={styles.dashcont}>
               <DashDog/>
               <DashOwner/>
             </View>
           </View>
         </ScrollView>
-        {/* <FooterBar/> */}
+        
       </View>
   );
 };

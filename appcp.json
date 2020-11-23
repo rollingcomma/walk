@@ -17,6 +17,7 @@
       "**/*"
     ],
     "facebookScheme": "fb2719816824957835",
+    "facebookAppID": "2719816824957835",
     "facebookDisplayName": "Walk",
     "ios": {
       "bundleIdentifier": "host.exp.Exponent",
@@ -27,6 +28,11 @@
           "location",
           "fetch"
         ]
+      },
+      "config":{
+        "googleSignIn": {
+          "reversedClientId": "com.googleusercontent.apps.855049434388-lg44s04igmic2jh4bl3ud1iq4ne3np4m"
+        }
       },
       "googleServicesFile": "./GoogleService-Info.plist"
     },

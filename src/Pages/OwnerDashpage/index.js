@@ -38,15 +38,14 @@ const OwnerDashPage = ({}) => {
   return (
       <View style={styles.app}>
         <ScrollView>
-            {/* <TopBar title="Dashboard" /> */}
+            
           <View style={styles.container}>
-            <MapPlaceholder text="Return Address"/>
+            <MapPlaceholder text="Walker Location"/>
             <View style={styles.dashcont}>
               <WalkerProfile/>
             </View>
           </View>
         </ScrollView>
-        {/* <FooterBar/> */}
       </View>
   );
 };
