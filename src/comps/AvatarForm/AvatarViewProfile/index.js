@@ -31,13 +31,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const AvatarViewProfile = ({textName,  text}) => {
+const AvatarViewProfile = ({textName,  text, onPress}) => {
   
   return (
       <View style={styles.container}>
         <View style={styles.textcont}>
             <Text style={styles.text1}>{textName}</Text>
-            <Text style={styles.text2}>View Profile</Text>
+            <Text style={styles.text2} onPress={onPress}>View Profile</Text>
             <Text style={styles.text3}>{text}</Text>
         </View>
         <View>

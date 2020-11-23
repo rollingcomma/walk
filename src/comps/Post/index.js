@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/native";
-import { View, Text} from "react-native";
+import { View, Text, StyleSheet, onPress, TouchableOpacity} from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import  colors  from '../../styles/colors';
+import BasicAvatar from "../Avatar/BasicAvatar";
+import Popup from "../Popup"
 
 const MainCont = styled.View`
-  width:375px;
+  /* width:375px; */
   height:415px;
   display:flex;
   flex-direction:column;
@@ -11,27 +15,24 @@ const MainCont = styled.View`
   padding-top:30px;
 `;
 const Header = styled.View`
-  width:375px;
   height:53px;
-  /* background-color:#DBD; */
-  display:flex;
   flex-direction:row;
+  align-items:center;
+  margin-bottom:10px;
+  margin-top:10px;
 `;
 const ProfilePic = styled.View`
   flex:1;
   display:flex;
-  align-items:center;
-  /* background-color:#CBD; */
   justify-content:center;
 `;
 
 const ProfileName = styled.View`
   flex:5;
-  /* background-color:#DBB; */
   display:flex;
   flex-direction:column;
   padding-left:8px;
-  justify-content:space-evenly;
+  height:40px;
 `;
 const NameText = styled.Text`
   font-style: normal;
@@ -39,58 +40,41 @@ const NameText = styled.Text`
   font-size: 22px;
 `;
 const ViewProfile = styled.Text`
-  font-style: normal;
-  font-weight: normal;
   font-size: 10px;
   color: #53B7BE;
 `;
 const Time = styled.Text`
   flex:1;
-  /* background-color:#CCD; */
-  font-style: normal;
-  font-weight: normal;
   font-size: 10px;
-  color: #959494;
-  display:flex;
-  flex-direction:row;
-  align-items:center;
+  color: #959494; 
 `;
 const Picture = styled.View`
-  width:100%;
+  /* width:100%; */
  height:328px;
  /* background-color:#BBD; */
 `;
 const Footer = styled.View`
-  width:375px;
   height:34px;
-  /* background-color:#DCB; */
+  align-items:center;
   display:flex;
   flex-direction:row;
+  margin-top:15px;
 `;
 const Icons = styled.View`
   flex:1;
-  /* background-color:#ADD; */
   display:flex;
   flex-direction:row;
   justify-content:space-evenly;
 `;
 const Heart = styled.View`
-  width:30px;
-  height:30px;
-  /* background-color:#ABD; */
-`;
-const Message = styled.View`
-  width:30px;
-  height:30px;
+  width:23px;
+  height:23px;
   /* background-color:#ABD; */
 `;
 const Distance = styled.Text`
   flex:3;
-  /* background-color:#DDA; */
   display:flex;
-  align-items:center;
   padding-left:8px;
-  font-style: normal;
   font-weight: bold;
   font-size: 15px;
 `;
@@ -100,14 +84,13 @@ const ProfileImage = styled.Image`
   border-radius:20px;
 `;
 const ImgCont = styled.View`
-  width:40px;
+  /* width:40px;
   height:40px;
-  /* background-color:blue; */
-  border-radius:20px;
+  border-radius:20px; */
 `;
 const IconPics = styled.Image`
-  width:100%;
-  height:100%;
+  width:23px;
+  height:23px;
 `;
 const DisplayPic = styled.Image`
   width:100%;
@@ -117,39 +100,65 @@ const messageimg = require("./message.png");
 const likeimg = require("./like.png");
 const profilepicture = require("./Lucky.png");
 const display = require("./Lucky.png");
-const Post = ({text, time, distance}) => {
+const Post = ({
+  text, 
+  profileImageUrl,
+  imageUrl,
+  time, 
+  distance}) => {
+
+  const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
+  const handleModalClose = () => {
+    setModalVisible(!modalVisible);
+  }
   return (
     <View>
       <MainCont>
         <Header>
           <ProfilePic>
             <ImgCont>
-              <ProfileImage source={profilepicture} />
-            </ImgCont>
+              <BasicAvatar
+                image1={require('./Lucky.png')}
+                width={40}
+                height={40}
+              />
+              {/* <ProfileImage source={profilepicture} /> */}
+              </ImgCont>
           </ProfilePic>
           <ProfileName>
-              <NameText>{text}</NameText>
-            <ViewProfile><Text>View Profile</Text></ViewProfile>
+            <NameText><Text>{text}</Text></NameText>
+            <ViewProfile onPress={() => navigation.navigate("DogProfileRequest")}>View Profile</ViewProfile>
+            
           </ProfileName>
-          <Time><Text>{time}  hr ago</Text></Time>
+          
+          <Time><Text>{time}hr ago</Text></Time>
         </Header>
+        
         <Picture>
           <DisplayPic source={display} />
         </Picture>
+
         <Footer>
           <Icons>
             <Heart>
               <IconPics source={likeimg} />
             </Heart>
-            <Message>
-              <IconPics source={messageimg} />
-            </Message>
-            </Icons>
+            <TouchableOpacity onPress={() => {
+                console.log("open modal clicked"); 
+                setModalVisible(true)}}>
+              <IconPics 
+              source={messageimg} >
+
+              </IconPics>
+              </TouchableOpacity>
+          </Icons>
           <Distance>
             <Text>{distance} Km away</Text>
           </Distance>
         </Footer>
       </MainCont>
+      <Popup modalVisible={ modalVisible } handleModalClose={handleModalClose} />
     </View>
   );
 };
@@ -159,6 +168,54 @@ Post.defaultProps = {
   time:"2",
   picture:"Lucky.png",
   display:"Lucky.png",
-  distance:"1"
+  distance:"1",
+  onPress: () => {},
 };
+
+const styles = StyleSheet.create({
+  card: {
+    borderRadius: 10,
+    backgroundColor: colors.white,
+    marginBottom: 10
+  },
+  header: {
+    flexDirection:"row",
+    justifyContent:"flex-start",
+    margin:10,
+  },
+  profileName: {
+    marginStart: 10,
+    justifyContent: "center",
+  },
+  image:{
+    width:"100%",
+    height:200,
+  },
+  footer:{
+    flexDirection:"row",
+    justifyContent:"space-between",
+    margin:10,
+  },
+  requestBtnContainerStyle: {
+    paddingVertical: 10,
+    borderRadius: 5,
+    backgroundColor: colors.primary
+  },
+  requestBtnTextStyle: {
+    textAlign: "center",
+    color: colors.primary,
+    fontSize: 16
+  },
+  profileBtnContainerStyle: {
+    paddingVertical: 10,
+    color: colors.primary
+  },
+  requestBtnTextStyle: {
+    marginHorizontal:10,
+    textAlign: "center",
+    color: colors.white,
+    fontSize: 16,
+    fontWeight: "bold"
+  }
+})
 export default Post;

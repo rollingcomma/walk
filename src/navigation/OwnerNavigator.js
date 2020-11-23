@@ -1,26 +1,26 @@
 import React from 'react';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-// import { DogProfile, Home, Event} from "../screens";
-import DogProfile from "../screens/DogProfile";
-import Home from "../screens/Home";
-import Event from "../screens/Event";
+import { DogProfilePage} from "../Pages";
 import ImageUpload from "../components/ImageUpload";
 import InboxNavigator from "./InboxNavigator"
+import FeedNavigator from './FeedNavigator';
+import EventNavigator from './EventNavigator';
+import FooterBarOwner from '../comps/FooterBarOwner'
 
 const Tab = createBottomTabNavigator();
 
-export default OwnerNavigator = () => {
+export default function OwnerNavigator() {
   return(
-    <Tab.Navigator>
+    <Tab.Navigator tabBar={props => <FooterBarOwner {...props} />}>
       <Tab.Screen 
-        name="Home"
-        component={Home}
-        options={{title:"Posts"}}
+        name="Feed"
+        component={FeedNavigator}
+        // options={{title:"Home"}}
       />
       <Tab.Screen 
         name="Event"
-        component={Event}
-        options={{title:"Events"}}
+        component={EventNavigator}
+        // options={{title:"Events"}}
       />
       <Tab.Screen 
         name="Add"
@@ -34,7 +34,7 @@ export default OwnerNavigator = () => {
       />
       <Tab.Screen 
         name="Profile"
-        component={DogProfile}
+        component={DogProfilePage}
         options={{title:"Profile"}}
       />
     </Tab.Navigator>

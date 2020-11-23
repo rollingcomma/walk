@@ -99,9 +99,9 @@ const styles = StyleSheet.create({
   inputStyle: {
     borderWidth: 1,
     borderColor: colors.secondary,
-    minHeight: 40,
+    minHeight: 45,
     borderRadius: 5,
-    width: "80%",
+    width: "85%",
     backgroundColor: colors.white,
     marginRight:15
   },

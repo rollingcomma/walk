@@ -21,7 +21,7 @@ import Spacer from "../../comps/Spacer";
 import TopBar from "../../comps/TopBar";
 import AvatarWithName from "../../comps/Avatar/AvatarWithName";
 import AvatarEdit from "../../comps/Avatar/AvatarEdit";
-import FooterBar from "../../comps/FooterBar";
+// import FooterBar from "../../comps/FooterBar";
 
 const Main = styled.View`
   width:375px;
@@ -192,7 +192,7 @@ const WalkerEditProfile = () => {
                   </InputCont2>
               </EmergencyInfo>
           </Cont>
-        <FooterCont><FooterBar /></FooterCont>
+        {/* <FooterCont><FooterBar /></FooterCont> */}
      </MainCont>
       </Main>
     </View>

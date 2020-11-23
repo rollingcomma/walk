@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import styled from "styled-components/native";
-import { View, TextInput, Text } from "react-native";
+import { View, TextInput, Text, StyleSheet } from "react-native";
 
 const MainCont = styled.View`
   /* background-color: #dbd; */
@@ -25,40 +25,53 @@ const RightSide = styled.View`
 `;
 const OpOne = styled.View`
   width: 100%;
-  height: 27px;
+  height: 37px;
   border: 1px solid #e5e5e5;
+  margin-bottom:5px;
 `;
 const Input1 = styled.TextInput`
   /* background-color:#FAD; */
   height:100%;
+  /* color:"#dad" */
+  
 `
+
+const styles = StyleSheet.create({ 
+  text: {
+    fontWeight:"bold",
+    fontSize:13,
+    marginTop:5
+  },
+});
+
+
 const Likes = ({ maintext}) => {
-  const [likeone, setLikeOne] = useState("");
-  const [liketwo, setLikeTwo] = useState("");
-  const [likethree, setLikeThree] = useState("");
+  const [dislikeone, setDislikeOne] = useState("");
+  const [disliketwo, setDislikeTwo] = useState("");
+  const [dislikethree, setDislikeThree] = useState("");
   return (
     <View>
       <MainCont>
         <LeftSide>
-          <Text>{maintext}</Text>
+          <Text style={styles.text}>{maintext}</Text>
         </LeftSide>
         <RightSide>
           <OpOne>
           <Input1 placeholder="Type something..." onChangeText={(t)=>{
               alert(t)
-              setLikeOne(likeone);
+              setDislikeOne(dislikeone);
             }}/>
           </OpOne>
           <OpOne>
           <Input1 placeholder="Type something..." onChangeText={(t)=>{
               alert(t)
-              setLikeTwo(liketwo);
+              setDislikeTwo(disliketwo);
             }}/>
           </OpOne>
           <OpOne>
             <Input1 placeholder="Type something..." onChangeText={(t)=>{
               alert(t)
-              setLikeThree(likethree);
+              setDislikeThree(dislikethree);
             }}/>
           </OpOne>
         </RightSide>

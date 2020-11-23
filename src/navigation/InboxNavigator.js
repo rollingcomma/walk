@@ -1,12 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
-// import { ChatChannel, Inbox, DashboardOwner, DashboardWalker} from "../screens";
+import { Inbox, Chatting,  WalkerProfilePage, OwnerDashPage, WalkerDashPage, LeaveReviewPage} from "../Pages";
 import { useUserState } from "../hook/useUserState";
-import ChatChannel from "../screens/ChatChannel";
-import Inbox from "../screens/Inbox";
-import DashboardOwner from "../screens/DashboardOwner";
-import DashboardWalker from "../screens/DashboardWalker";
-import WalkerDashPage from '../Pages/WalkerDashPage';
+// import Inbox from "../screens/Inbox"
 const Stack = createStackNavigator();
 
 export default InboxNavigator = () => {
@@ -18,14 +14,24 @@ export default InboxNavigator = () => {
         component={Inbox}
         options={{title: "Inbox"}} />
       <Stack.Screen 
-        name="ChatChannel"
-        component={ChatChannel}
-        options={{title:"Chat Channel"}}
+        name="Chatting"
+        component={Chatting}
+        options={{title: "Bob"}}
+      />
+      <Stack.Screen 
+        name="WalkerProfile"
+        component={WalkerProfilePage}
+        options={{title:"Walker Profile"}}
+      />
+      <Stack.Screen 
+        name="LeaveReview"
+        component={LeaveReviewPage}
+        options={{title:"Leave a Review"}}
       />
       {userState.type === "dog owner"?
         <Stack.Screen 
           name="Dashboard"
-          component={DashboardOwner}
+          component={OwnerDashPage}
           options={{title:"Owner"}}
         />
       :

@@ -1,9 +1,9 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-// import ReviewStars from "../../comps/ReviewStars";
-// import YourReview from "../../comps/YourReview";
-// import ShareFeedback from "../../comps/ShareFeedback";
-// import FooterBar from "../../comps/FooterBar";
+// import ReviewStars from "./Comps/ReviewStars";
+// import YourReview from "./Comps/YourReview";
+// import ShareFeedback from "./Comps/ShareFeedback";
+// import FooterBar from "./Comps/FooterBar";
 
 const LeaveReviewPage = () => {
   return (

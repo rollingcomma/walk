@@ -1,104 +1,62 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import styled from "styled-components/native";
-import FooterBar from "../../comps/FooterBar";
-import WalkerProfile from "../../comps/WalkerProfile";
-import ReviewStars from "../../comps/ReviewStars";
-import WalkerProfileTitle from "../../comps/WalkerProfileTitle";
-import TopBar from "../../comps/TopBar";
+import { View, Text, StyleSheet, ScrollView} from "react-native";
+import DashDog from "../../comps/DashDog";
+import DashOwner from "../../comps/DashOwner";
 import MapPlaceholder from "../../comps/MapPlaceholder";
+import TopBar from '../../comps/TopBar';
+import WalkerProfile from "../../comps/WalkerProfile";
 
-const LocationCont = styled.View`
-  /* position: relative; */
-  top: 5%;
-`;
+// import AvatarViewProfile from '../AvatarForm/AvatarViewProfile';
 
-const LocationText = styled.View`
-  margin-left: 50px;
-  margin-bottom: 10px;
-`;
+const styles = StyleSheet.create({
+  app: {
+    justifyContent:"center",
+    // alignItems:"center",
+    // width:"100%",
+    height:"100%"
+  },
+  container:{
+    alignItems:"center",
+    marginTop:40,
+  
+  },
+  map: {
+    
+  },
+  dashcont: {
+    flexDirection: "row",
+    width: 360,
+    justifyContent:"space-between",
+    marginTop:50,
+    marginBottom:40
+  },
+  
+});
 
-const WalkerTitleCont = styled.View`
-  margin-left: 50px;
-  margin-bottom: 10px;
-`;
-
-const ReviewStarsCont = styled.View`
-  bottom: 17%;
-  margin-left: 200px;
-`;
-const WalkerProfileCont = styled.View`
-  /* position: relative; */
-  top: 20%;
-`;
-
-const Header = styled.View``;
-
-const Main = styled.View`
-  width: 375px;
-  height: 812px;
-  display: flex;
-  flex-direction: column;
-  /* background-color: red; */
-  align-items: center;
-`;
-
-const MainCont = styled.View`
-  width: 100%;
-  height: 812px;
-`;
-
-const FooterCont = styled.View`
-  width: 375px;
-  position: absolute;
-  bottom: 0;
-`;
-
-const Cont = styled.View`
-  width: 100%;
-  height: 86%;
-  /* background-color: blue; */
-  overflow: scroll;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const OwnerDashPage = () => {
+const OwnerDashPage = ({}) => {
+ 
   return (
-    <View>
-      <Main>
-        <MainCont>
-          <Header>
-            <TopBar title="Dashboard" />
-          </Header>
-          <Cont>
-            <LocationCont>
-              <LocationText>
-                <WalkerProfileTitle text="Walker Location" />
-              </LocationText>
-              <MapPlaceholder />
-            </LocationCont>
-            <WalkerProfileCont>
-              <WalkerTitleCont>
-                <WalkerProfileTitle />
-              </WalkerTitleCont>
-              <WalkerProfile
-                age="24"
-                bio="Hi there! My name is Ethan and I love all animals. Dogs, cats, birds, you name it. I really love spending time outdoors in nature and ..."
-              />
-              <ReviewStarsCont>
-                <ReviewStars />
-              </ReviewStarsCont>
-            </WalkerProfileCont>
-          </Cont>
-          <FooterCont>
-            <FooterBar />
-          </FooterCont>
-        </MainCont>
-      </Main>
-    </View>
+      <View style={styles.app}>
+        <ScrollView>
+            {/* <TopBar title="Dashboard" /> */}
+          <View style={styles.container}>
+            <MapPlaceholder text="Return Address"/>
+            <View style={styles.dashcont}>
+              <WalkerProfile/>
+            </View>
+          </View>
+        </ScrollView>
+        {/* <FooterBar/> */}
+      </View>
   );
 };
+
+OwnerDashPage.defaultProps = {
+    // size: null,
+    text: null,
+    backgroundColor: null,
+    // height: null
+};
+
 
 export default OwnerDashPage;

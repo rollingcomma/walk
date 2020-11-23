@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const BasicButton = ({text, size, backgroundColor, height, width}) => {
+const BasicButton = ({text, size, backgroundColor, height, width, onPress}) => {
   
   const fontSize = [{ fontSize: size ? size : 16}] ;
   const widthstyles = [{ width: width ? width : null} , { height: height ? height : 50}] ;

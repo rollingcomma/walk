@@ -1,88 +1,59 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import styled from "styled-components/native";
+import { View, Text, StyleSheet, 
+  // TouchableOpacity 
+} from "react-native";
 import Title from "../../comps/Title";
 import ContinueAs from "../../comps/ContinueAs";
-import DogOwnerButton from "../../comps/WButton/DogOwnerButton";
+import BasicButton from "../../comps/WButton/BasicButton";
 
-const WalkerButtonCont = styled.View`
-  /* background-color: red; */
-`;
+const styles = StyleSheet.create({ 
+  app: {
+    justifyContent:"center",
+    alignItems:"center",
+    backgroundColor:"#F5FEFE",
+    height:"100%",
+    
+  },
+  text: {
+    height:120,
 
-const OwnerButtonCont = styled.View`
-  /* background-color: red; */
-  margin-bottom: 20px;
-`;
+    justifyContent:"space-between",
+    alignItems:"center",
+    
+  },
+  button: {
+    marginTop:70,
+    height:150,
+    // backgroundColor:"red",
+    justifyContent:"space-between"
+  },
+});
 
-const ButtonCont = styled.View`
-  flex-direction: column;
-`;
-
-const LogoCont = styled.View`
-  padding-top: 30px;
-  padding-bottom: 30px;
-`;
-
-const ContinueAsCont = styled.View`
-  padding-top: 30px;
-  padding-bottom: 30px;
-`;
-
-const Main = styled.View`
-  width: 375px;
-  height: 812px;
-  display: flex;
-  flex-direction: column;
-  /* background-color: red; */
-  align-items: center;
-`;
-
-const MainCont = styled.View`
-  width: 100%;
-  height: 812px;
-`;
-
-const Cont = styled.View`
-  width: 100%;
-  height: 86%;
-  /* background-color: blue; */
-  overflow: scroll;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Continue = () => {
+const ContinueAsPage = () => {
   return (
-    <View>
-      <Main>
-        <MainCont>
-          <Cont>
-            <LogoCont>
-              <Title />
-            </LogoCont>
-            <ContinueAsCont>
-              <ContinueAs />
-            </ContinueAsCont>
-            <ButtonCont>
-              <OwnerButtonCont>
-                <DogOwnerButton />
-              </OwnerButtonCont>
-              <WalkerButtonCont>
-                <DogOwnerButton
-                // text="Dog Walker"
-                // backgroundColor="#53B7BE"
-                // width={242}
-                // height={55}
-                // size={18}
-                />
-              </WalkerButtonCont>
-            </ButtonCont>
-          </Cont>
-        </MainCont>
-      </Main>
+    <View style={styles.app}>
+      <View style={styles.text}>
+      <Title />
+      <ContinueAs  />
+      </View>
+      <View style={styles.button}>
+      <BasicButton 
+        text="Dog Owner"  
+        backgroundColor= "#53B7BE" 
+        width={242}
+        height={55}
+        size={18}
+        />
+      <BasicButton 
+        text="Dog Walker"  
+        backgroundColor= "#53B7BE" 
+        width={242}
+        height={55}
+        size={18}
+        />
+        </View>
     </View>
   );
 };
 
-export default Continue;
+export default ContinueAsPage; 

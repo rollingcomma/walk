@@ -1,89 +1,57 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import styled from "styled-components/native";
+import { View, StyleSheet, ScrollView } from "react-native";
+import TopBar from "../../comps/TopBar";
+// import FooterBar from "../../comps/FooterBar";
+import UserBio from "../../comps/UserBio";
 import WriteReview from "../../comps/WriteReview";
 import LocationAge from "../../comps/LocationAge";
-import UserBio from "../../comps/UserBio";
-import FooterBar from "../../comps/FooterBar";
-import AvatarWithName from "../../comps/./Avatar/AvatarWithName";
-import TopBar from "../../comps/TopBar";
+import AvatarWithName from "../../comps/Avatar/AvatarWithName";
 
-const WriteReviewCont = styled.View`
-  margin-top: 150px;
-  margin-bottom: 30px;
-  margin-left: 20px;
-`;
+const styles = StyleSheet.create({
+  app: {
+    height:"100%",
+  },
+  Cont: {
+    marginLeft:20,
+    // height:"100%",
+    display:"flex",
+    flexDirection: "column",
+    justifyContent:"space-between"
+  },
+  elements: {
+    marginTop:50,
+    marginBottom:10
+  },
+});
 
-const UserInfoCont = styled.View`
-  margin-left: 20px;
-  margin-top: 40px;
-`;
-
-const AvatarName = styled.View`
-  margin-top: 40px;
-`;
-
-const Header = styled.View``;
-
-const Main = styled.View`
-  width: 375px;
-  height: 812px;
-  display: flex;
-  flex-direction: column;
-  /* background-color: red; */
-  align-items: center;
-`;
-
-const MainCont = styled.View`
-  width: 100%;
-  height: 812px;
-`;
-
-const FooterCont = styled.View`
-  width: 375px;
-  position: absolute;
-  bottom: 0;
-`;
-
-const Cont = styled.View`
-  width: 100%;
-  height: 86%;
-  /* background-color: blue; */
-  overflow: scroll;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const WalkProfile = () => {
+const WalkerProfilePage = () => {
   return (
-    <View>
-      <Main>
-        <MainCont>
-          <Header>
-            <TopBar title="Walker Profile" />
-          </Header>
-          <Cont>
-            <AvatarName>
-              <AvatarWithName text="Mason K" />
-            </AvatarName>
-
-            <UserInfoCont>
-              <LocationAge />
-              <UserBio />
-            </UserInfoCont>
-
-            <WriteReviewCont>
-              <WriteReview />
-            </WriteReviewCont>
-          </Cont>
-          <FooterCont>
-            <FooterBar />
-          </FooterCont>
-        </MainCont>
-      </Main>
+    <View style={styles.app}>
+      {/* <TopBar
+        title="Walker Profile"
+        imageLeft1={require('../../comps/TopBar/leftArrow.png')}
+        imageLeft2={require('../../comps/TopBar/message.png')}
+      /> */}
+      <ScrollView>
+        <View style={styles.Cont}>
+          <View style={styles.elements}>
+            <AvatarWithName text="Mason K." />
+          </View>
+          <View style={styles.elements}>
+            <LocationAge />
+          </View>
+          <View style={styles.elements}>
+            <UserBio />
+          </View>
+          <View style={styles.elements}>
+            <WriteReview />
+          </View>
+        </View>
+      </ScrollView>
+      {/* <FooterBar /> */}
     </View>
   );
 };
 
-export default WalkProfile;
+
+export default WalkerProfilePage;

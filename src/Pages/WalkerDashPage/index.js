@@ -1,107 +1,62 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import styled from "styled-components/native";
-import FooterBar from "../../comps/FooterBar";
+import { View, Text, StyleSheet, ScrollView} from "react-native";
 import DashDog from "../../comps/DashDog";
 import DashOwner from "../../comps/DashOwner";
-import WalkerProfileTitle from "../../comps/WalkerProfileTitle";
-import TopBar from "../../comps/TopBar";
+
 import MapPlaceholder from "../../comps/MapPlaceholder";
-import Map from "../../components/Map";
+// import Map from "../../components/Map";
+// import AvatarViewProfile from '../AvatarForm/AvatarViewProfile';
 
-const LocationCont = styled.View`
-  /* position: relative; */
-  top: 2%;
-`;
-
-const LocationText = styled.View`
-  margin-left: 50px;
-  margin-bottom: 10px;
-`;
-
-const DashOwnerCont = styled.View`
-  padding-left: 5px;
-`;
-
-const DashDogCont = styled.View`
-  padding-right: 5px;
-`;
-
-const DashDogOwnerCont = styled.View`
-  /* position: relative; */
-  flex-direction: row;
+const styles = StyleSheet.create({
+  app: {
+    justifyContent:"center",
+    // alignItems:"center",
+    width:"100%",
+    height:"100%"
+  },
+  container:{
+    alignItems:"center",
+    marginTop:40,
   
-  top: 10%;
-`;
+  },
+  map: {
+    width:"100%",
+    height:"100%",
+  },
+  dashcont: {
+    flexDirection: "row",
+    width: 360,
+    justifyContent:"space-between",
+    marginTop:40
+  },
+  
+});
 
-const Header = styled.View``;
-
-const Main = styled.View`
-  width: 375px;
-  height: 812px;
-  display: flex;
-  flex-direction: column;
-  /* background-color: red; */
-  align-items: center;
-`;
-
-const MainCont = styled.View`
-  width: 100%;
-  height: 812px;
-`;
-
-const FooterCont = styled.View`
-  width: 375px;
-  position: absolute;
-  bottom: 0;
-`;
-
-const Cont = styled.View`
-  width: 100%;
-  height: 90%;
-  /* background-color: blue; */
-  overflow: scroll;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const WalkerDashPage = () => {
+const WalkerDashPage = ({}) => {
+ 
   return (
-    <View>
-      <Main>
-        <MainCont>
-          {/* <Header>
-            <TopBar title="Dashboard" />
-          </Header> */}
-          <Cont>
-            <LocationCont>
-              <LocationText>
-                <WalkerProfileTitle text="Return Address" />
-              </LocationText>
-             
-                <Map />
-              
-            </LocationCont>
-            <DashDogOwnerCont>
-              <DashDogCont>
-                <DashDog />
-              </DashDogCont>
-              <DashOwnerCont>
-                <DashOwner
-                  owneremail="ethan123@gmail.com"
-                  owneradress="1234 123A Ave Burnaby, BC"
-                />
-              </DashOwnerCont>
-            </DashDogOwnerCont>
-          </Cont>
-          <FooterCont>
-            <FooterBar />
-          </FooterCont>
-        </MainCont>
-      </Main>
-    </View>
+      <View style={styles.app}>
+        <ScrollView>
+            {/* <TopBar title="Dashboard" /> */}
+          <View style={styles.container}>
+            <MapPlaceholder />
+            <View style={styles.dashcont}>
+              <DashDog/>
+              <DashOwner/>
+            </View>
+          </View>
+        </ScrollView>
+        {/* <FooterBar/> */}
+      </View>
   );
 };
+
+WalkerDashPage.defaultProps = {
+    // size: null,
+    text: null,
+    backgroundColor: null,
+    // height: null
+};
+
 
 export default WalkerDashPage;

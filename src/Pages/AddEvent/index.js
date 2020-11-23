@@ -2,30 +2,30 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import styled from "styled-components/native";
 
-import Description from "../.../../comps/Description";
-import Dropdown from "../.../../comps/Dropdown";
-import Input from "../.../../comps/Input";
-import Likes from "../.../../comps/Likes";
-import Popup from "../.../../comps/Popup";
-import Texting from "../.../../comps/Texting";
-import Post from "../.../../comps/Post";
-import WalkerProfile from "../.../../comps/WalkerProfile";
-import MsgSent from "../.../../comps/MsgSent";
-import MsgSelection from "../.../../comps/MsgSelection";
-import Birthday from "../.../../comps/Birthday";
-import MsgRecieved from "../.../../comps/MsgRecieved";
-import DashDog from "../.../../comps/DashDog";
-import DashOwner from "../.../../comps/DashOwner";
-import AddImage from "../.../../comps/AddImage";
-import Spacer from "../.../../comps/Spacer";
-import TopBar from "../.../../comps/TopBar";
-import AvatarWithName from "../.../../comps/Avatar/AvatarWithName";
-import AvatarEdit from "../.../../comps/Avatar/AvatarEdit";
-import FooterBar from "../.../../comps/FooterBar";
-import Avatar06 from "../.../../comps/Avatar/Avatar06";
-import Province from "../.../../comps/Province";
-import Button from "../.../../comps/Button";
-import EventTime from "../.../../comps/EventTime";
+import Description from "../../comps/Description";
+import Dropdown from "../../comps/Dropdown";
+import Input from "../../comps/Input";
+import Likes from "../../comps/Likes";
+import Popup from "../../comps/Popup";
+import Texting from "../../comps/Texting";
+import Post from "../../comps/Post";
+import WalkerProfile from "../../comps/WalkerProfile";
+import MsgSent from "../../comps/MsgSent";
+import MsgSelection from "../../comps/MsgSelection";
+import Birthday from "../../comps/Birthday";
+import MsgRecieved from "../../comps/MsgRecieved";
+import DashDog from "../../comps/DashDog";
+import DashOwner from "../../comps/DashOwner";
+import AddImage from "../../comps/AddImage";
+import Spacer from "../../comps/Spacer";
+import TopBar from "../../comps/TopBar";
+import AvatarWithName from "../../comps/Avatar/AvatarWithName";
+import AvatarEdit from "../../comps/Avatar/AvatarEdit";
+// import FooterBar from "../../comps/FooterBar";
+import Avatar06 from "../../comps/Avatar/Avatar06";
+import Province from "../../comps/Province";
+import Button from "../../comps/Button";
+import EventTime from "../../comps/EventTime";
 
 const Main = styled.View`
   width: 375px;
@@ -100,7 +100,7 @@ const AddEvent = () => {
         <MainCont>
           <TopBar
             title="Create an Event"
-            imageLeft1={require("../.../../comps/TopBar/leftArrow.png")}
+            imageLeft1={require("../../comps/TopBar/leftArrow.png")}
           />
           <Cont>
             <InputCont>
@@ -134,9 +134,9 @@ const AddEvent = () => {
             </Upload>
             <Button />
           </Cont>
-          <FooterCont>
+          {/* <FooterCont>
             <FooterBar />
-          </FooterCont>
+          </FooterCont> */}
         </MainCont>
       </Main>
     </View>

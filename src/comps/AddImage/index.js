@@ -47,5 +47,8 @@ const AddImage = ({}) => {
   );
 };
 
-AddImage.defaultProps = {};
+AddImage.defaultProps = {
+
+};
+
 export default AddImage;

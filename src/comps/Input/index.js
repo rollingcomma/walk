@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components/native";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 const InputCont = styled.View`
   display: flex;
@@ -23,6 +23,7 @@ const InputTitle = styled.View`
   align-items: center;
   justify-content: center;
   /* background-color:#CBD; */
+  font-size:30;
 `;
 const Spacer = styled.View`
   flex: 1;
@@ -39,14 +40,21 @@ const TextInput = styled.TextInput`
   border:1px solid #DDD;
 `;
 
+const styles = StyleSheet.create({ 
+  text: {
+    fontSize:13,
+    fontWeight:"bold"
+  },
+});
+
 const Input = ({ text, placeholder, height, onChangeText, width }) => {
   return (
     <View>
       <InputCont>
         <InputTitle>
-          <Text>{text}</Text>
+          <Text style={styles.text}>{text}</Text>
         </InputTitle>
-        <Spacer />
+        {/* <Spacer /> */}
         <InputBox  height={height}>
           <TextInput onChangeText={onChangeText} placeholder={placeholder}  width={width} height={height} multiline/>
         </InputBox>

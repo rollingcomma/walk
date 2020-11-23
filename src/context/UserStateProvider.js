@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from "react";
 import { users } from "../db/mockDb";
 
-const defaultUserState = users.uid9;
+const defaultUserState = users.uid1;
 export const UserContext = createContext(defaultUserState)
 export const DispatchUserContext = createContext(undefined)
 

@@ -2,17 +2,18 @@ import React from "react";
 import { Container, Tab, Tabs } from "native-base";
 import  Request from "./Request";
 import MessageBox from "./MessageBox"
+import { ActivatePage, RequestPage } from "../Pages"
 export default Inbox = () => {
   return(
     <Container>
       <Tabs>
         <Tab
           heading="Messages">
-          <MessageBox />
+          <ActivatePage />
         </Tab>
         <Tab
           heading="Requests">
-          <Request />
+          <RequestPage />
         </Tab>
       </Tabs>
     </Container>

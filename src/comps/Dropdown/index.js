@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components/native";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, StyleSheet } from "react-native";
 
 const Component = styled.View`
   /* margin:30px 30px; */
   width: 273px;
+ 
 
   /* background-color:#DDB; */
 `;
@@ -15,10 +16,11 @@ const MainCont = styled.View`
   /* background-color:#DDB; */
   display: flex;
   justify-content: flex-end;
+  justify-content:center;
 `;
 
 const Cont = styled.View`
-  width: 273px;
+  width: 280px;
   height: 40px;
   /* background-color:#BDB; */
   display: flex;
@@ -38,10 +40,10 @@ const ImgCont = styled.TouchableOpacity`
 `;
 
 const Options = styled.View`
-  width: 273px;
+  width: 280px;
   height: 80px;
   background-color: #bcd;
-  display: ${(props) => (props.expand ? "none" : "inline-flex")};
+  /* display: ${(props) => (props.expand ? "none" : "inline-flex")}; */
   flex-direction: column;
 `;
 
@@ -58,6 +60,15 @@ const Arrow = styled.Image`
   width: 100%;
   height: 100%;
 `;
+
+const styles = StyleSheet.create({ 
+  text: {
+    fontSize:20,
+    marginBottom:5
+  },
+});
+
+
 const downarrowimg = require("./downarrow.png");
 const Dropdown = ({ text, country }) => {
   const [expand, setExpand] = useState(true);
@@ -71,7 +82,7 @@ const Dropdown = ({ text, country }) => {
     <View>
       <Component>
         <MainCont>
-          <Text>{text}</Text>
+          <Text style={styles.text}>{text}</Text>
           <Cont>
             <Text>{tCountry}</Text>
             <ImgCont

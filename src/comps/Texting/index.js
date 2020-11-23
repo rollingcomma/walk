@@ -3,9 +3,8 @@ import styled from "styled-components/native";
 import { View, Text } from "react-native";
 
 const InputCont = styled.View`
-  width: 344px;
-  height: 119px;
   /* background-color:#DBB; */
+  margin:10px 0 ;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,15 +13,11 @@ const InputCont = styled.View`
 const Inputs = styled.View`
   display: flex;
   flex-direction: row;
-  width: 344px;
   height: 37px;
-  /* background-color: #bbd; */
 `;
 
 const Add = styled.View`
   flex: 1;
-  /* background-color: green; */
-  display: flex;
   align-items: center;
   justify-content: center;
 `;
@@ -30,7 +25,7 @@ const Add = styled.View`
 const Textbox = styled.View`
   flex: 7;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   /* background-color: blue; */
 `;
 
@@ -63,6 +58,10 @@ const TextInput = styled.TextInput`
   border-radius: 12px;
   border: 1px solid lightgrey;
 `;
+
+const nextarrow = require("./nextarrow.png");
+const plus = require("./plus.png");
+
 const Texting = ({}) => {
   return (
     <View>
@@ -74,7 +73,7 @@ const Texting = ({}) => {
                 alert("Send picture in the chat");
               }}
             >
-              <IconPics source={(require = "./plus.png")} />
+              <IconPics source={plus} />
             </AddCont>
           </Add>
           <Textbox>
@@ -86,7 +85,7 @@ const Texting = ({}) => {
                 alert("Message Sent!");
               }}
             >
-              <IconPics source={(require = "./nextarrow.png")} />
+              <IconPics source={nextarrow} />
             </ArrowCont>
           </NextArrow>
         </Inputs>

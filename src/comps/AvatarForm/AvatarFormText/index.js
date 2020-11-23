@@ -40,13 +40,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const AvatarFormText = ({textname, text, backgroundColor, }) => {
+const AvatarFormText = ({textname, text, backgroundColor, handleOnPress }) => {
   
   return (
       <View style={styles.container}>
         <View style={styles.avatar}>
         </View>
-        <TouchableOpacity onPress={onPress} style={styles.touch}>
+        <TouchableOpacity onPress={handleOnPress} style={styles.touch}>
           <View style={styles.textcont}>
             <Text style={styles.text1}>{textname}</Text>
             <Text style={styles.text2}>{text}</Text>

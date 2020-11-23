@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import Card from '../components/Card';
 import Screen from '../components/Screen';
-export default Home = () => {
+export default Home = ({navigation, route}) => {
   const dummy = [{
     id:1,
     name:"Milly",

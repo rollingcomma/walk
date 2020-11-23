@@ -21,7 +21,7 @@ import Spacer from "../../comps/Spacer";
 import TopBar from "../../comps/TopBar";
 import AvatarWithName from "../../comps/Avatar/AvatarWithName";
 import AvatarEdit from "../../comps/Avatar/AvatarEdit";
-import FooterBar from "../../comps/FooterBar";
+// import FooterBar from "../../comps/FooterBar";
 import Avatar06 from "../../comps/Avatar/Avatar06";
 import Province from "../../comps/Province";
 import Button from "../../comps/Button";
@@ -127,9 +127,9 @@ const WalkerAuthentication = () => {
             />
             <Button text="Continue" height="44px" backgroundColor="#53B7BE" />
           </Cont>
-          <FooterCont>
+          {/* <FooterCont>
             <FooterBar />
-          </FooterCont>
+          </FooterCont> */}
         </MainCont>
       </Main>
     </View>

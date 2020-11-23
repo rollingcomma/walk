@@ -1,25 +1,29 @@
 import React from "react";
 import { View, Text, StyleSheet} from "react-native";
 import BasicAvatar from '../../Avatar/BasicAvatar';
+import ReviewStars from "../../ReviewStars";
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    alignItems:"center",
-    justifyContent:"center",
+    // alignItems:"center",
+    // justifyContent:"center",
   },
   avatar: {
-    marginLeft:20
+    // marginLeft:20
   },
 reviewcont: {
-    backgroundColor:"lightgray",
-    width: 160,
-    height:60,
-    margin:10
+    marginLeft:20,
+    justifyContent:"center"
+},
+name: {
+  fontWeight:"bold",
+  fontSize:18,
+  marginBottom:10,
 }
 });
 
-const AvatarForm05 = ({}) => {
+const AvatarForm05 = ({name}) => {
   
   return (
       <View style={styles.container}>
@@ -31,17 +35,17 @@ const AvatarForm05 = ({}) => {
             />
         </View>
         <View style={styles.reviewcont}>
-            
+            <Text style={styles.name}>{name}</Text>
+            <ReviewStars/>
         </View>
       </View>
   );
 };
 
 AvatarForm05.defaultProps = {
-    // size: null,
+    name: null,
     text: null,
     backgroundColor: null,
-    // height: null
 };
 
 export default AvatarForm05;

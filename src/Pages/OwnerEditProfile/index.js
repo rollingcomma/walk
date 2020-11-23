@@ -21,7 +21,7 @@ import Spacer from "../../comps/Spacer";
 import TopBar from "../../comps/TopBar";
 import AvatarWithName from "../../comps/Avatar/AvatarWithName";
 import AvatarEdit from "../../comps/Avatar/AvatarEdit";
-import FooterBar from "../../comps/FooterBar";
+// import FooterBar from "../../comps/FooterBar";
 import Avatar06 from "../../comps/Avatar/Avatar06";
 import Dislikes from "../../comps/Dislikes";
 import Province from "../../comps/Province";
@@ -224,9 +224,9 @@ const OwnerEditProfile = () => {
               </AddCont>
             </PostCont>
           </Cont>
-          <FooterCont>
+          {/* <FooterCont>
             <FooterBar />
-          </FooterCont>
+          </FooterCont> */}
         </MainCont>
       </Main>
     </View>

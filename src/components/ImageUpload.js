@@ -143,7 +143,7 @@ export default ImageUpload = () => {
             textAlign: 'center',
             marginHorizontal: 15,
           }}>
-          Example: Upload ImagePicker result
+          Create a Post
         </Text>
       )}
       <Button

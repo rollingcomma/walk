@@ -50,7 +50,7 @@ const TextRight = styled.Text`
 `;
 
 const MsgSelection = ({}) => {
-  const [general, setGeneral] = useState(false)
+  const [general, setGeneral] = useState(false);
   return (
     <View>
       <MainCont onClick={()=>{

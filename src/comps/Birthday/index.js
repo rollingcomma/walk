@@ -4,11 +4,12 @@ import { View, Text } from "react-native";
 
 const MainCont = styled.View`
   width: 304px;
-  height: 40px;
+  height: 80%;
   display: flex;
   /* background-color:#DBD; */
   /* margin:30px 30px; */
- justify-content:flex-end;
+ justify-content:center;
+ 
 `;
 const Cont = styled.View`
   width:100%;
@@ -67,7 +68,7 @@ const DayDrop = styled.View`
   /* background-color:#BCB; */
   display:${props=>props.expandD ? "none" : "inline-flex"};
   flex-direction:column;
-  overflow:scroll;
+  /* overflow:scroll; */
   background-color: #FFFFFF;
 `;
 const DayOption = styled.View`
@@ -99,7 +100,7 @@ const YearDrop = styled.View`
   /* background-color:#BCB; */
   display:${props=>props.expandY ? "none" : "inline-flex"};
   flex-direction:column;
-  overflow:scroll;
+  /* overflow:scroll; */
   background-color: #FFFFFF;
  
 `;

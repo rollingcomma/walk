@@ -1,94 +1,106 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components/native";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import BasicButton from "../WButton/BasicButton"
 
 const EventCont = styled.View`
-  /* margin-left: auto;
-  margin-right: auto; */
+  /* align-items:center; */
+  justify-content:center;
   display: flex;
-  /* margin-left: 20px; */
-  /* margin-top: 20px; */
+ 
 `;
 
-const Buttontext = styled.Text`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-`;
 
 const Buttonbox = styled.TouchableOpacity`
   background: ${(props) => (props.highlight ? "#959494" : "#53B7BE")};
   border-radius: 4px;
   width: 107px;
   padding: 10px;
-  display: flex;
-  align-items: right;
-  justify-content: right;
   margin-top: 8px;
+  margin-left: 30px;
+`;
+
+const Buttontext = styled.Text` 
+  color: #fff;
+font-size:16px;
+  margin-left:5px;
 `;
 
 const Details = styled.Text`
   display: flex;
-  justify-content: left;
-  align-items: left;
-  font-weight: 400;
-  padding: 5px;
+  /* justify-content: left; */
+  /* align-items: left; */
+  font-size:13;
+  margin-top: 5px;
+  margin-bottom: 5px;
   flex-direction: column;
 `;
+
+const styles = StyleSheet.create({ 
+  details: {
+    // alignItems:"left"
+  },
+  // buttontext: {
+  // color:
+  // }
+});
 
 const AttendCont = styled.View`
   display: flex;
   flex-direction: row;
-  justify-content: left;
-  align-items: left;
-  padding: 5px;
+  /* justify-content: left; */
+  /* align-items: left; */
+  /* padding: 5px; */
 `;
 
 const Paw = styled.View`
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   display: flex;
+  justify-content:center;
+  align-items:center;
   margin-left: 5px;
 
-  img {
+  /* img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
+  } */
+`;
+
+const PawImg = styled.Image`
+  width: 30px;
+  height: 30px;
+  /* font-weight: 700; */
 `;
 
 const Number = styled.Text`
-  justify-content: left;
-  align-items: left;
-  font-weight: 500;
+  /* justify-content: left; */
+  /* align-items: left; */
+  font-weight: bold;
+  font-size:18px;
 `;
 
 const Subhead = styled.Text`
   color: #53b7be;
-  font-weight: 400;
   padding-top: 5px;
+  font-size:13px;
 `;
 
 const Title = styled.Text`
-  font-weight: 700;
-`;
-
-const PawImg = styled.Image`
-  width: 20px;
-  height: 20px;
-  font-weight: 700;
+  font-weight: bold;
+  font-size:18px;
 `;
 
 const ImageCont = styled.View``;
 
 const EventImg = styled.Image`
-  width: 199px;
-  height: 200px;
+  /* width: 199px;
+  height: 200px; */
 `;
 
 const Column = styled.View`
-  align-items: left;
+  /* align-items: left; */
 `;
 
 const paw = require("./paw.png");
@@ -106,7 +118,7 @@ const EventInfo = ({
   detail2,
   img
 }) => {
-  const [highlight, setHighlight] = useState(true);
+  const [highlight, setHighlight] = useState(false);
 
   return (
     <View>
@@ -129,11 +141,18 @@ const EventInfo = ({
               <PawImg source={paw} />
             </Paw>
           </AttendCont>
-          <Details>
+          <Details style={styles.details}>
             <Text>{time}</Text>
             <Text>{detail1}</Text>
             <Text>{detail2}</Text>
           </Details>
+          {/* <BasicButton
+          text="Interested"  
+          backgroundColor= "#38BC64" 
+          height={27}
+          width={107}
+          size={16}
+          /> */}
           <Buttonbox
             onPress={() => {
               setHighlight(!highlight);
@@ -141,7 +160,7 @@ const EventInfo = ({
             highlight={highlight}
           >
             <Buttontext>
-              <Text>{highlight ? text : "Going"}</Text>
+              <Text  style={styles.buttontext}>{highlight ? text : "Going"}</Text>
             </Buttontext>
           </Buttonbox>
         </Column>

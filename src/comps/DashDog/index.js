@@ -72,7 +72,7 @@ const ViewProfile = styled.View`
   display:flex;
   flex-direction:row;
 `;
-const PText = styled.Text`
+const PText = styled.View`
   font-size:8px;
   color: #53B7BE;
 `;
@@ -120,7 +120,7 @@ const LikesCont = styled.View`
   display:flex;
   flex-direction:row;
 `;
-const Title = styled.Text`
+const Title = styled.View`
   height:100%;
   flex:2;
   /* background-color:#CCC; */
@@ -128,8 +128,8 @@ const Title = styled.Text`
   align-items:center;
   justify-content:center;
 `;
-const TitleText2 = styled.Text`
-  font-weight: normal;
+const TitleText2 = styled.View`
+  font-weight:bold;
   font-size: 10px;
 `;
 const Info = styled.View`
@@ -140,7 +140,7 @@ const Info = styled.View`
   justify-content:center;
   padding-left:4px;
 `;
-const InfoText = styled.Text`
+const InfoText = styled.View`
   font-weight: normal;
   font-size: 10px;
   color: #565555;
@@ -158,27 +158,26 @@ const DashDog = ({dogname, age, breed, likes}) => {
           <TopInfo>
             <TopCont>
               <ProfPicCont>
-                <ImgCont><Img source={dogpicture} /></ImgCont>
+                <ImgCont><Img source={dogpicture}/></ImgCont>
               </ProfPicCont>
               <ProfTextCont>
                 <Name><Text>{dogname}</Text></Name>
-                <ViewProfile><PText>View full profile</PText><ArrowCont><Arrow source={rightarrow}/></ArrowCont></ViewProfile>
+                <ViewProfile><PText><Text>View full profile</Text></PText><ArrowCont><Arrow source={rightarrow}/></ArrowCont></ViewProfile>
               </ProfTextCont>
             </TopCont>
           </TopInfo>
           <BottomInfo>
             <BottomCont>
               <AgeCont>
-                <Title><TitleText2>Age</TitleText2></Title>
-                <Info><InfoText>{age}</InfoText></Info>
+                <Title><TitleText2><Text>Age</Text></TitleText2></Title>
+                <Info><InfoText><Text>{age}</Text></InfoText></Info>
               </AgeCont>
               <BreedCont>
-                <Title><TitleText2>Breed</TitleText2></Title>
-                <Info><InfoText>{breed}</InfoText></Info>
+                <Title><TitleText2><Text>Breed</Text></TitleText2></Title>
+                <Info><InfoText><Text>{breed}</Text></InfoText></Info>
               </BreedCont>
               <LikesCont>
-                <Title><TitleText2>Likes</TitleText2></Title>
-                <Info><InfoText>{likes}</InfoText></Info>
+                <Title><TitleText2><Text>Likes</Text></TitleText2></Title>
               </LikesCont>
             </BottomCont>
           </BottomInfo>

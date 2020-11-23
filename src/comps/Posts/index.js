@@ -4,26 +4,18 @@ import { View, Text } from "react-native";
 
 const Description = styled.Text`
   color: #565555;
-  justify-content: left;
-  align-items: left;
   text-align: left;
-  font-weight: 400;
+  font-size:12px;
 `;
 const Titletext = styled.Text`
   color: #000;
-  justify-content: left;
-  align-items: left;
   text-align: left;
-  font-weight: 500;
+  font-weight: bold;
+  font-size:14px;
 `;
 
 const TextCont = styled.View`
   display: flex;
-  align-items: column;
-  /* margin-left: auto;
-  margin-right: auto; */
-  /* margin-top: 20px; */
-  margin-left: 30px;
 `;
 
 const Posts = () => {

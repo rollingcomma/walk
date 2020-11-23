@@ -1,11 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components/native";
-import { View } from "react-native";
-
+import { Formik } from 'formik';
+import { FontAwesome } from '@expo/vector-icons';
+import { View, Text, Modal, StyleSheet, onPress } from "react-native";
+import colors from '../../styles/colors';
 const PopupCont = styled.View`
   width: 324px;
   height: 254px;
-  /* background-color: red; */
+  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,7 +25,7 @@ const Exit = styled.View`
   justify-content: center;
 `;
 
-const ImgBox = styled.View`
+const ImgBox = styled.Button`
   width: 17px;
   height: 16px;
   margin-right:10px;
@@ -72,6 +74,7 @@ const ImgInput = styled.View`
   flex: 1;
   height: 44px;
 `;
+
 const Close = styled.Image`
 width:100%;
 height:100%;
@@ -82,30 +85,75 @@ const InputT = styled.TextInput`
   height:100%;
 `;
 
-const Popup = ({}) => {
+
+
+const nextarrow = require("./nextarrow.png");
+const close = require("./close.png");
+
+
+const Popup = ({
+  modalVisible,
+  handleModalClose
+}) => {
   return (
-    <View>
+   <Modal 
+      transparent
+      visible={modalVisible}
+      animationType="fade">
+      <View style={styles.modalContainer}>
       <PopupCont>
         <Exit>
-          <ImgBox>
-          <Close source={require=("./close.png")} />
-          </ImgBox>
+          <FontAwesome.Button
+            name="close"
+            backgroundColor="transparent"
+            size= {20}
+            color={colors.secondary}
+            onPress={() => handleModalClose()}/>
         </Exit>
-        <TextDisplay>Send a Message</TextDisplay>
-        <Inputs>
-          <InputsCont>
-            <TextInput>
-              <InputT placeholder="Type a Message..." />
-            </TextInput>
-            <ImgInput>
-                <Close source={require=("./nextarrow.png")} />
-            </ImgInput>
-          </InputsCont>
-        </Inputs>
+        <TextDisplay><Text >Send a Message</Text></TextDisplay>
+        <Formik  
+            initialValues={{
+              message:"",
+            }}
+            onSubmit = {async values => {
+              console.log("form submitted");
+              // const dogProfile = await dogProfile(user.uid, values);
+              // console.log("dog profile created", dogProfile)
+            }}>
+            {({handleChange, handleBlur, handleReset, handleSubmit, values, touched, errors, isSubmitting}) => {
+              return(
+                <>
+                <Inputs>
+                  <InputsCont>
+                    <TextInput>
+                      <InputT placeholder="Type a Message..." />
+                    </TextInput>
+                    <FontAwesome.Button
+                      name="chevron-circle-right"
+                      size= {30}
+                      backgroundColor="transparent"
+                      color={colors.primary}
+                      onPress={() => handleModalClose() }
+                      />
+                  </InputsCont>
+                </Inputs>
+                 </>
+              );
+            }}
+          </Formik>
       </PopupCont>
-    </View>
+      </View>
+    </Modal>
   );
 };
+const styles = StyleSheet.create({
+  modalContainer: {
+    flex:1,
+    paddingHorizontal: 30,
+    backgroundColor:'rgba(0,0,0,0.8)',
+    justifyContent: "center",
+    alignItems:"center"
+  }})
 
 Popup.defaultProps = {};
 

@@ -56,12 +56,6 @@ const user = require("./user.png");
 const activeuser = require("./activeuser.png");
 
 const WalkerFooterBar = ({ onPress }) => {
-  /*
-  const [Activehome, setActivehome] = useState(false);
-  const [Activechat, setActivechat] = useState(false);
-  const [Activeevents, setActiveevents] = useState(false);
-  const [Activeuser, setActiveuser] = useState(false);*/
-
   const [active, setActive] = useState(4);
 
   return (

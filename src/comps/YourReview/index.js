@@ -3,30 +3,32 @@ import styled from "styled-components/native";
 import { View, Text, TouchableOpacity } from "react-native";
 
 const Reviewtext = styled.Text`
-  font-weight: 700;
+  font-weight: bold;
   color: #000;
   font-size:22;
 `;
 
 const Main = styled.View`
-  display: flex;
+  /* display: flex; */
   /* margin-left: 20px; */
+  /* align-items:center; */
+  /* justify-content:center; */
 `;
 
 const Star1 = styled.TouchableOpacity`
-  margin: 5px;
+  margin: 10px 0 0 15px;
 `;
 
 const Starscontainer = styled.View`
-  width: 124px;
-  justify-content: space-between;
-  display: flex;
+  /* width: 124px; */
+  /* justify-content: space-between; */
+  /* display: flex; */
   flex-direction: row;
 `;
 
 const StarImg = styled.Image`
-  width: 50px;
-  height: 50px;
+  /* width: 50px; */
+  /* height: 50px; */
   /* object-fit: contain; */
 `;
 

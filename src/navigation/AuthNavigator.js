@@ -1,12 +1,10 @@
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
-// import { Login, ContinueAs, NewOwner, NewWalker} from "../screens/";
-import Login from "../screens/Login";
-import ContinueAs from "../screens/ContinueAs";
+import { SignIn, ContinueAsPage} from "../Pages";
+
 import NewOwner from "../screens/NewOwner";
 import NewWalker from "../screens/NewWalker";
-import SignIn from "../Pages/SignIn";
-import ContinueAsPage from "../Pages/ContinueAsPage";
+
 
 const Stack = createStackNavigator();
 

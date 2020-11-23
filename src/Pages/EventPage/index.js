@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import styled from "styled-components/native";
 import TopBar from "../../comps/TopBar";
 import EventInfo from "../../comps/EventInfo";
-import FooterBar from "../../comps/FooterBar";
+// import FooterBar from "../../comps/FooterBar";
 import Spacer from "../../comps/Spacer";
 
 const Header = styled.View``;
@@ -54,9 +54,9 @@ const Events = () => {
     <View>
       <Main>
         <MainCont>
-          <Header>
+          {/* <Header>
             <TopBar title="Events" />
-          </Header>
+          </Header> */}
           <Cont>
             <EventsCont>
               <EventInfo />
@@ -65,9 +65,9 @@ const Events = () => {
               </SpacerCont>
             </EventsCont>
           </Cont>
-          <FooterCont>
+          {/* <FooterCont>
             <FooterBar />
-          </FooterCont>
+          </FooterCont> */}
         </MainCont>
       </Main>
     </View>

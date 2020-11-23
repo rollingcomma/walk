@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import MapView , { Marker } from 'react-native-maps';
 import { StyleSheet, Dimensions, Image } from 'react-native';
 
-export default function Map() {
+export default function Map({style}) {
   const initialRegion = {
     latitude: 49.24966 ,
     longitude: -123.11934,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    latitudeDelta: 0.0122,
+    longitudeDelta: 0.0121,
   };
   const [region, setRegion] = useState(initialRegion);
 
@@ -22,7 +22,6 @@ export default function Map() {
             onRegionChangeComplete={region => setRegion(region) }
           >
             <Image source={require("../../assets/paw.png")} style={{height:25, width:25}} />
-
             </Marker>
         }
       </MapView>
@@ -31,9 +30,6 @@ export default function Map() {
 
 const styles = StyleSheet.create({
   mapStyle: {
-  //  flex: 1,
-  //  alignItems: "center"
-    width: Dimensions.get('window').width,
-    height: (Dimensions.get('window').height)/2.2,
+    flex:1
   },
 });
