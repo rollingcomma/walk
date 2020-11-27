@@ -4,19 +4,59 @@ import { View, Text, Image, StyleSheet} from "react-native";
 import Title from "../../comps/Title";
 import GoogleButton from "../../comps/GoogleButton";
 import FacebookButton from "../../comps/FacebookButton";
+import { signInWithGoogle, signInWithFacebook, findUser, createUser} from "../../db/DBUtils";
+import { useUserState } from "../../hook/useUserState"
+import { usersRef } from "../../db/DBRefs";
 
-const SignIn = () => {
+const SignIn = ({navigation}) => {
+  const [ userState, dispatchUser] = useUserState();
+ 
+  const handleDirectUser = async (currentUser) => {
+    console.log("direct user")
+    const user =  await findUser(currentUser.uid);
+    console.log("find user", user)
+    if( user && user.type ) {
+      dispatchUser(user);
+      console.log("userState",userState);
+      return; 
+    }
+    if(!user) {
+      const newUser = {
+        ...currentUser,
+        createdAt: new Date()
+      }
+      if(await createUser(newUser)) user = newUser;
+    }
+    if(user && !user.type){
+      dispatchUser(user);
+      navigation.navigate("ContinueAs");
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    const currentUser = await signInWithGoogle();
+
+    if(currentUser)
+      await handleDirectUser(currentUser);
+  };
+
+  const handleFacebookSignIn = async () => {
+    const currentUser = await signInWithFacebook();
+    if(currentUser)
+    await handleDirectUser(currentUser);
+  };
+
   return (
     <View style={styles.background}>
       <View style={styles.signinCont}>
         <Title />
         <View style={styles.buttonCont}>
-          <GoogleButton style={styles.GoogleButton} />
+          <GoogleButton style={styles.GoogleButton} onPress={handleGoogleSignIn}/>
           <Text>or</Text>
-          <FacebookButton />
+          <FacebookButton onPress={handleFacebookSignIn}/>
         </View>
       </View>
-      </View>
+    </View>
   );
 };
 

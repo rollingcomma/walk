@@ -13,7 +13,7 @@ export default WalkerNavigator = () => {
   return (
   <Tab.Navigator tabBar={props => <FooterBarWalker {...props} />}>
     <Tab.Screen 
-      name="Feed"
+      name="Home"
       component={FeedNavigator}
       // options={{title:"Posts"}}
     />

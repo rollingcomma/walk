@@ -10,8 +10,83 @@ import {
 } from './DBRefs';
 import "react-native-get-random-values";
 import {v4 as uuidv4} from 'uuid';
-import { batch, firestoreFieldValue } from './firebase';
+import { batch, firestoreFieldValue, auth, firestore } from './firebase';
+import * as Facebook from 'expo-facebook';
+import * as Google from 'expo-google-app-auth';
 
+
+/**
+ * 
+ */
+export const signInWithGoogle = async () => {
+    const config = {
+      iosClientId: "855049434388-lg44s04igmic2jh4bl3ud1iq4ne3np4m.apps.googleusercontent.com",
+      androidClientId: "855049434388-ab84sv7shltutn0vdm7gdd55qrsf5ml5.apps.googleusercontent.com",
+      scopes: ["profile", "email"]
+    }
+    try {
+      const {
+        type,
+        idToken,
+        accessToken
+      } = await Google.logInAsync(config);
+      
+      if(type === 'success') {
+        const credential = auth.GoogleAuthProvider.credential(idToken, accessToken);
+        await auth().signInWithCredential(credential);
+        if (auth().currentUser) {
+          return {
+            uid: auth().currentUser.uid,
+            username: auth().currentUser.displayName,
+            email: auth().currentUser.email,
+            photoURL:auth().currentUser.photoURL
+          }
+        //return currentUser;
+        }
+      } else {
+        console.log("login failed");
+      }
+    } catch ({ message }) {
+      console.log(`Google Login Error: ${message}`);
+    }
+  }
+
+  /**
+   * 
+   */
+  export const signInWithFacebook = async () => {
+    try{
+      await Facebook.initializeAsync();
+      const {
+        type,
+        token
+      } = await Facebook.logInWithReadPermissionsAsync( {appId: "2719816824957835",
+          permissions: ['public_profile'],
+        });
+      
+      if(type === 'success') {
+        const credential = auth.FacebookAuthProvider.credential(token);
+        //console.log(credential)
+        await auth().signInWithCredential(credential);
+        if (auth().currentUser) {
+          currentUser = {
+            uid: auth().currentUser.uid,
+            username: auth().currentUser.displayName,
+            email: auth().currentUser.email,
+            photoURL:auth().currentUser.photoURL
+          }
+        }
+        return currentUser;
+
+      } else {
+        console.log("login failed");
+      }
+    } catch ({ message }) {
+      console.log(`Facebook Login Error: ${message}`);
+    }
+  };
+
+  
 
 /**
  * description: fetch user by uid

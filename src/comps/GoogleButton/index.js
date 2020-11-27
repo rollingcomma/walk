@@ -2,32 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components/native";
 import { View, Text, TouchableOpacity } from "react-native";
 
-// const Button = styled.TouchableOpacity`
-//   align-items: center;
-//   justify-content: center; 
-//   top: 50%;
-//   margin-top: 20px;
-// `;
-
-// const FBlogo = styled.View`
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: space-between;
-//   align-items: center;
-// `;
-
-// const ImgCont = styled.View`
-//   width: 30px;
-//   height: 30px;
-//   display: flex;
-
-//   img {
-//     width: 100%;
-//     height: 100%;
-//     object-fit: cover;
-//   }
-// `;
-
 const ButtonBox = styled.TouchableOpacity`
   /* display: flex; */
   flex-direction: row;
@@ -63,34 +37,26 @@ const GoogleImg = styled.Image`
 
 const google = require("./google.png");
 
-const GoogleButton = () => {
+const GoogleButton = ({onPress}) => {
   const [highlight, setHighlight] = useState(false);
 
   return (
     <View>
-      {/* <Button> */}
         <ButtonBox
-          onPress={() => {
-            setHighlight(!highlight);
-          }}
-          highlight={highlight}
+          onPress={()=> onPress()}
+          //highlight={highlight}
         >
-          {/* <FBlogo> */}
-            {/* <ImgCont> */}
-              <GoogleImg source={google} />
-            {/* </ImgCont> */}
-            <Buttontext>
-              <Text>Sign in With Google</Text>
-            </Buttontext>
-          {/* </FBlogo> */}
+          <GoogleImg source={google} />
+          <Buttontext>
+            <Text>Sign in With Google</Text>
+          </Buttontext>
         </ButtonBox>
-      {/* </Button> */}
     </View>
   );
 };
 
-GoogleButton.defaultProps = {
-  onPress: () => {}
-};
+// GoogleButton.defaultProps = {
+//   onPress: () => {}
+// };
 
 export default GoogleButton; 
