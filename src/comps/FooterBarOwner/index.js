@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
 import { View, TouchableOpacity } from "react-native";
+import ImageUpload from "../../components/ImageUpload";
 
 const Usericon = styled.TouchableOpacity``;
 
@@ -63,7 +64,7 @@ const activechat = require("./activechat.png");
 const user = require("./user.png");
 const activeuser = require("./activeuser.png");
 
-const FooterBar = ({state, descriptors, navigation}) => {
+const FooterBar = ({state, descriptors, navigation }) => {
   
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   if(focusedOptions.tabBarVisible === false) {return null}

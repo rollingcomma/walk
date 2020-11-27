@@ -8,7 +8,7 @@ const TextCont = styled.View`
   margin-right: auto; */
   /* margin-left: 20px; */
   padding-top: 20px;
-  width:150;
+  width:150px;
 `;
 
 const LocationTitle = styled.Text`

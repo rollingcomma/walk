@@ -146,12 +146,33 @@ export default ImageUpload = () => {
           Create a Post
         </Text>
       )}
-      <Button
+      <TouchableOpacity
         onPress={handleImagePicking}
-        title="Pick an image from camera roll"
-      />
+        style={{
+          fontSize: 18,
+          padding:10,
+          marginBottom:10,
+          color:"#38BC64",
+          backgroundColor:"#97D7DA",
+          borderRadius:10,
+        }}>
+          <Text>Pick an image from camera roll</Text>
+        </TouchableOpacity>
+       <Text > Or </Text> 
 
-      <Button onPress={handlePhotoTaking} title="Take a photo" />
+      <TouchableOpacity 
+        onPress={handlePhotoTaking} 
+        style={{
+          fontSize: 18,
+          padding: 10,
+          marginTop:10,
+          color:"#38BC64",
+          backgroundColor:"#97D7DA",
+          borderRadius:10,
+        }}>
+          <Text>Take a photo</Text>
+        </TouchableOpacity>
+       
 
       {handleRenderImage()}
       {handleRenderUploadingOverlay()}

@@ -7,6 +7,7 @@ import AppNavigator from "./src/navigation/AppNavigator";
 import AuthNavigator from "./src/navigation/AuthNavigator";
 import UserStateProvider from "./src/context/UserStateProvider";
 import { useUserState } from "./src/hook/useUserState";
+import { EventPage, WalkerAuthentication, WalkerEditProfile, AddEvent, OwnerEditProfile } from './src/Pages';
 
 export default App= () => {
   console.log("app")
@@ -17,6 +18,7 @@ export default App= () => {
         <NavigationContainer>
           {userState? <AppNavigator />: <AuthNavigator /> } 
         </NavigationContainer>
+       
       </Screen>
     </UserStateProvider>
     

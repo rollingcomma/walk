@@ -22,7 +22,7 @@ const Buttonbox = styled.TouchableOpacity`
 
 const Buttontext = styled.Text` 
   color: #fff;
-font-size:16px;
+  font-size:16px;
   margin-left:5px;
 `;
 
@@ -30,7 +30,7 @@ const Details = styled.Text`
   display: flex;
   /* justify-content: left; */
   /* align-items: left; */
-  font-size:13;
+  font-size:13px;
   margin-top: 5px;
   margin-bottom: 5px;
   flex-direction: column;

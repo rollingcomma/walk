@@ -115,7 +115,7 @@ const ViewDogProfile = ({
                   <View style={styles.ImgCont}>{image1}</View>
                 </View>
                 <View style={styles.Bottom}>
-                  <Text style={{ fontSize: 16, fontWeight: 500 }}>Likes</Text>
+                  <Text style={{ fontSize: "16px", fontWeight: 500 }}>Likes</Text>
                   {/* props from "likes" from "OwnerEditProfile" */}
                   <Text>{likeone}</Text>
                   <Text>{liketwo}</Text>
@@ -125,11 +125,11 @@ const ViewDogProfile = ({
               <View style={styles.Info}>
                 <View style={styles.Top}>
                   {/* props for dog name, breed, and age from "OwnerEditProfile" */}
-                  <Text style={{ fontSize: 28, fontWeight: 500 }}>
+                  <Text style={{ fontSize: "28px", fontWeight: 500 }}>
                     {dogname}
                   </Text>
-                  <Text style={{ fontSize: 16 }}>{dogbreed}</Text>
-                  <Text style={{ fontSize: 16 }}>{dogage}</Text>
+                  <Text style={{ fontSize: "16px" }}>{dogbreed}</Text>
+                  <Text style={{ fontSize: "16px" }}>{dogage}</Text>
                   {/* bgcolor not working */}
                   <BasicButton
                     text="Activate Walk"
@@ -141,7 +141,7 @@ const ViewDogProfile = ({
                 </View>
                 <View style={styles.Bottom}>
                   <View style={styles.Bottom}>
-                    <Text style={{ fontSize: 16, fontWeight: 500 }}>
+                    <Text style={{ fontSize: "16px", fontWeight: 500 }}>
                       Dislikes
                     </Text>
                     {/* props from "dislikes" from "OwnerEditPage" */}

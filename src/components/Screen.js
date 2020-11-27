@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView, Dimensions } from 'react-native';
 import Constants from 'expo-constants'; 
 
 export default Screen = ({children}) => {
@@ -12,5 +12,6 @@ export default Screen = ({children}) => {
 const styles = StyleSheet.create({
   screen: {
     flex:1,
+    width: Dimensions.get("window").width,
     marginTop: Constants.statusBarHeight,
   }})

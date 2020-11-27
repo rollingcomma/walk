@@ -20,7 +20,7 @@ export default function OwnerNavigator() {
       <Tab.Screen 
         name="Event"
         component={EventNavigator}
-        // options={{title:"Events"}}
+        options={{title:"Events"}}
       />
       <Tab.Screen 
         name="Add"

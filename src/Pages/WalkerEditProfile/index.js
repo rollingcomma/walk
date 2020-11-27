@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import styled from "styled-components/native";
 
 import Description from "../../comps/Description";
@@ -18,22 +18,23 @@ import DashDog from "../../comps/DashDog";
 import DashOwner from "../../comps/DashOwner";
 import AddImage from "../../comps/AddImage";
 import Spacer from "../../comps/Spacer";
-import TopBar from "../../comps/TopBar";
+//import TopBar from "../../comps/TopBar";
 import AvatarWithName from "../../comps/Avatar/AvatarWithName";
 import AvatarEdit from "../../comps/Avatar/AvatarEdit";
-// import FooterBar from "../../comps/FooterBar";
+//import FooterBar from "../../comps/FooterBar";
+
 
 const Main = styled.View`
-  width:375px;
-  height:812px;
-  display:flex;
-  flex-direction:column;
+  /* width:375px; */
+  /* height:812px; */
+  /* display:flex;
+  flex-direction:column; */
   /* background-color:red; */
-  align-items:center;
+  /* align-items:center; */
 `;
 const MainCont = styled.View`
-  width:100%;
-  height:812px;
+  /* width:100%; */
+  height:100%;
 `;
 const FooterCont = styled.View`
   width:375px;
@@ -41,41 +42,42 @@ const FooterCont = styled.View`
   bottom:0;
 `;
 const Cont = styled.View`
-  width:100%;
-  height:86%;
+  /* width:100%; */
+  height:100%;
   /* background-color:blue; */
-  overflow:scroll;
-  display:flex;
+  /* overflow-y:scroll; */
+  /* display:flex;
   flex-direction:column;
-  align-items:center;
+  align-items:center; */
 `;
 const Top = styled.View`
-  width:100%;
-  height:194px;
+  /* width:100%; */
+  height:200px;
   /* background-color:#DBD; */
-  display:flex;
-  flex-direction:column;
+  /* display:flex;
+  flex-direction:column;*/
   justify-content:center;
 `;
 const PersonalInfo = styled.View`
-  width:100%;
-  height:202px;
+  /* width:100%; */
+  height:220px;
   /* background-color:#CCA; */
-  z-index:5;
-  display:flex;
+  /* z-index:5; */
+  /* display:flex; */
   margin-top:10px;
 `;
 const BasicInfo = styled.View`
-  width:100%;
-  height:227px;
+  /* width:100%; */
+  height:250px;
   display:flex;
   flex-direction:column;
   background-color:#FFF;
   align-items:center;
+  justify-content:center;
 `;
 const HeaderText = styled.Text`
   font-weight: 500;
-  font-size: 14px;
+  font-size: 30px;
   margin-left:20px;
   margin-top:14px;
   /* background-color:#ACA; */
@@ -93,15 +95,15 @@ const Bcont = styled.View`
   margin-top:24px;
 `;
 const EmergencyInfo = styled.View`
-  width:100%;
-  height:180px;
+  /* width:100%; */
+  height:270px;
   /* background-color:#ECA; */
   z-index:4;
   display:flex;
   margin-top:16px;
 `;
 const InputCont2 = styled.View`
-  width:100%;
+  /* width:100%; */
   height:120px;
   display:flex;
   align-items:center;
@@ -126,7 +128,8 @@ const WalkerEditProfile = () => {
     <View>
     <Main>
       <MainCont>
-        <TopBar title="Edit Profile" text1="Cancel" text2="Done"/>
+        {/* <TopBar title="Edit Profile" text1="Cancel" text2="Done"/> */}
+        <ScrollView>
         <Cont>
           <Top>
             <AvatarEdit />
@@ -134,23 +137,27 @@ const WalkerEditProfile = () => {
           <Spacer />
           <BasicInfo>
             <Input text="Name" 
+            height="37px"
             onChangeText={(t)=>{
-              alert(t)
+              // alert(t)
               setName(name);
               }}/>
             <Input text="Age" 
+            height="37px"
             onChangeText={(t)=>{
-              alert(t)
+              // alert(t)
               setAge(age);
             }}/>
             <Input text="Location"
+            height="37px"
             onChangeText={(t)=>{
-              alert(t)
+              // alert(t)
               setLocation(location);
             }}/>
-            <Input text="Bio" height="48px"
+            <Input text="Bio" 
+            height="48px"
             onChangeText={(t)=>{
-              alert(t)
+              // alert(t)
               setBio(bio);
             }}/>
           </BasicInfo>
@@ -159,13 +166,15 @@ const WalkerEditProfile = () => {
             <HeaderText>Personal Information</HeaderText>
             <InputCont>
               <Input text="Email"
+              height="37px"
                 onChangeText={(t)=>{
-                  alert(t)
+                  // alert(t)
                   setEmail(email);
               }}/>
               <Input text="Phone"
+              height="37px"
                 onChangeText={(t)=>{
-                  alert(t)
+                  // alert(t)
                   setPhone(phone);
               }}/>
                 <Bcont>
@@ -180,18 +189,21 @@ const WalkerEditProfile = () => {
               <HeaderText>Emergency Contact Information</HeaderText>
                 <InputCont2>
                   <Input text="Name"
+                  height="37px"
                     onChangeText={(t)=>{
-                      alert(t)
+                      // alert(t)
                       emSetName(emname);
                       }}/>
                   <Input text="Phone"
+                      height="37px"
                     onChangeText={(t)=>{
-                      alert(t)
+                      // alert(t)
                       emSetPhone(emphone);
                       }}/>
                   </InputCont2>
               </EmergencyInfo>
           </Cont>
+          </ScrollView>
         {/* <FooterCont><FooterBar /></FooterCont> */}
      </MainCont>
       </Main>

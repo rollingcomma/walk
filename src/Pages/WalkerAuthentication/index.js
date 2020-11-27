@@ -1,75 +1,95 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { ScrollView, View, Text, StyleSheet } from "react-native";
 import styled from "styled-components/native";
 
-import Description from "../../comps/Description";
 import Dropdown from "../../comps/Dropdown";
 import Input from "../../comps/Input";
-import Likes from "../../comps/Likes";
-import Popup from "../../comps/Popup";
-import Texting from "../../comps/Texting";
-import Post from "../../comps/Post";
-import WalkerProfile from "../../comps/WalkerProfile";
-import MsgSent from "../../comps/MsgSent";
-import MsgSelection from "../../comps/MsgSelection";
 import Birthday from "../../comps/Birthday";
-import MsgRecieved from "../../comps/MsgRecieved";
-import DashDog from "../../comps/DashDog";
-import DashOwner from "../../comps/DashOwner";
-import AddImage from "../../comps/AddImage";
 import Spacer from "../../comps/Spacer";
-import TopBar from "../../comps/TopBar";
-import AvatarWithName from "../../comps/Avatar/AvatarWithName";
-import AvatarEdit from "../../comps/Avatar/AvatarEdit";
-// import FooterBar from "../../comps/FooterBar";
-import Avatar06 from "../../comps/Avatar/Avatar06";
+//mport FooterBar from "../../comps/FooterBar";
 import Province from "../../comps/Province";
-import Button from "../../comps/Button";
+import BasicButton from "../../comps/WButton/BasicButton";
 
 const Main = styled.View`
-  width: 375px;
-  height: 812px;
+  /* width: 375px;
+  height: 812px; */
   /* background-color: red; */
-  align-items: center;
-  margin: 30px 30px;
+  height:100%;
+  
+
 `;
-const MainCont = styled.View`
-  width: 100%;
-  height: 812px;
-`;
-const FooterCont = styled.View`
-  width: 375px;
-  position: absolute;
-  bottom: 0;
-`;
+
 const Cont = styled.View`
-  width: 100%;
-  height: 92%;
-  /* background-color: blue; */
-  overflow: scroll;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+align-items: center;
+  /* width: 100%; */
+  /* height: 50%; */
+  
+  /* flex-direction: column; */
+  /* align-items: center; */
 `;
+
+
+
 const TitleText = styled.Text`
   font-size: 24px;
   color: #53b7be;
-  margin-top: 60px;
+  margin-top: 50px;
 `;
+
+const InputCont = styled.View`
+`;
+
+const styles = StyleSheet.create({ 
+  country: {
+    marginTop:30,
+    // justifyContent:"center",
+    // alignItems:"center",
+    // backgroundColor:"red",
+    // height:"100%"
+  },
+  InputCont: {
+    marginTop:30,
+  },
+  Province: {
+    marginTop:30
+  },
+  zip: {
+    marginTop:30,
+  },
+  zipinput: {
+    width:50,
+  },
+  birth: {
+    marginTop:30,
+  },
+  spacer: {
+    marginTop:50,
+    marginBottom:20,
+    // width:"100%"
+    // height:10,
+  }, 
+  emergencyname: {
+    marginTop:30,
+  },
+  emergencyphone: {
+    marginTop:30,
+
+  },
+  button: {
+    marginTop:50,
+    marginBottom:50
+  }
+});
+
 const TitleText2 = styled.Text`
   font-size: 24px;
   color: #53b7be;
   margin-top: 30px;
 `;
-const InputCont = styled.View`
-  width: 100%;
-  height: 570px;
-  /* background-color: #bdb; */
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  z-index: 4;
-`;
+
+
+
+
 
 const WalkerAuthentication = () => {
   const [phone, setPhone] = useState("");
@@ -78,61 +98,113 @@ const WalkerAuthentication = () => {
   const [emname, emSetName] = useState("");
   const [emphone, emSetPhone] = useState("");
   return (
-    <View>
       <Main>
-        <MainCont>
+        {/* <MainCont> */}
+        <ScrollView>
           <Cont>
             <TitleText>Dog Walker Application</TitleText>
-            <InputCont>
+            
+            <InputCont  style={styles.InputCont}>
+              <Text>Phone</Text>
               <Input
-                text="Phone"
+                height={37}
+                width={275}
                 onChangeText={(t) => {
-                  alert(t);
+                  // alert(t);
                   phone(setPhone);
                 }}
-              />
+                />
+              <Text>Email</Text>
               <Input
-                text="Email"
+                height={37}
+                width={275}
                 onChangeText={(t) => {
-                  alert(t);
+                  // alert(t);
                   email(setEmail);
                 }}
               />
-              <Dropdown />
-              <Province text="Province" />
-              <Input
-                text="Zip Code"
-                onChangeText={(t) => {
-                  alert(t);
-                  walkerzip(setWalkerZip);
-                }}
-              />
-              <Birthday />
             </InputCont>
+
+              <View style={styles.country}>
+                <Dropdown />
+              </View>
+
+              <View style={styles.Province}>
+                <Province text="Province" />
+              </View>
+
+              <View style={styles.zip}>
+                <Text>Zip Code</Text>
+              <Input  style={styles.zipinput}
+                height={37}
+                width={275}
+                onChangeText={(t) => {
+                  // alert(t);
+                  walkerzip(setWalkerZip);
+                }}></Input>
+
+
+              <View style={styles.birth}>
+              <Birthday />
+              </View>
+
+
+              </View>
+              </Cont>
+              <View  style={styles.spacer}>
             <Spacer />
-            <TitleText2>Emergency Contact</TitleText2>
-            <Input
-              text="Name"
+            </View>
+            <Cont>
+              <TitleText2>Emergency Contact</TitleText2>
+              
+              <View style={styles.emergencyname}>
+              <Text>Name</Text>
+              <Input
+              height={37}
+                width={275}
+                onChangeText={(t) => {
+                  // alert(t);
+                  emname(emSetName);
+                }}
+                />
+              </View>
+
+
+             
+
+              <View style={styles.emergencyphone}>
+              <Text>Phone</Text>
+              <Input
+              height={37}
+              width={275}
               onChangeText={(t) => {
-                alert(t);
-                emname(emSetName);
-              }}
-            />
-            <Input
-              text="Phone"
-              onChangeText={(t) => {
-                alert(t);
+                // alert(t);
                 emphone(emSetPhone);
               }}
-            />
-            <Button text="Continue" height="44px" backgroundColor="#53B7BE" />
+              />
+              </View>
+
+              <View style={styles.button}>
+              <BasicButton 
+              text="Continue" 
+              height={44} 
+              width={275}
+              backgroundColor="#53B7BE" />
+              </View>
+
+
+
+              
+           
+
+            
           </Cont>
-          {/* <FooterCont>
-            <FooterBar />
-          </FooterCont> */}
-        </MainCont>
+          </ScrollView>
+         
+            {/* <FooterBar /> */}
+         
+        {/* </MainCont> */}
       </Main>
-    </View>
   );
 };
 

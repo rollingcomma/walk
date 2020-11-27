@@ -19,7 +19,7 @@ export default WalkerNavigator = () => {
     />
     <Tab.Screen 
       name="Event"
-      component={Event}
+      component={EventPage}
       options={{title:"Events"}}
     />
     <Tab.Screen 
