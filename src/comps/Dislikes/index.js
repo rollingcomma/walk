@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components/native";
 import { View, TextInput, Text, StyleSheet } from "react-native";
 
@@ -43,10 +43,14 @@ const styles = StyleSheet.create({
 });
 
 
-const Dislikes = ({ maintext}) => {
-  const [dislikeone, setDislikeOne] = useState("");
-  const [disliketwo, setDislikeTwo] = useState("");
-  const [dislikethree, setDislikeThree] = useState("");
+const Dislikes = ({ maintext, dislikes, handleDislikes}) => {
+  const [dislikeone, setDislikeOne] = useState(dislikes && dislikes[0] ||"");
+  const [disliketwo, setDislikeTwo] = useState(dislikes && dislikes[1] ||"");
+  const [dislikethree, setDislikeThree] =useState(dislikes && dislikes[2] ||"");
+  
+  useEffect(()=>{
+    handleDislike([dislikeone, disliketwo, dislikethree]);
+  },[dislikeone, disliketwo, dislikethree]);
   return (
     <View>
       <MainCont>
@@ -55,21 +59,27 @@ const Dislikes = ({ maintext}) => {
         </LeftSide>
         <RightSide>
           <OpOne>
-          <Input1 placeholder="Type something..." onChangeText={(t)=>{
-              alert(t)
-              setDislikeOne(dislikeone);
+          <Input1 
+            placeholder="Type something..." 
+            value={dislikeone}
+            onChangeText={(text)=>{
+              setDislikeOne(text);
             }}/>
           </OpOne>
           <OpOne>
-          <Input1 placeholder="Type something..." onChangeText={(t)=>{
-              alert(t)
-              setDislikeTwo(disliketwo);
+          <Input1 
+            placeholder="Type something..."
+            value={disliketwo}
+            onChangeText={(text)=>{
+              setDislikeTwo(text);
             }}/>
           </OpOne>
           <OpOne>
-            <Input1 placeholder="Type something..." onChangeText={(t)=>{
-              alert(t)
-              setDislikeThree(dislikethree);
+            <Input1 
+              placeholder="Type something..." 
+              value={dislikethree}
+              onChangeText={(t)=>{
+                setDislikeThree(t);
             }}/>
           </OpOne>
         </RightSide>

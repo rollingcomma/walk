@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Input = ({ text, placeholder, height, onChangeText, width }) => {
+const Input = ({ text, placeholder, height, onChangeText, width, multiline}) => {
   return (
     <View>
       <InputCont>
@@ -56,7 +56,7 @@ const Input = ({ text, placeholder, height, onChangeText, width }) => {
         </InputTitle>
         {/* <Spacer /> */}
         <InputBox  height={height}>
-          <TextInput onChangeText={onChangeText} placeholder={placeholder}  width={width} height={height} multiline/>
+          <TextInput onChangeText={onChangeText} placeholder={placeholder}  width={width} height={height} multiline={multiline}/>
         </InputBox>
       </InputCont>
     </View>

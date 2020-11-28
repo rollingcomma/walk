@@ -38,10 +38,9 @@ const Feed = () => {
         keyExtractor={post => post.id.toString()}
         renderItem={( { item })=> 
           <Cont>
-           <Post 
-            post={item.value}
-            distance={3}
-          
+            <Post 
+              post={item.value}
+              distance={3}
             />
           </Cont>
         }

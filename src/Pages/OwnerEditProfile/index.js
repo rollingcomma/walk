@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import { View, Text, KeyboardAvoidingView, Platform } from "react-native";
 import styled from "styled-components/native";
-
-
 import Input from "../../comps/Input";
 import Likes from "../../comps/Likes";
 import AddImage from "../../comps/AddImage";
 import Spacer from "../../comps/Spacer";
-//import TopBar from "../../comps/TopBar";
-//import FooterBar from "../../comps/FooterBar";
 import Avatar06 from "../../comps/Avatar/Avatar06";
 import Dislikes from "../../comps/Dislikes";
 import Province from "../../comps/Province";
+import { useUserState } from "../../hook/useUserState";
 
 const Main = styled.View`
   width: 375px;
@@ -102,13 +99,26 @@ const AddCont = styled.View`
 `;
 
 const OwnerEditProfile = () => {
-  const [dogname, setDogName] = useState("");
-  const [dogage, setDogAge] = useState("");
-  const [dogbreed, setDogBreed] = useState("");
-  const [dogemail, setDogEmail] = useState("");
-  const [dogphone, setDogPhone] = useState("");
-  const [dogadress, setDogAdress] = useState("");
-  const [dogzip, setDogZip] = useState("");
+  const [userState, dispatchUser] = useUserState();
+  const profile = userState && userState.user.profile? userState.user.Profile:null;
+  const [dogName, setDogName] = useState(profile && profile.name ||"");
+  const [dogAge, setDogAge] = useState(profile && profile.age || "");
+  const [dogBreed, setDogBreed] = useState(profile && profile.breed || "");
+  const [dogBio, setDogBio] = userState(profile && profile.bio || "");
+  const [phone, setPhone] = useState(profile && profile.phone ||"");
+  const [address, setAddress] = useState(profile && profile.address ||"");
+  const [city, setCity] = useState(profile && profile.city||"");
+  const [province, setProvince] = useState(profile && profile.province||"");
+  const [zip, setZip] = useState(profile && profile.postalCode || "");
+  const [likes, setLikes] = useState(profile && profile.likes || null);
+  const [dislikes, setDislikes] = useState(profile && profile.dislikes || null);
+  
+  const handleLikes = (likes) =>{
+    setLikes(likes);
+  }
+  const handleDislikes = (dislikes) =>{
+    setDislikes(dislikes);
+  }
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS == "ios" ? "padding" : "height"}
@@ -118,6 +128,7 @@ const OwnerEditProfile = () => {
         <MainCont>
          
           <Cont>
+           
             <Top>
               <Avatar06 />
             </Top>
@@ -126,25 +137,26 @@ const OwnerEditProfile = () => {
               <Input
                 text="Name"
                 height="35px"
-                onChangeText={(t) => {
-                  // alert(t);
-                  setDogName(dogname);
+                value= {dogName}
+                onChangeText={(text) => {
+                  setDogName(text);
                 }}
+               
               />
               <Input
                 text="Age"
                 height="35px"
-                onChangeText={(t) => {
-                  // alert(t);
-                  setDogAge(dogage);
+                value={dogAge}
+                onChangeText={(text) => {
+                  setDogAge(text);
                 }}
-              />
+               />
               <Input
                 text="Breed"
                 height="35px"
-                onChangeText={(t) => {
-                  // alert(t);
-                  setDogBreed(dogbreed);
+                value={dogBreed}
+                onChangeText={(text) => {
+                  setDogBreed(text);
                 }}
               />
             </BasicInfo>
@@ -155,17 +167,22 @@ const OwnerEditProfile = () => {
                 <Input
                   text="Bio"
                   height="48px"
-                  onChangeText={(t) => {
-                    // alert(t);
-                    setDogBreed(dogbreed);
+                  value={dogBio}
+                  onChangeText={(text) => {
+                    setDogBio(text);
                   }}
+                   multiline={true}
                 />
                 <LikesCont>
                   <Likes 
-                  maintext="Likes"
+                    maintext="Likes"
+                    likes={likes}
+                    handleLikes={handleLikes}
                   />
                   <Dislikes 
-                      maintext="Dislikes"
+                    maintext="Dislikes"
+                    likes={dislikes}
+                    handleDislikes={handleDislikes}
                   />
                 </LikesCont>
               </InputCont>
@@ -174,51 +191,51 @@ const OwnerEditProfile = () => {
             <PersonalInfo>
               <TitleText><Text>Personal Information</Text></TitleText>
               <InputCont2>
-                <Input
-                  text="Email"
-                  height="35px"
-                  onChangeText={(t) => {
-                    // alert(t);
-                    setDogEmail(dogemail);
-                  }}
-                />
-                <Input
+              <Input
                   text="Phone" height="35px"
-                  onChangeText={(t) => {
-                    // alert(t);
-                    setDogPhone(dogphone);
+                  value={phone}
+                  onChangeText={(text) => {
+                    setPhone(text);
                   }}
                 />
-               
-                <Province text="Province" />
-           
                 <Input
-                  text="Adress"
+                  text="address"
                   height="35px"
-                  onChangeText={(t) => {
+                  value={address}
+                  onChangeText={(text) => {
                     // alert(t);
-                    setDogAdress(dogadress);
+                    setAddress(text);
                   }}
                 />
+                <Input
+                  text="city"
+                  height="35px"
+                  value={city}
+                  onChangeText={(text) => {
+                    setCity(text);
+                  }}
+                />
+                <Province text="Province" />
                 <Input
                   text="Zip Code"
                   height="35px"
-                  onChangeText={(t) => {
+                  value={zip}
+                  onChangeText={(text) => {
                     // alert(t);
-                    setDogZip(dogzip);
+                    setZip(text);
                   }}
                 />
-                    
               </InputCont2>
             </PersonalInfo>
+            
             <Spacer />
-            <PostCont>
-              <TitleText><Text>Posts</Text></TitleText>
-              <TitleText2><Text>Add pup pics here!</Text></TitleText2>
-              <AddCont>
-                <AddImage />
-              </AddCont>
-            </PostCont>
+            {/* // <PostCont>
+            //   <TitleText><Text>Posts</Text></TitleText>
+            //   <TitleText2><Text>Add pup pics here!</Text></TitleText2>
+            //   <AddCont>
+            //     <AddImage />
+            //   </AddCont>
+            // </PostCont> */}
           </Cont>
           
         </MainCont>

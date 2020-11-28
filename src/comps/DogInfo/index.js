@@ -24,14 +24,14 @@ const Description = styled.Text`
   flex-direction: column; */
 `;
 
-const DogInfo = () => {
+const DogInfo = ({name, breed, age}) => {
   return (
     <View>
       <TextCont>
         
-          <Titletext>Milly</Titletext>
-          <Description>Border Collie</Description>
-          <Description>Age 6</Description>
+          <Titletext>{name}</Titletext>
+          <Description>{breed}</Description>
+          <Description>Age {age}</Description>
         
       </TextCont>
     </View>

@@ -12,6 +12,7 @@ export default AppNavigator = () => {
   
   return (
     <Stack.Navigator>
+
     {
       (userState && userState.user && userState.user.type ?
         (userState.user.type =="dog owner" ?
@@ -49,20 +50,21 @@ export default AppNavigator = () => {
                 component={ContinueAsPage}
                 options={{headerShown: false}} 
               />
-              <Stack.Screen 
-                name="NewOwner"
-                component={OwnerEditProfile}
-                options={{title:"create an owner"}}
-              />
-              <Stack.Screen 
-                name="NewWalker"
-                component={WalkerEditProfile}
-                options={{title:"create a walker"}}
-              />
+              
             </>
           )
       )
     }
+    <Stack.Screen 
+      name="NewOwner"
+      component={OwnerEditProfile}
+      options={{title:"create an owner"}}
+    />
+    <Stack.Screen 
+      name="NewWalker"
+      component={WalkerEditProfile}
+      options={{title:"create a walker"}}
+    />
     </Stack.Navigator>
   )
 }

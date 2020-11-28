@@ -100,8 +100,7 @@ const DisplayPic = styled.Image`
 `;
 const messageimg = require("./message.png");
 const likeimg = require("./like.png");
-const profilepicture = require("./Lucky.png");
-const display = require("./Lucky.png");
+
 const Post = ({
   post,
   distance}) => {
@@ -122,13 +121,11 @@ const Post = ({
                 width={40}
                 height={40}
               />
-              {/* <ProfileImage source={profilepicture} /> */}
               </ImgCont>
           </ProfilePic>
           <ProfileName>
             <NameText><Text>{post.name}</Text></NameText>
-            <ViewProfile onPress={() => navigation.navigate("DogProfileRequest", {pid: post.profileId})}>View Profile</ViewProfile>
-            
+            <ViewProfile onPress={() => navigation.navigate("DogProfileRequest", {profileId: post.dogId})}>View Profile</ViewProfile>
           </ProfileName>
           
           <Time><Text>HRs ago</Text></Time>
@@ -163,59 +160,14 @@ const Post = ({
   );
 };
 
-Post.defaultProps = {
-  text:"Lucky",
-  time:"2",
-  picture:"Lucky.png",
-  display:"Lucky.png",
-  distance:"1",
-  onPress: () => {},
-};
+// Post.defaultProps = {
+//   text:"Lucky",
+//   time:"2",
+//   picture:"Lucky.png",
+//   display:"Lucky.png",
+//   distance:"1",
+//   onPress: () => {},
+// };
 
-const styles = StyleSheet.create({
-  card: {
-    borderRadius: 10,
-    backgroundColor: colors.white,
-    marginBottom: 10
-  },
-  header: {
-    flexDirection:"row",
-    justifyContent:"flex-start",
-    margin:10,
-  },
-  profileName: {
-    marginStart: 10,
-    justifyContent: "center",
-  },
-  image:{
-    width:"100%",
-    height:200,
-  },
-  footer:{
-    flexDirection:"row",
-    justifyContent:"space-between",
-    margin:10,
-  },
-  requestBtnContainerStyle: {
-    paddingVertical: 10,
-    borderRadius: 5,
-    backgroundColor: colors.primary
-  },
-  requestBtnTextStyle: {
-    textAlign: "center",
-    color: colors.primary,
-    fontSize: 16
-  },
-  profileBtnContainerStyle: {
-    paddingVertical: 10,
-    color: colors.primary
-  },
-  requestBtnTextStyle: {
-    marginHorizontal:10,
-    textAlign: "center",
-    color: colors.white,
-    fontSize: 16,
-    fontWeight: "bold"
-  }
-})
+
 export default Post;

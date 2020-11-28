@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView} from "react-native";
 import DogPhotos from '../../comps/DogPhotos';
-// import FooterBar from '../../comps/FooterBar';
 import AvatarDogProfile from "../../comps/AvatarForm/AvatarDogProfile";
+import { getDogProfile } from "../../db/DBUtils";
+import { useUserState } from "../../hook/useUserState";
 
 const styles = StyleSheet.create({
   app: {
@@ -14,14 +15,29 @@ const styles = StyleSheet.create({
   },
 });
 
-const DogProfilePage = ({}) => {
- 
+const DogProfilePage = () => {
+  const [userState, dispatchUser] = useUserState();
+  const [profile, setProfile] = useState(null);
+
+   useEffect(() => {
+    
+    async function fetchData() {
+      const newProfile = await getDogProfile(userState.user.profileId);
+      if(newProfile) {
+        setProfile(newProfile);
+        const newUserState = {...userState};
+        newUserState.user.profile = newProfile;
+        dispatchUser(newUserState);
+      };
+    }
+    fetchData();
+  },[])
+
   return (
       <View style={styles.app}>
         <ScrollView>
-
           <View style={styles.AvatarDogProfile}>
-          <AvatarDogProfile />
+          {profile&& <AvatarDogProfile profile={profile}/>}
           </View>
           
           <DogPhotos/>

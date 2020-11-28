@@ -1,6 +1,8 @@
 import React from "react";
 import { View, Text, Image, StyleSheet} from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import BasicAvatar from "../BasicAvatar";
+import { useNavigation } from "@react-navigation/native"
 
 const styles = StyleSheet.create({
   container: {
@@ -14,18 +16,24 @@ const styles = StyleSheet.create({
   },
 });
 
-const AvatarEdit = ({}) => {
+const AvatarEdit = ({avatarUrl}) => {
+  const navigation = useNavigation();
   return (
       <View style={styles.container}
       >
         <BasicAvatar
-        image1={require('../dog3.jpg')}
+        image1={{uri:avatarUrl}}
          width={134}
          height={134}
          />
-         <Image style={styles.icon}
-        source={require('../edit.png')}
-        />
+        <TouchableOpacity opPress={() => {
+          navigation.navigate("OwnerEditProfile");
+        }}>
+          <Image style={styles.icon}
+            source={require('../edit.png')}
+          />
+        </TouchableOpacity> 
+         
       </View>
   );
 };

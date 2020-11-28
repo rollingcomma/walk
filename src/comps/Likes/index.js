@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import styled from "styled-components/native";
-import { View, TextInput, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 const MainCont = styled.View`
   /* background-color: #dbd; */
@@ -45,10 +45,15 @@ const styles = StyleSheet.create({
 });
 
 
-const Likes = ({ maintext}) => {
-  const [dislikeone, setDislikeOne] = useState("");
-  const [disliketwo, setDislikeTwo] = useState("");
-  const [dislikethree, setDislikeThree] = useState("");
+const Likes = ({ maintext, likes, handleLikes}) => {
+  const [likeone, setLikeOne] = useState(likes && likes[0] ||"");
+  const [liketwo, setLikeTwo] = useState(likes && likes[1] ||"");
+  const [likethree, setLikeThree] = useState(likes && likes[2] ||"");
+
+  useEffect(()=>{
+    handleLikes([likeone, liketwo, likethree]);
+  },[likeone, liketwo, likethree]);
+  
   return (
     <View>
       <MainCont>
@@ -57,21 +62,27 @@ const Likes = ({ maintext}) => {
         </LeftSide>
         <RightSide>
           <OpOne>
-          <Input1 placeholder="Type something..." onChangeText={(t)=>{
-              alert(t)
-              setDislikeOne(dislikeone);
+          <Input1 
+            placeholder="Type something..." 
+            value={likeone}
+            onChangeText={(text)=>{
+              setLikeOne(text);
             }}/>
           </OpOne>
           <OpOne>
-          <Input1 placeholder="Type something..." onChangeText={(t)=>{
-              alert(t)
-              setDislikeTwo(disliketwo);
+          <Input1 
+            placeholder="Type something..."
+            value={liketwo}
+            onChangeText={(text)=>{
+              setLikeTwo(text);
             }}/>
           </OpOne>
           <OpOne>
-            <Input1 placeholder="Type something..." onChangeText={(t)=>{
-              alert(t)
-              setDislikeThree(dislikethree);
+            <Input1 
+              placeholder="Type something..."
+              value={likethree}
+              onChangeText={(text)=>{
+                setLikeThree(text);
             }}/>
           </OpOne>
         </RightSide>

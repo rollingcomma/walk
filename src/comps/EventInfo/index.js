@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components/native";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import BasicButton from "../WButton/BasicButton"
 
 import { useUserState } from "../../hook/useUserState";
 import { updateEvent } from "../../db/DBUtils";
+
 const EventCont = styled.View`
   /* align-items:center; */
   justify-content:center;
   display: flex;
  
 `;
-
-
 const ButtonBox = styled.TouchableOpacity`
   background: ${(props) => (props.isInterested ? "#959494" : "#53B7BE")};
   border-radius: 4px;

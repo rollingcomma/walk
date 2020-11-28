@@ -18,7 +18,7 @@ const SignIn = ({navigation}) => {
     
     if( user && user.type ) {
       dispatchUser({user});
-      console.log("userState",userState);
+      //console.log("userState",userState);
       return; 
     }
     if(!user) {
