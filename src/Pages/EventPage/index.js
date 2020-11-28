@@ -1,11 +1,10 @@
-import React from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import { FlatList } from "react-native";
 import styled from "styled-components/native";
-//import TopBar from "../../comps/TopBar";
 import EventInfo from "../../comps/EventInfo";
-//import FooterBar from "../../comps/FooterBar";
 import Spacer from "../../comps/Spacer";
 
+import { getAllEvents } from "../../db/DBUtils"
 
 const MainCont = styled.View`
   width: 100%;
@@ -42,81 +41,56 @@ const DisplayPic = styled.Image`
   align-items:center;
 `;
 
-const place0 = require("../../Public/rocky-point.png");
-const place1 = require("../../Public/derby-reach.png");
-const place2 = require("../../Public/queen-elizabeth.png");
-
 const Events = ({}) => {
+  const [events, setEvents] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+  
+  const handleRefresh = () => {
+
+  }
+  useEffect(() => {
+    async function fetchData() {
+      const res = await getAllEvents();
+      if(res) setEvents(res);
+    }
+    fetchData();
+  },[])
+
   return (
 
     <MainCont>
-      <ScrollView>
-
-        <Cont>
+      {events && <FlatList
+        data={events}
+        keyExtractor={event => event.id.toString()}
+        renderItem={( { item })=> 
+          <Cont>
           <Section>
           <EventsCont>
             <EventInfo
-              title="Rocky Point Park"
-              date="Wednesday, Dec 7th 2020"
-              number="6"
-              time="2:00pm"
-              detail1="Small Dogs"
-              detail2="At the park"
+              id={item.id}
+              event={item.value}
+              title={item.value.name}
+              date={item.value.date}
+              number={item.value.participants.length}
+              time={`${item.value.startTime} - ${item.value.endTime}`}
+              detail1={item.value.details[0]}
+              detail2={item.value.details[1]}
             />
           </EventsCont>
           <EventImg>
-            <DisplayPic source={place0} />
+            <DisplayPic source={{uri: item.value.pictureUrl}} />
           </EventImg>
           </Section>
         <SpacerCont>
           <Spacer />
         </SpacerCont>
         </Cont>
-
-        <Cont>
-          <Section>
-          <EventsCont>
-            <EventInfo
-              title="Derby Reach Regional Park"
-              date="Sunday, Nov 8th 2020"
-              number="7"
-              time="1:00pm"
-              detail1="Let's Walk"
-              detail2="through a track"
-            />
-          </EventsCont>
-          <EventImg>
-            <DisplayPic source={place1} />
-          </EventImg>
-          </Section>
-        <SpacerCont>
-          <Spacer />
-        </SpacerCont>
-        </Cont>
-
-        <Cont>
-          <Section>
-          <EventsCont>
-            <EventInfo
-              title="Queen Elizabeth Dog Park"
-              date="Wednesday, Dec 7th 2020"
-              number="6"
-              time="2:00pm"
-              detail1="Small Dogs"
-              detail2="At the park"
-            />
-          </EventsCont>
-          <EventImg>
-            <DisplayPic source={place2} />
-          </EventImg>
-          </Section>
-        <SpacerCont>
-          <Spacer />
-        </SpacerCont>
-        </Cont>
-        
-      </ScrollView>
-     
+        }
+        refreshing={refreshing}
+        onRefresh={()=> {
+          handleRefresh();
+        }}
+      />}
     </MainCont>
    
   );

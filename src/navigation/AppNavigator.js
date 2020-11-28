@@ -2,17 +2,20 @@ import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import { useUserState } from "../hook/useUserState";
 import { OwnerNavigator, WalkerNavigator } from "./"
-import { SignIn, ContinueAsPage, OwnerEditProfile, WalkerEditProfile } from "../Pages"
+import { SignIn, ContinueAsPage, OwnerEditProfile, WalkerEditProfile, Loading } from "../Pages"
+import ChatChannel from '../screens/ChatChannel';
+
 const Stack = createStackNavigator();
 
 export default AppNavigator = () => {
   const [userState] = useUserState();
   
   return (
-    <Stack.Navigator>{
-      userState && userState.type ?
-        (
-          userState.type =="dog owner" ?
+    <Stack.Navigator>
+    {
+      (userState && userState.user && userState.user.type ?
+        (userState.user.type =="dog owner" ?
+          
           (<Stack.Screen
             name="Owner"
             component={OwnerNavigator} 
@@ -25,36 +28,41 @@ export default AppNavigator = () => {
             options={{headerShown: false}}
           />)
         )
+       
       :
         (
-        //   <Stack.Screen
-        //   name="Auth"
-        //   component={AuthNavigator}
-        // />
+          // userState && userState.isLoading?
+          // (<Stack.Screen
+          //   name="Loading"
+          //   component={Loading} 
+          //   options={{headerShown: false}}
+          // />)
+          // :
           <>
-            <Stack.Screen
-              name="Welcome"
-              component={SignIn}
-              options={{headerShown: false}} />
-            <Stack.Screen 
-              name="ContinueAs"
-              component={ContinueAsPage}
-              options={{title:"continue as"}}
-            />
-            <Stack.Screen 
-              name="NewOwner"
-              component={OwnerEditProfile}
-              options={{title:"create an owner"}}
-            />
-            <Stack.Screen 
-              name="NewWalker"
-              component={WalkerEditProfile}
-              options={{title:"create a walker"}}
-            />
-        </>
-        )
-        
-        
-    }</Stack.Navigator>
+              <Stack.Screen
+                name="Welcome"
+                component={SignIn}
+                options={{headerShown: false}} 
+              />
+              <Stack.Screen 
+                name="ContinueAs"
+                component={ContinueAsPage}
+                options={{headerShown: false}} 
+              />
+              <Stack.Screen 
+                name="NewOwner"
+                component={OwnerEditProfile}
+                options={{title:"create an owner"}}
+              />
+              <Stack.Screen 
+                name="NewWalker"
+                component={WalkerEditProfile}
+                options={{title:"create a walker"}}
+              />
+            </>
+          )
+      )
+    }
+    </Stack.Navigator>
   )
 }

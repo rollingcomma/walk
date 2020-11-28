@@ -16,7 +16,7 @@ import * as Google from 'expo-google-app-auth';
 
 
 /**
- * 
+ * Description: Sign In with Google and Firebase
  */
 export const signInWithGoogle = async () => {
     const config = {
@@ -52,7 +52,7 @@ export const signInWithGoogle = async () => {
   }
 
   /**
-   * 
+   * Description: Sign In with Facebook and Firebase
    */
   export const signInWithFacebook = async () => {
     try{
@@ -85,8 +85,6 @@ export const signInWithGoogle = async () => {
       console.log(`Facebook Login Error: ${message}`);
     }
   };
-
-  
 
 /**
  * description: fetch user by uid
@@ -435,6 +433,7 @@ export const deleteWalkerProfile = (uid) => {
 export const getAllPosts = () => {
   return postsRef.orderBy("createdAt", "asc").get()
   .then(querySnapshot => {
+    console.log("get posting")
     let posts = [];
     querySnapshot.forEach(doc => 
                             posts.push({

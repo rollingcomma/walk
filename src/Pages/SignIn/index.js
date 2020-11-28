@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, {useState} from "react";
 import { View, Text, Image, StyleSheet} from "react-native";
 import Title from "../../comps/Title";
 import GoogleButton from "../../comps/GoogleButton";
@@ -10,13 +10,14 @@ import { usersRef } from "../../db/DBRefs";
 
 const SignIn = ({navigation}) => {
   const [ userState, dispatchUser] = useUserState();
+  const [ isLoading, setIsLoading ] = useState(false);
  
   const handleDirectUser = async (currentUser) => {
     console.log("direct user")
     const user =  await findUser(currentUser.uid);
-    console.log("find user", user)
+    
     if( user && user.type ) {
-      dispatchUser(user);
+      dispatchUser({user});
       console.log("userState",userState);
       return; 
     }
@@ -28,16 +29,17 @@ const SignIn = ({navigation}) => {
       if(await createUser(newUser)) user = newUser;
     }
     if(user && !user.type){
-      dispatchUser(user);
+      dispatchUser({user});
       navigation.navigate("ContinueAs");
     }
   };
 
   const handleGoogleSignIn = async () => {
     const currentUser = await signInWithGoogle();
-
     if(currentUser)
+      dispatchUser({isLoading: true})
       await handleDirectUser(currentUser);
+      dispatchUser({isLoading: false})
   };
 
   const handleFacebookSignIn = async () => {

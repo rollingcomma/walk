@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import  colors  from '../../styles/colors';
 import BasicAvatar from "../Avatar/BasicAvatar";
 import Popup from "../Popup"
+import { DateDiff } from "../../helpers/tools"
 
 const MainCont = styled.View`
   /* width:375px; */
@@ -50,7 +51,8 @@ const Time = styled.Text`
 `;
 const Picture = styled.View`
   /* width:100%; */
- height:328px;
+  maxWidth: 100%;
+  height:340px;
  /* background-color:#BBD; */
 `;
 const Footer = styled.View`
@@ -101,10 +103,7 @@ const likeimg = require("./like.png");
 const profilepicture = require("./Lucky.png");
 const display = require("./Lucky.png");
 const Post = ({
-  text, 
-  profileImageUrl,
-  imageUrl,
-  time, 
+  post,
   distance}) => {
 
   const navigation = useNavigation();
@@ -119,7 +118,7 @@ const Post = ({
           <ProfilePic>
             <ImgCont>
               <BasicAvatar
-                image1={require('./Lucky.png')}
+                image1={{uri: post.avatarUrl}}
                 width={40}
                 height={40}
               />
@@ -127,16 +126,17 @@ const Post = ({
               </ImgCont>
           </ProfilePic>
           <ProfileName>
-            <NameText><Text>{text}</Text></NameText>
-            <ViewProfile onPress={() => navigation.navigate("DogProfileRequest")}>View Profile</ViewProfile>
+            <NameText><Text>{post.name}</Text></NameText>
+            <ViewProfile onPress={() => navigation.navigate("DogProfileRequest", {pid: post.profileId})}>View Profile</ViewProfile>
             
           </ProfileName>
           
-          <Time><Text>{time}hr ago</Text></Time>
+          <Time><Text>HRs ago</Text></Time>
+           {/* TODO {DateDiff(Date.now() - post.createdAt)}  */}
         </Header>
         
         <Picture>
-          <DisplayPic source={display} />
+          <DisplayPic source={{uri: post.picsUrl}} />
         </Picture>
 
         <Footer>

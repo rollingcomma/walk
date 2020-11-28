@@ -29,23 +29,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const ContinueAsPage = () => {
+const Loading = () => {
   return (
     <View style={styles.app}>
       <View style={styles.text}>
       <Title />
-      <ContinueAs text={" Continue as a"}/>
+      <ContinueAs text={"Loading"} />
       </View>
       <View style={styles.button}>
       <BasicButton 
-        text="Dog Owner"  
-        backgroundColor= "#53B7BE" 
-        width={242}
-        height={55}
-        size={18}
-        />
-      <BasicButton 
-        text="Dog Walker"  
+        text="Loading"  
         backgroundColor= "#53B7BE" 
         width={242}
         height={55}
@@ -56,4 +49,4 @@ const ContinueAsPage = () => {
   );
 };
 
-export default ContinueAsPage; 
+export default Loading; 

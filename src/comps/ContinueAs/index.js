@@ -10,11 +10,11 @@ const Continuetext = styled.Text`
   font-size:22;
 `;
 
-const ContinueAs = () => {
+const ContinueAs = ({text}) => {
   return (
     <View>
       <Continuetext>
-        Continue as a
+       {text}
       </Continuetext>
     </View>
   );

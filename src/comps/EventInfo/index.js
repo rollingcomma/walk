@@ -3,6 +3,8 @@ import styled from "styled-components/native";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import BasicButton from "../WButton/BasicButton"
 
+import { useUserState } from "../../hook/useUserState";
+import { updateEvent } from "../../db/DBUtils";
 const EventCont = styled.View`
   /* align-items:center; */
   justify-content:center;
@@ -11,8 +13,8 @@ const EventCont = styled.View`
 `;
 
 
-const Buttonbox = styled.TouchableOpacity`
-  background: ${(props) => (props.highlight ? "#959494" : "#53B7BE")};
+const ButtonBox = styled.TouchableOpacity`
+  background: ${(props) => (props.isInterested ? "#959494" : "#53B7BE")};
   border-radius: 4px;
   width: 107px;
   padding: 10px;
@@ -20,13 +22,13 @@ const Buttonbox = styled.TouchableOpacity`
   margin-left: 30px;
 `;
 
-const Buttontext = styled.Text` 
+const ButtonText = styled.Text` 
   color: #fff;
   font-size:16px;
   margin-left:5px;
 `;
 
-const Details = styled.Text`
+const Details = styled.View`
   display: flex;
   /* justify-content: left; */
   /* align-items: left; */
@@ -35,15 +37,6 @@ const Details = styled.Text`
   margin-bottom: 5px;
   flex-direction: column;
 `;
-
-const styles = StyleSheet.create({ 
-  details: {
-    // alignItems:"left"
-  },
-  // buttontext: {
-  // color:
-  // }
-});
 
 const AttendCont = styled.View`
   display: flex;
@@ -104,65 +97,70 @@ const Column = styled.View`
 `;
 
 const paw = require("./paw.png");
-const derbyreach = require("./derby-reach.png");
-const queenelizabeth = require("./queen-elizabeth.png");
-const rockypoint = require("./rocky-point.png");
 
 const EventInfo = ({
-  text,
-  title,
-  date,
-  number,
-  time,
-  detail1,
-  detail2,
-  img
+  id,
+  event,
 }) => {
-  const [highlight, setHighlight] = useState(false);
+  const [eventState, setEventState] = useState(event)
+  const [isInterested, setIsInterested] = useState(false);
+  const [userState] = useUserState();
+
+  const handleGoingClick = () => {
+    const newEvent = {...eventState}
+    if(isInterested) {
+      newEvent.participants = newEvent.participants.filter(p => p !==  userState.user.uid);
+    } else {
+      newEvent.participants.push(userState.user.uid);
+    }
+    if(updateEvent(id, newEvent)) {
+      setEventState(newEvent)
+      setIsInterested(!isInterested);
+    }
+  }
+
+  useEffect(() => {
+    if(eventState.participants.includes(userState.user.uid))
+      setIsInterested(true);
+  },[]
+  )
 
   return (
     <View>
       <EventCont>
         <ImageCont>
-          <EventImg source={img} />
+          <EventImg source={{uri: eventState.pictureUrl}} />
         </ImageCont>
         <Column>
           <Title>
-            <Text>{title}</Text>
+            <Text>{eventState.name}</Text>
           </Title>
           <Subhead>
-            <Text>{date}</Text>
+            <Text>{eventState.date}</Text>
           </Subhead>
           <AttendCont>
             <Number>
-              <Text>{number}</Text>
+              <Text>{eventState.participants.length}</Text>
             </Number>
             <Paw>
               <PawImg source={paw} />
             </Paw>
           </AttendCont>
-          <Details style={styles.details}>
-            <Text>{time}</Text>
-            <Text>{detail1}</Text>
-            <Text>{detail2}</Text>
+          <Details >
+            <Text>{`${eventState.startTime} - ${eventState.endTime}`}</Text>
+            <Text>{eventState.details[0]}</Text>
+            <Text>{eventState.details[1]}</Text>
           </Details>
-          {/* <BasicButton
-          text="Interested"  
-          backgroundColor= "#38BC64" 
-          height={27}
-          width={107}
-          size={16}
-          /> */}
-          <Buttonbox
+          <ButtonBox
             onPress={() => {
-              setHighlight(!highlight);
+              handleGoingClick();
             }}
-            highlight={highlight}
+            isInterested={isInterested}
           >
-            <Buttontext>
-              <Text  style={styles.buttontext}>{highlight ? text : "Going"}</Text>
-            </Buttontext>
-          </Buttonbox>
+            <ButtonText>
+              <Text>{isInterested ? "Interested" : "Going"}</Text>
+            </ButtonText>
+          </ButtonBox>
         </Column>
       </EventCont>
     </View>
