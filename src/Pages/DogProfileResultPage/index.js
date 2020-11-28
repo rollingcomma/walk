@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, StyleSheet, ScrollView} from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, ScrollView, Alert} from "react-native";
 //import TopBar from '../../comps/TopBar';
 import DogPhotos from '../../comps/DogPhotos';
 // import FooterBar from '../../comps/FooterBar';
@@ -8,6 +8,7 @@ import BasicButton from "../../comps/WButton/BasicButton";
 import BasicAvatar from "../../comps/Avatar/BasicAvatar";
 import DogLikes from "../../comps/DogLikes";
 import DogDislikes from "../../comps/DogDislikes";
+
 //import AddImage from "../../comps/AddImage";
 import { getDogProfile, createRequest } from "../../db/DBUtils";
 
@@ -48,19 +49,21 @@ const styles = StyleSheet.create({
 });
 
 const DogProfileResultPage = ({route}) => {
+  console.log(route.params);
+  const message = "Cute pup, I want to walk him";
   const { profileId } = route.params;
   const [profile, setProfile] = useState(null)
   const [UserState] = useUserState();
+
    useEffect(() => {
     async function fetchData() {
-      profile = await getDogProfile(profileId);
-      console.log(profile);
-      if(profile) setProfile(profile);
+      const initialProfile = await getDogProfile(profileId);
+      if(initialProfile) setProfile(initialProfile);
     }
     fetchData();
   },[])
 
-  const handleRequestPress = (message) => {
+  const handleRequestPress = () => {
     const request = {
       owner:profile.owner,
       walker: UserState.user.uid,
@@ -68,11 +71,12 @@ const DogProfileResultPage = ({route}) => {
       status: "active",
       createdAt: Date.now()
     }
-    createRequest(request);
+    if(createRequest(request)) Alert.alert("Thank You", "Your request is sent!");
   }
   return (
     <View style={styles.app}>
       <ScrollView>
+        {profile && 
         <View style={styles.container}>
           <View style={styles.AvatarCont}>
             <BasicAvatar
@@ -99,6 +103,7 @@ const DogProfileResultPage = ({route}) => {
           </View>
           <DogPhotos/>
         </View>
+        }
       </ScrollView>
     </View>
   );
