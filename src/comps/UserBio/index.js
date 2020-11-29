@@ -27,7 +27,7 @@ const TextCont = styled.View`
   font-size:16;
 `;
 
-const UserBio = () => {
+const UserBio = ({bio}) => {
   return (
     <View>
       <TextCont>
@@ -36,10 +36,7 @@ const UserBio = () => {
         </Biotitle>
         <Biodesc>
           <Text>
-            “Hi there! My name is Mason and I love all animals. Dogs, cats,
-            birds, you name it. I really love spending time outdoors in nature
-            and going for hikes and walks. During COVID, I’ve been trying to
-            stay busy by picking up new hobbies such as reading and tennis.”
+           {bio}
           </Text>
         </Biodesc>
       </TextCont>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components/native";
 import { View, Text, TouchableOpacity } from "react-native";
 import BasicButton from '../WButton/BasicButton';
+import { useNavigation } from "@react-navigation/native";
 
 // const Buttontext = styled.Text`
 //   color: #fff;
@@ -69,9 +70,12 @@ const StarImg = styled.Image`
 const filled = require("./filled.png");
 const unfilled = require("./unfilled.png");
 
-const WriteReview = () => {
+const WriteReview = ({isVisitor, profileId}) => {
   const [highlight, setHighlight] = useState(true);
-
+  const handleReviewButtonClick = () => {
+    const navigation = useNavigation();
+    navigation.navigate("LeaveReview", {profileId: profileId})
+  }
   return (
     <View>
       <Main>
@@ -107,12 +111,13 @@ const WriteReview = () => {
           }}
           highlight={highlight}
         > */}
-          <BasicButton
+        { isVisitor && <BasicButton
         text="Write a Review"  
-        backgroundColor= "#565555" 
+        backgroundColor= "#565555"
+        onPress={handleReviewButtonClick}
         height={45}
         width={137}
-        />
+          />}
           {/* <Buttontext>
             <Text>Write a Review</Text>
           </Buttontext> */}

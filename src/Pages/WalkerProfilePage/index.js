@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import TopBar from "../../comps/TopBar";
 // import FooterBar from "../../comps/FooterBar";
@@ -6,6 +6,7 @@ import UserBio from "../../comps/UserBio";
 import WriteReview from "../../comps/WriteReview";
 import LocationAge from "../../comps/LocationAge";
 import AvatarWithName from "../../comps/Avatar/AvatarWithName";
+import { useUserState } from "../../hook/useUserState"
 
 const styles = StyleSheet.create({
   app: {
@@ -24,31 +25,39 @@ const styles = StyleSheet.create({
   },
 });
 
-const WalkerProfilePage = () => {
+const WalkerProfilePage = ({route}) => {
+  console.log(route.params);
+  const [profile, setProfile] = useState(null)
+  const [userState] = useUserState();
+  const isVisitor = route.params.profileId;
+  const profileId  = route.params.profileId || userState.user.uid;
+
+   useEffect(() => {
+    async function fetchData() {
+      const initialProfile = await getWalkerProfile(profileId);
+      if(initialProfile) setProfile(initialProfile);
+    }
+    fetchData();
+  },[])
+
   return (
     <View style={styles.app}>
-      {/* <TopBar
-        title="Walker Profile"
-        imageLeft1={require('../../comps/TopBar/leftArrow.png')}
-        imageLeft2={require('../../comps/TopBar/message.png')}
-      /> */}
       <ScrollView>
         <View style={styles.Cont}>
           <View style={styles.elements}>
-            <AvatarWithName text="Mason K." />
+            <AvatarWithName text={profile.name} />
           </View>
           <View style={styles.elements}>
-            <LocationAge />
+            <LocationAge profile={profile}/>
           </View>
           <View style={styles.elements}>
-            <UserBio />
+            <UserBio bio={profile.bio}/>
           </View>
           <View style={styles.elements}>
-            <WriteReview />
+            <WriteReview isVisitor={isVisitor}/>
           </View>
         </View>
       </ScrollView>
-      {/* <FooterBar /> */}
     </View>
   );
 };

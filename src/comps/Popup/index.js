@@ -93,7 +93,9 @@ const close = require("./close.png");
 
 const Popup = ({
   modalVisible,
-  handleModalClose
+  handleModalClose,
+  handleMessageChange,
+  handleSubmit
 }) => {
   return (
    <Modal 
@@ -117,23 +119,29 @@ const Popup = ({
             }}
             onSubmit = {async values => {
               console.log("form submitted");
-              // const dogProfile = await dogProfile(user.uid, values);
-              // console.log("dog profile created", dogProfile)
             }}>
-            {({handleChange, handleBlur, handleReset, handleSubmit, values, touched, errors, isSubmitting}) => {
+            {({handleChange, handleBlur, handleReset,  values, touched, errors, isSubmitting}) => {
               return(
                 <>
                 <Inputs>
                   <InputsCont>
                     <TextInput>
-                      <InputT placeholder="Type a Message..." />
+                      <InputT 
+                        placeholder="Type a Message..."
+                        handleTextChange={(text) => {
+                          handleMessageChange(text);
+                        }}
+
+                      />
                     </TextInput>
                     <FontAwesome.Button
                       name="chevron-circle-right"
                       size= {30}
                       backgroundColor="transparent"
                       color={colors.primary}
-                      onPress={() => handleModalClose() }
+                      onPress={() => {
+                        handleSubmit();
+                        handleModalClose()} }
                       />
                   </InputsCont>
                 </Inputs>

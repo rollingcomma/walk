@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
-import { View, Text, StyleSheet, onPress, TouchableOpacity} from "react-native";
+import { View, Text, onPress, TouchableOpacity} from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import  colors  from '../../styles/colors';
+
 import BasicAvatar from "../Avatar/BasicAvatar";
 import Popup from "../Popup"
 import { DateDiff } from "../../helpers/tools"
+import { useUserState } from "../../hook/useUserState";
+import { createChannel, createMessage, findChannelId, findOwnerByProfileId } from "../../db/DBUtils";
 
 const MainCont = styled.View`
   /* width:375px; */
@@ -104,12 +106,52 @@ const likeimg = require("./like.png");
 const Post = ({
   post,
   distance}) => {
-
+  const [ message, setMessage ] = useState("");
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const [ userState ] = useUserState();
+
   const handleModalClose = () => {
     setModalVisible(!modalVisible);
   }
+  
+  const handleMessageChange = (msg) => {
+    setMessage(msg);
+  }
+
+  const handleSubmit = async () => {
+    const newMessage = {
+          sender:userState.user.uid,
+          message:message,
+          timeStamp: Date.now()
+        }
+    if(userState && userState.user.channels) {
+      console.log("channel")
+      //if current user has no channel, create channel and first message
+      if(userState.user.channels.length === 0) {  
+        const owner = await findOwnerByProfileId(post.dogId);
+        const channel = { 
+            user1: userState.user.uid,
+            user2: owner.uid,
+            createAt: Date.now()
+          };
+        createChannel(channel, newMessage);
+      } else { //if current user has channel, verify if channel exist and create message
+        const result = await findChannelId(userState.user.channels, post.dogId );
+        console.log("result", result)
+        if(result.channelId) { // channel exists
+          createMessage(result.channelId, newMessage);
+        } else  { //channel does not exist
+          const channel = { 
+            user1: userState.user.uid,
+            user2: result.uid,
+            createAt: Date.now()
+          };
+          createChannel(channel, newMessage);
+        }
+      }
+    }
+  } 
   return (
     <View>
       <MainCont>
@@ -142,11 +184,9 @@ const Post = ({
               <IconPics source={likeimg} />
             </Heart>
             <TouchableOpacity onPress={() => {
-                console.log("open modal clicked"); 
                 setModalVisible(true)}}>
               <IconPics 
-              source={messageimg} >
-
+                source={messageimg} >
               </IconPics>
               </TouchableOpacity>
           </Icons>
@@ -155,7 +195,7 @@ const Post = ({
           </Distance>
         </Footer>
       </MainCont>
-      <Popup modalVisible={ modalVisible } handleModalClose={handleModalClose} />
+      <Popup modalVisible={ modalVisible } handleMessageChange={handleMessageChange} handleSubmit={handleSubmit} handleModalClose={handleModalClose} />
     </View>
   );
 };

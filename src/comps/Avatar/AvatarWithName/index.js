@@ -25,16 +25,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const AvatarWithName = ({text, image1}) => {
+const AvatarWithName = ({name, avatarUrl}) => {
   return (
       <View style={styles.container}
       >
         <BasicAvatar
-        image1={require('../face2.jpg')}
-         width={134}
-         height={134}
-         />
-        <Text style={styles.text}>{text}</Text>
+          image1={avatarUrl}
+          width={134}
+          height={134}
+        />
+        <Text style={styles.text}>{name}</Text>
       </View>
   );
 };

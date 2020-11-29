@@ -10,8 +10,8 @@ import DogLikes from "../../comps/DogLikes";
 import DogDislikes from "../../comps/DogDislikes";
 
 //import AddImage from "../../comps/AddImage";
+import Popup from "../../comps/Popup";
 import { getDogProfile, createRequest } from "../../db/DBUtils";
-
 import { useUserState } from "../../hook/useUserState";
 
 const styles = StyleSheet.create({
@@ -50,20 +50,28 @@ const styles = StyleSheet.create({
 
 const DogProfileResultPage = ({route}) => {
   console.log(route.params);
-  const message = "Cute pup, I want to walk him";
+  
   const { profileId } = route.params;
+  const [requestBtnVisible, setRequestBtnVisible] = useState(true);
   const [profile, setProfile] = useState(null)
   const [UserState] = useUserState();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [message, setMessage] = useState( "Cute pup, I want to walk him")
 
    useEffect(() => {
     async function fetchData() {
       const initialProfile = await getDogProfile(profileId);
       if(initialProfile) setProfile(initialProfile);
+      if(initialProfile.owner === UserState.user.uid) setRequestBtnVisible(false);
     }
     fetchData();
   },[])
 
   const handleRequestPress = () => {
+    setModalVisible(true);
+  }
+
+  const handleSubmit = () => {
     const request = {
       owner:profile.owner,
       walker: UserState.user.uid,
@@ -72,6 +80,13 @@ const DogProfileResultPage = ({route}) => {
       createdAt: Date.now()
     }
     if(createRequest(request)) Alert.alert("Thank You", "Your request is sent!");
+  }
+
+  const handleModalClose = () => {
+    setModalVisible(false);
+  }
+  const handleMessageChange = (msg) => {
+    setMessage(msg)
   }
   return (
     <View style={styles.app}>
@@ -87,14 +102,14 @@ const DogProfileResultPage = ({route}) => {
             <View style={styles.detailcont}>
               <Text style={styles.name}>{profile.breed}</Text>
               <Text style={styles.age}>age {profile.age}</Text>
-              <BasicButton 
+              {requestBtnVisible && <BasicButton 
                 text="Send Walk Request"  
                 backgroundColor= "#38BC64" 
                 height={31}
                 width={153}
                 size={14}
                 onPress={handleRequestPress}
-              />
+              />}
             </View>
           </View>
           <View style={styles.textCont}>
@@ -105,6 +120,7 @@ const DogProfileResultPage = ({route}) => {
         </View>
         }
       </ScrollView>
+      <Popup modalVisible={ modalVisible } handleMessageChange={handleMessageChange} handleSubmit={handleSubmit} handleModalClose={handleModalClose} />
     </View>
   );
 };

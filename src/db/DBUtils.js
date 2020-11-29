@@ -116,6 +116,26 @@ export const findUser = (uid) => {
 }
 
 /**
+ * 
+ * @param {*} dogId 
+ */
+export const findOwnerByProfileId = (dogId) => {
+  if(!dogId) return;
+  
+  return usersRef.where("profileId", "==", dogId).get()
+  .then(data => {
+    let owner = [];
+    data.forEach(doc => 
+      owner.push(doc.data())
+    )
+    return owner[0];
+  })
+  .catch(err => {
+    console.log("Error getting user", err);
+  });
+}
+
+/**
  * description: create new user
  * 
  * @param { user } 
@@ -865,7 +885,7 @@ export const unmarkEvent = (eventId, uid) => {
  */
 export const createChannel = (newChannel, firstMessage) => {
   if(!newChannel || !firstMessage) return;
-
+  console.log("create channel", newChannel, firstMessage);
   const chRef = channelsRef.doc();
   batch.set(chRef, newChannel);
   const msgRef = chRef.collection("messages").doc();
@@ -884,6 +904,26 @@ export const createChannel = (newChannel, firstMessage) => {
 };
 
 /**
+ * 
+ * @param {*} channelList 
+ * @param {*} receiver 
+ */
+export const findChannelId = async (channelList, dogId) => {
+  if(!channelList || !dogId) return;
+
+  const receiver = await findOwnerByProfileId(dogId);
+  console.log("receiver",receiver)
+  if (receiver && receiver.channels && receiver.channels.length === 0) return {uid:receiver.uid};
+  channelList.forEach(
+    channel => { 
+      if(receiver.channels.includes(channel)) return {channelId:channel, uid:receiver.uid};
+    }
+  )
+  return {uid: receiver.uid};
+
+
+}
+/**
  * Description: insert a message into given channel
  * 
  * @param { string } channelId 
@@ -897,7 +937,7 @@ export const createChannel = (newChannel, firstMessage) => {
  */
 export const createMessage = (channelId, message) => {
   if(!channelId || !message) return;
-  
+  console.log("create message", channelId, message)
   return channelsRef.doc(channelId).collection("messages").add(message)
   .then((doc) => {return doc.id})
   .catch(err => {

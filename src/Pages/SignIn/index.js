@@ -18,6 +18,10 @@ const SignIn = ({navigation}) => {
     
     if( user && user.type ) {
       dispatchUser({user});
+      if(user.type == "dog owner")
+        navigation.navigate("Owner");
+      else
+        navigation.navigate("Walker")
       //console.log("userState",userState);
       return; 
     }
@@ -37,9 +41,9 @@ const SignIn = ({navigation}) => {
   const handleGoogleSignIn = async () => {
     const currentUser = await signInWithGoogle();
     if(currentUser)
-      dispatchUser({isLoading: true})
+      //dispatchUser({isLoading: true})
       await handleDirectUser(currentUser);
-      dispatchUser({isLoading: false})
+      //dispatchUser({isLoading: false})
   };
 
   const handleFacebookSignIn = async () => {
