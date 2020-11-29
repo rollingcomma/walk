@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import styled from "styled-components/native";
+import Loading from "../../components/Loading";
 import EventInfo from "../../comps/EventInfo";
 import Spacer from "../../comps/Spacer";
 
@@ -42,6 +43,7 @@ const DisplayPic = styled.Image`
 `;
 
 const Events = ({}) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [events, setEvents] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   
@@ -52,14 +54,20 @@ const Events = ({}) => {
     async function fetchData() {
       const res = await getAllEvents();
       if(res) setEvents(res);
+      setIsLoading(false);
     }
     fetchData();
+    
   },[])
 
-  return (
-
-    <MainCont>
-      {events && <FlatList
+  return isLoading? 
+    (
+      <Loading />
+    ) 
+    : 
+    (
+      <MainCont>
+        <FlatList
         data={events}
         keyExtractor={event => event.id.toString()}
         renderItem={( { item })=> 
@@ -90,7 +98,7 @@ const Events = ({}) => {
         onRefresh={()=> {
           handleRefresh();
         }}
-      />}
+      />
     </MainCont>
    
   );

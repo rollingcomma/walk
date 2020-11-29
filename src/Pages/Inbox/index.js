@@ -12,13 +12,13 @@ export default Inbox = () => {
           tabStyle={{flex:1, backgroundColor:"#ffffff"}}
           activeTabStyle={{backgroundColor:"#97D7DA"}}
           >
-          <RequestPage />
+          <ActivatePage />
         </Tab>
         <Tab
           heading="Requests"
           tabStyle={{flex:1, backgroundColor:"#ffffff"}}
           activeTabStyle={{backgroundColor:"#97D7DA"}}>
-          <ActivatePage />
+          <RequestPage />
         </Tab>
       </Tabs>
     </Container>

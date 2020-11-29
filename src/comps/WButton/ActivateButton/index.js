@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const ActivateButton = ({onPress}) => {
+const ActivateButton = ({onPress, index}) => {
   return (
       <View style={styles.cont} >
         
@@ -23,6 +23,7 @@ const ActivateButton = ({onPress}) => {
         height={26}
         width={91}
         size={14}
+        index={index}
         onPress={onPress}
         />
       </View> 

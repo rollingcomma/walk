@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { ScrollView, View } from "react-native";
 import styled from "styled-components/native";
-
+import Loading from "../../components/Loading";
 import Description from "../../comps/Description";
 import Dropdown from "../../comps/Dropdown";
 import Input from "../../comps/Input";
@@ -124,7 +124,14 @@ const WalkerEditProfile = () => {
   const [email, setEmail] = useState("");
   const [emname, emSetName] = useState("");
   const [emphone, emSetPhone] = useState("");
-  return (
+  const [isLoading, setIsLoading] = useState(true);
+
+  return isLoading? 
+    (
+      <Loading />
+    ) 
+    : 
+    (
     <View>
     <Main>
       <MainCont>

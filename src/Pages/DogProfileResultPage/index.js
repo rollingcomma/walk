@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, Alert} from "react-native";
-//import TopBar from '../../comps/TopBar';
+import Loading from "../../components/Loading";
 import DogPhotos from '../../comps/DogPhotos';
-// import FooterBar from '../../comps/FooterBar';
-//import AvatarDogProfile from "../../comps/AvatarForm/AvatarDogProfile";
 import BasicButton from "../../comps/WButton/BasicButton";
 import BasicAvatar from "../../comps/Avatar/BasicAvatar";
 import DogLikes from "../../comps/DogLikes";
 import DogDislikes from "../../comps/DogDislikes";
-
-//import AddImage from "../../comps/AddImage";
 import Popup from "../../comps/Popup";
 import { getDogProfile, createRequest } from "../../db/DBUtils";
 import { useUserState } from "../../hook/useUserState";
@@ -50,31 +46,30 @@ const styles = StyleSheet.create({
 
 const DogProfileResultPage = ({route}) => {
   console.log(route.params);
-  
+  const [isLoading, setIsLoading] = useState(true);
   const { profileId } = route.params;
-  const [requestBtnVisible, setRequestBtnVisible] = useState(true);
+  //const [requestBtnVisible, setRequestBtnVisible] = useState(true);
   const [profile, setProfile] = useState(null)
-  const [UserState] = useUserState();
+  const [userState] = useUserState();
   const [modalVisible, setModalVisible] = useState(false);
   const [message, setMessage] = useState( "Cute pup, I want to walk him")
-
-   useEffect(() => {
-    async function fetchData() {
-      const initialProfile = await getDogProfile(profileId);
-      if(initialProfile) setProfile(initialProfile);
-      if(initialProfile.owner === UserState.user.uid) setRequestBtnVisible(false);
-    }
-    fetchData();
-  },[])
 
   const handleRequestPress = () => {
     setModalVisible(true);
   }
 
   const handleSubmit = () => {
+    if( !message ) {
+      alert("message can't be empty");
+      return
+    }
     const request = {
-      owner:profile.owner,
-      walker: UserState.user.uid,
+      owner: profile.owner,
+      ownerName: profile.name,
+      ownerAvatarUrl: profile.avatarUrl,
+      walker: userState.user.uid,
+      walkerName: userState.user.username,
+      walkerAvatarUrl: userState.user.avatarUrl,
       message: message,
       status: "active",
       createdAt: Date.now()
@@ -88,7 +83,24 @@ const DogProfileResultPage = ({route}) => {
   const handleMessageChange = (msg) => {
     setMessage(msg)
   }
-  return (
+  
+   useEffect(() => {
+    async function fetchData() {
+      const initialProfile = await getDogProfile(profileId);
+      if(initialProfile) setProfile(initialProfile);
+      //if(initialProfile.owner === UserState.user.uid) setRequestBtnVisible(false);
+      setIsLoading(false);
+    }
+    fetchData();
+    
+  },[])
+
+  return isLoading? 
+    (
+      <Loading />
+    ) 
+    : 
+   (
     <View style={styles.app}>
       <ScrollView>
         {profile && 
@@ -102,7 +114,7 @@ const DogProfileResultPage = ({route}) => {
             <View style={styles.detailcont}>
               <Text style={styles.name}>{profile.breed}</Text>
               <Text style={styles.age}>age {profile.age}</Text>
-              {requestBtnVisible && <BasicButton 
+              {userState && userState.user.type == "walker" && <BasicButton 
                 text="Send Walk Request"  
                 backgroundColor= "#38BC64" 
                 height={31}

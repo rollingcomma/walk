@@ -22,10 +22,11 @@ const styles = StyleSheet.create({
   // },
 });
 
-const BasicAvatar = ({text, image1, width, height}) => {
+const BasicAvatar = ({text, image1, width, height, item}) => {
   const widthstyles = [{ width: width ? width : 50} , { height: height ? height : 50}] ;
   const sizestyles = [styles.avatar, widthstyles];
-  
+  // console.log(item)
+  // if(item) image1 = item.messages[0].sender == item.user1? {uri: item.user1AvatarUrl}:{uri:item.user2AvatarUrl}
   return (
       <View style={styles.container}>
         <Image style={sizestyles}

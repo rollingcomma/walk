@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
 });
 
 const ContinueAsPage = () => {
+  
   return (
     <View style={styles.app}>
       <View style={styles.text}>

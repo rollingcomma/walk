@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ScrollView, View } from "react-native";
 import styled from "styled-components/native";
 
-
+import Loading from "../../components/Loading";
 import MsgSent from "../../comps/MsgSent";
 import MsgRecieved from "../../comps/MsgRecieved";
 import Texting from "../../comps/Texting";
@@ -24,7 +24,14 @@ const Cont = styled.View`
 `;
 
 const Chatting = () => {
-  return (
+  const [isLoading, setIsLoading] = useState(true);
+  
+  return isLoading? 
+    (
+      <Loading />
+    ) 
+    : 
+    (
       <Main>
         <ScrollView>
         <MainCont>

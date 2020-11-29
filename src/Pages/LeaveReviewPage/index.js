@@ -1,9 +1,10 @@
 import React from "react";
 import { View, StyleSheet, ScrollView, Text } from "react-native";
 import styled from "styled-components/native";
+import Loading from "../../components/Loading";
 import YourReview from "../../comps/YourReview";
 import ShareFeedback from "../../comps/ShareFeedback";
-// import FooterBar from "../../comps/FooterBar";
+
 import TopBar from "../../comps/TopBar";
 import Description from "../../comps/Description";
 import AvatarForm05 from "../../comps/AvatarForm/AvatarForm05";
@@ -47,7 +48,13 @@ const PostButtonCont = styled.View`
 `;
 
 const LeaveReview = () => {
-  return (
+  const [isLoading, setIsLoading] = useState(true);
+  return isLoading? 
+    (
+      <Loading />
+    ) 
+    : 
+    (
         <View  style={styles.app}>
           <TopBar title="Leave a Review" />
           <ScrollView>

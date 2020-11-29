@@ -13,15 +13,17 @@ const styles = StyleSheet.create({
   }
 });
 
-const DeclineButton = () => {
+const DeclineButton = ({isDeclined, onPress, index}) => {
   return (
       <View style={styles.cont} >
         <BasicButton 
-        text="Decline"  
-        backgroundColor= "#C74C33" 
+        text={isDeclined? "Decline":"Declined"}  
+        backgroundColor= {isDeclined? "#959494":"#C74C33" } 
         height={26}
         width={91}
         size={14}
+        index={index}
+        onPress={isDeclined?null:onPress}
         />
       </View>
     

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ScrollView, View, Text, StyleSheet } from "react-native";
 import styled from "styled-components/native";
-
+import Loading from "../../components/Loading";
 import Dropdown from "../../comps/Dropdown";
 import Input from "../../comps/Input";
 import Birthday from "../../comps/Birthday";
@@ -97,7 +97,14 @@ const WalkerAuthentication = () => {
   const [walkerzip, setWalkerZip] = useState("");
   const [emname, emSetName] = useState("");
   const [emphone, emSetPhone] = useState("");
-  return (
+  const [isLoading, setIsLoading] = useState(false);
+
+  return isLoading? 
+    (
+      <Loading />
+    ) 
+    :  
+    (
       <Main>
         {/* <MainCont> */}
         <ScrollView>

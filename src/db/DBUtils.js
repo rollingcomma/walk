@@ -39,7 +39,7 @@ export const signInWithGoogle = async () => {
             uid: auth().currentUser.uid,
             username: auth().currentUser.displayName,
             email: auth().currentUser.email,
-            photoURL:auth().currentUser.photoURL
+            // photoURL:auth().currentUser.photoURL
           }
         //return currentUser;
         }
@@ -73,7 +73,7 @@ export const signInWithGoogle = async () => {
             uid: auth().currentUser.uid,
             username: auth().currentUser.displayName,
             email: auth().currentUser.email,
-            photoURL:auth().currentUser.photoURL
+            // photoURL:auth().currentUser.photoURL
           }
         }
         return currentUser;
@@ -872,7 +872,9 @@ export const unmarkEvent = (eventId, uid) => {
  * @param { channel } newChannel 
  *        {
  *          user1: "string", -uid
+ *          user1AvatarUrl: "sgring",
  *          user2: "string", -uid
+ * *        user2AvatarUrl: "sgring",
  *          createdAt: "date",
  *        }
  * @param { message } firstMessage 
@@ -973,23 +975,34 @@ export const updateMessage = (channelId, messageId, newMessage) => {
  */
 export const getMessagesByChannelId = (channelId, maxMsg) => {
   if (!channelId) return;
-
-  let ref;
-  if(maxMsg) {
-    ref = channelsRef.doc(channelId).collection("messages").orderBy("createdAt", "asc").limit(maxMsg);
-  } else {
-    ref = channelsRef.doc(channelId).collection("messages").orderBy("createdAt", "asc");
-  }
-  return ref.get()
-  .then(querySnapshot => {
-    let messages = [];
-    querySnapshot.forEach(doc => 
-                            messages.push({
-                              id: doc.id,
-                              message: doc.data()
-                            })
-                          )
-    return messages;
+  let channel;
+  console.log("channel Id", channelId);
+  return channelsRef.doc(channelId).get()
+  .then(doc => {
+    if(doc.exists) {
+      channel = doc.data();
+      let ref;
+      if(maxMsg) {
+        ref = channelsRef.doc(channelId).collection("messages").orderBy("createdAt", "asc").limit(maxMsg);
+      } else {
+        ref = channelsRef.doc(channelId).collection("messages").orderBy("createdAt", "asc");
+      }
+      return ref.get()
+      .then(querySnapshot => {
+        let messages = [];
+        querySnapshot.forEach(doc => 
+                                messages.push({
+                                  id: doc.id,
+                                  message: doc.data()
+                                })
+                            )
+        
+        channel.messages = [...messages];
+        return channel;
+      })
+    } else {
+      console.log("no record found");
+    }
   })
   .catch(err => {
     console.log("Error to read message", err);
@@ -1006,7 +1019,7 @@ export const getMessagesByChannelId = (channelId, maxMsg) => {
  */
 export const getAllChannelsByUid = (uid, maxMsg) => {
   if(!uid) return;
-
+  //console.log()
   return usersRef.doc(uid).get()
   .then(async doc => {
     let channels = [];
@@ -1014,10 +1027,8 @@ export const getAllChannelsByUid = (uid, maxMsg) => {
     for( const channelId of user.channels) {
       if(channelId) {
         const channel = await getMessagesByChannelId(channelId, maxMsg);
-        channels.push({
-                        id: channelId, 
-                        channel:channel
-                      });
+        channel.id = channelId,
+        channels.push(channel);
       }
     }
     return channels;

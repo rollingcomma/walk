@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, KeyboardAvoidingView, Platform } from "react-native";
 import styled from "styled-components/native";
+import Loading from "../../components/Loading";
 import Input from "../../comps/Input";
 import Likes from "../../comps/Likes";
 import AddImage from "../../comps/AddImage";
@@ -99,6 +100,7 @@ const AddCont = styled.View`
 `;
 
 const OwnerEditProfile = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [userState, dispatchUser] = useUserState();
   const profile = userState && userState.user.profile? userState.user.Profile:null;
   const [dogName, setDogName] = useState(profile && profile.name ||"");
@@ -119,7 +121,12 @@ const OwnerEditProfile = () => {
   const handleDislikes = (dislikes) =>{
     setDislikes(dislikes);
   }
-  return (
+  
+  return isLoading? 
+    (
+      <Loading />
+    ) 
+    : (
     <KeyboardAvoidingView
       behavior={Platform.OS == "ios" ? "padding" : "height"}
       style={{flex:1}}

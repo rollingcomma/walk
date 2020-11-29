@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import styled from "styled-components/native";
+import Loading from "../../components/Loading";
 import {format} from "date-fns/";
-import Post from "../../comps/Post";import AvatarEdit from "../../comps/Avatar/AvatarEdit";
+import Post from "../../comps/Post";
+import AvatarEdit from "../../comps/Avatar/AvatarEdit";
 
 import { getAllPosts } from "../../db/DBUtils"
 
@@ -17,6 +19,7 @@ const Cont = styled.View`
 
 const Feed = () => {
   const [posts, setPosts] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   
   const handleRefresh = () => {
@@ -27,13 +30,19 @@ const Feed = () => {
       const res = await getAllPosts();
       //console.log("post", res)
       if(res) setPosts(res);
+      setIsLoading(false);
     }
     fetchData();
   },[])
 
-  return (
+  return isLoading? 
+    (
+      <Loading />
+    ) 
+    : 
+    (
     <Main>
-      {posts && <FlatList
+        <FlatList
         data={posts}
         keyExtractor={post => post.id.toString()}
         renderItem={( { item })=> 
@@ -48,7 +57,7 @@ const Feed = () => {
         onRefresh={()=> {
           handleRefresh();
         }}
-      />}
+      />
     </Main>
   );
 };

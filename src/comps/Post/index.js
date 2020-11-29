@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
-import { View, Text, onPress, TouchableOpacity} from "react-native";
+import { View, Text, onPress, TouchableOpacity, Alert} from "react-native";
 import { useNavigation } from '@react-navigation/native';
 
 import BasicAvatar from "../Avatar/BasicAvatar";
@@ -120,6 +120,10 @@ const Post = ({
   }
 
   const handleSubmit = async () => {
+    if( !message ) {
+      alert("message can't be empty");
+      return
+    }
     const newMessage = {
           sender:userState.user.uid,
           message:message,
@@ -132,7 +136,11 @@ const Post = ({
         const owner = await findOwnerByProfileId(post.dogId);
         const channel = { 
             user1: userState.user.uid,
+            user1AvatarUrl: userState.user.avatarUrl,
+            user1Name: userState.user.name,
             user2: owner.uid,
+            user2AvatarUrl: owner.avatarUrl,
+            user2Name: owner.name,
             createAt: Date.now()
           };
         createChannel(channel, newMessage);
@@ -144,7 +152,11 @@ const Post = ({
         } else  { //channel does not exist
           const channel = { 
             user1: userState.user.uid,
+            user1AvatarUrl:userState.user.avatarUrl,
+            user1Name: userState.user.name,
             user2: result.uid,
+            user2AvatarUrl:result.avatarUrl,
+            user2Name: result.name,
             createAt: Date.now()
           };
           createChannel(channel, newMessage);

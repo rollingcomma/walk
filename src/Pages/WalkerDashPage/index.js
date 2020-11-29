@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView} from "react-native";
+import Loading from "../../components/Loading";
 import DashDog from "../../comps/DashDog";
 import DashOwner from "../../comps/DashOwner";
 
@@ -34,7 +35,13 @@ const styles = StyleSheet.create({
 
 const WalkerDashPage = ({}) => {
  
-  return (
+  const [isLoading, setIsLoading] = useState(true);
+  return isLoading? 
+    (
+      <Loading />
+    ) 
+    : 
+    (
       <View style={styles.app}>
         <ScrollView>
             

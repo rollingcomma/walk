@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView } from "react-native";
 import styled from "styled-components/native";
-
+import Loading from "../../components/Loading";
 import Input from "../../comps/Input";
-//import TopBar from "../../comps/TopBar";
-//import FooterBar from "../../comps/FooterBar";
 import BasicButton from "../../comps/WButton/BasicButton";
 import EventTime from "../../comps/EventTime";
 
@@ -57,11 +55,16 @@ const addimage = require("./addphoto.png");
 //const addimage = require("../../comps/TopBar/addphoto.png");
 
 const AddEvent = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [eventAdress, setEventAdress] = useState("");
   const [eventCity, setEventCity] = useState("");
- 
   
-  return (
+  return isLoading? 
+    (
+      <Loading />
+    ) 
+    : 
+    (
       <Main>
         {/* <MainCont> */}
           {/* <TopBar

@@ -1,6 +1,7 @@
 
 import React, {useState} from "react";
 import { View, Text, Image, StyleSheet} from "react-native";
+import Loading from "../../components/Loading";
 import Title from "../../comps/Title";
 import GoogleButton from "../../comps/GoogleButton";
 import FacebookButton from "../../comps/FacebookButton";
@@ -13,15 +14,18 @@ const SignIn = ({navigation}) => {
   const [ isLoading, setIsLoading ] = useState(false);
  
   const handleDirectUser = async (currentUser) => {
+    setIsLoading(true);
     console.log("direct user")
     const user =  await findUser(currentUser.uid);
     
     if( user && user.type ) {
       dispatchUser({user});
       if(user.type == "dog owner")
+        
         navigation.navigate("Owner");
       else
         navigation.navigate("Walker")
+      setIsLoading(false);
       //console.log("userState",userState);
       return; 
     }
@@ -51,7 +55,12 @@ const SignIn = ({navigation}) => {
     if(currentUser)
     await handleDirectUser(currentUser);
   };
-
+  // isLoading? 
+    // (
+    //   <Loading />
+    // ) 
+    // :  
+  
   return (
     <View style={styles.background}>
       <View style={styles.signinCont}>

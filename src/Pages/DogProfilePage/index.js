@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView} from "react-native";
+import Loading from "../../components/Loading";
 import DogPhotos from '../../comps/DogPhotos';
 import AvatarDogProfile from "../../comps/AvatarForm/AvatarDogProfile";
 import { getDogProfile } from "../../db/DBUtils";
@@ -16,6 +17,7 @@ const styles = StyleSheet.create({
 });
 
 const DogProfilePage = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [userState, dispatchUser] = useUserState();
   const [profile, setProfile] = useState(null);
 
@@ -29,15 +31,22 @@ const DogProfilePage = () => {
         newUserState.user.profile = newProfile;
         dispatchUser(newUserState);
       };
+      setIsLoading(false);
     }
     fetchData();
+    
   },[])
 
-  return (
+  return isLoading? 
+    ( 
+      <Loading /> 
+    )
+    :
+    ( 
       <View style={styles.app}>
         <ScrollView>
           <View style={styles.AvatarDogProfile}>
-          {profile&& <AvatarDogProfile profile={profile}/>}
+           <AvatarDogProfile profile={profile}/>
           </View>
           
           <DogPhotos/>
@@ -45,7 +54,7 @@ const DogProfilePage = () => {
         </ScrollView>
         {/* <FooterBar /> */}
       </View>
-  );
+    );
 };
 
 DogProfilePage.defaultProps = {

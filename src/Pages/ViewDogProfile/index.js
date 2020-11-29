@@ -101,7 +101,13 @@ const ViewDogProfile = ({
   image1,
   backgroundColor
 }) => {
-  return (
+  const [isLoading, setIsLoading] = useState(true);
+  return isLoading? 
+    (
+      <Loading />
+    ) 
+    : 
+    (
     <View>
       <View style={styles.Main}>
         <View style={styles.MainCont}>
