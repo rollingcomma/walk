@@ -53,9 +53,9 @@ const Img = styled.Image`
   border-radius: 16px;
   
 `;
-const avatar = require("./selfie.jpg");
+// const avatar = require("./selfie.jpg");
 
-const MsgRecieved = ({ msgRecieve }) => {
+const MsgRecieved = ({ msgRecieve, avatar }) => {
   return (
     <View>
       <MainCont>

@@ -38,14 +38,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const AvatarFormText = ({textName, text, backgroundColor, handleOnPress, index, item }) => {
+const AvatarFormText = ({textName, text, backgroundColor, handleOnPress}) => {
   console.log("avatarform", textName, text)
-  // if(item) textName = item.messages[0].sender == item.user1? item.user1Name:item.user2Name;
+  
   return (
       <View style={styles.container}>
         <View style={styles.avatar}>
         </View>
-        <TouchableOpacity onPress={() => handleOnPress(index)} style={styles.touch}>
+        <TouchableOpacity 
+          onPress={()=> handleOnPress()} 
+          style={styles.touch}>
           <View style={styles.textcont}>
             <Text style={styles.text1}>{textName}</Text>
             <Text style={styles.text2}>{text}</Text>

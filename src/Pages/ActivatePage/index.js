@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView} from "react-native";
 import Loading from "../../components/Loading";
+import Channel from "../../comps/AddOn/Channel";
 import AvatarFormText from '../../comps/AvatarForm/AvatarFormText';
 import BasicAvatar from "../../comps/Avatar/BasicAvatar";
 import Spacer from "../../comps/Spacer";
 import { useNavigation } from '@react-navigation/native';
-import { getAllChannelsByUid } from "../../db/DBUtils";
+import { createMessage, getAllChannelsByUid } from "../../db/DBUtils";
 import { useUserState } from "../../hook/useUserState";
 import { FlatList } from "react-native-gesture-handler";
 import { set } from "react-native-reanimated";
@@ -36,6 +37,17 @@ const ActivatePage = ({}) => {
     channel = channels.filter(channel=> channel.id == channelId)
     navigation.navigate("Chatting", {channel: channel});
   }
+
+  const handleNewMessage = async (channelId, msg) => {
+    const messageId = await createMessage(channelId, msg);
+    if(messageId) {
+      channel = channels.filter(channel=> channel.id == channelId)
+    }
+  }
+
+  const handleRefresh = () => {
+    
+  }
   
   useEffect(()=> {
     async function fetchData() {
@@ -61,19 +73,7 @@ const ActivatePage = ({}) => {
         renderItem={({item}) => 
           //  item.messages[0] &&
           <View>
-          <View style={styles.avatarcont}>
-            <BasicAvatar
-              image1={item.messages[0].message.sender == item.user1?{uri: item.user1AvatarUrl} : {uri:item.user2AvatarUrl}}
-              width={64}
-              height={64} />
-            <AvatarFormText
-              index={item.id}
-              textName={item.messages[0].message.sender == item.user1? item.user1Name : item.user2Name}
-              text={item.messages[0].message.message}
-              backgroundColor={"#53B7BE"}
-              handleOnPress={handleOnPress}
-            />
-          </View>
+            <Channel item={item} />
           <View style={styles.spacer}>
             <Spacer />
           </View>
