@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState, useReducer } from "react";
-import { _storeData, _retrieveData } from "../helpers/storage";
+import { _storeData, _retrieveData, _clearData } from "../helpers/storage";
 import { users } from "../db/mockDb";
 
 const owner = {
@@ -24,13 +24,13 @@ const walker = {
 }
 const initialUserState = owner;
 
-export const UserContext =  createContext(initialUserState);
+export const UserContext =  createContext({user:initialUserState});
 export const DispatchUserContext = createContext(undefined);
 
 
 export default UserStateProvider =  ({children}) => {
   
-  const [defaultUserState, setDefaultUserState] = useState(initialUserState);
+  const [defaultUserState, setDefaultUserState] = useState({user:initialUserState});
   useEffect(()=>{
     async function fetchUser() {
       user = await _retrieveData("user");
@@ -42,8 +42,13 @@ export default UserStateProvider =  ({children}) => {
 
   const [userState, dispatchUser] = useReducer(
     (userState, newValue) => {
-      _storeData({ ...newValue });
-      return { ...userState, ...newValue }
+      if(!newValue){
+         _clearData();
+         return null;
+      } else {
+         _storeData({ ...newValue });
+         return { ...userState, ...newValue }
+      }
     },
     defaultUserState
   );

@@ -8,7 +8,7 @@ import { useUserState } from "../../hook/useUserState";
 
 const styles = StyleSheet.create({
   app: {
-    height:"100%",
+     height:"100%",
   },
   AvatarDogProfile: {
     marginBottom:0,
@@ -16,25 +16,35 @@ const styles = StyleSheet.create({
   },
 });
 
-const DogProfilePage = () => {
+const DogProfilePage = ({route}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [userState, dispatchUser] = useUserState();
-  const [profile, setProfile] = useState(null);
-
+  const [profileState, setProfileState] = useState(null);
+  const [isVisitorState, setIsVisitorState] = useState(false);
+  let profile = null, isVisitor;
+  
    useEffect(() => {
-    
     async function fetchData() {
-      const newProfile = await getDogProfile(userState.user.profileId);
-      if(newProfile) {
-        setProfile(newProfile);
-        const newUserState = {...userState};
-        newUserState.user.profile = newProfile;
-        dispatchUser(newUserState);
-      };
+      if(route && route.params) {
+        profile = route.params.profile;
+        isVisitor = route.params.isVisitor;
+      }
+      if(profile) {
+        setProfileState({...profile});
+        setIsVisitorState(isVisitor);
+      } else {
+        const initialProfile = await getDogProfile(userState.user.profileId);
+        if(initialProfile) {
+          setProfileState(initialProfile);
+          const newUserState = {...userState};
+          newUserState.user.profile = initialProfile;
+          dispatchUser(newUserState);
+        };
+      }
+      
       setIsLoading(false);
     }
     fetchData();
-    
   },[])
 
   return isLoading? 
@@ -46,7 +56,7 @@ const DogProfilePage = () => {
       <View style={styles.app}>
         <ScrollView>
           <View style={styles.AvatarDogProfile}>
-           <AvatarDogProfile profile={profile}/>
+           <AvatarDogProfile isVisitor={isVisitorState} profile={profileState}/>
           </View>
           
           <DogPhotos/>

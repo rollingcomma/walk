@@ -1,7 +1,9 @@
 import React from 'react';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { DogProfilePage} from "../Pages";
 import ImageUpload from "../components/ImageUpload";
+import Logout from "../components/Logout";
+import { DogProfilePage, OwnerEditProfile} from "../Pages";
+
 import InboxNavigator from "./InboxNavigator"
 import FeedNavigator from './FeedNavigator';
 import EventNavigator from './EventNavigator';
@@ -35,8 +37,19 @@ export default function OwnerNavigator() {
       <Tab.Screen 
         name="Profile"
         component={DogProfilePage}
-        options={{title:"Profile"}}
+        options={
+          {title:"Profile",
+          headerRight: () => <Logout />
+        }}
       />
+      <Tab.Screen 
+      name="EditProfile"
+      component={OwnerEditProfile}
+      options={
+        {title:"Edit Profile"
+       
+      }}
+    />
     </Tab.Navigator>
   )
  

@@ -36,11 +36,6 @@ const RequestPage = ({}) => {
   const [isDeclined, setIsDeclined] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-
-  const handleOnPressViewProfile = () => {
-    navigation.navigate("WalkerProfile");
-
-  }
   
   const handleCompleteRequest = async (requestId) => {
     const request = requests.filter(req => req.id === requestId);
@@ -77,7 +72,7 @@ const RequestPage = ({}) => {
       else {
         initialRequests = await getRequestsSent(userState.user.uid);
       }
-      console.log("requests", initialRequests);
+      //console.log("requests", initialRequests);
       setRequests(initialRequests);
       setIsLoading(false);
     }
@@ -108,10 +103,9 @@ const RequestPage = ({}) => {
                 text={item.value.message}
                 profileId={userState.user.type==="walker"?item.value.owner:item.value.walker}
                 index = {item.id}
-                onPress={handleOnPressViewProfile}
                 />
                 <View style={styles.buttons}>
-                 {item.status != "active" && <ActivateButton sender={item.value.walker} onPress={handleOnPressActive}/>}
+                 {item.status != "active" && <ActivateButton sender={userState.user.type==="walker"?item.value.owner:item.value.walker} onPress={handleOnPressActive}/>}
                   <DeclineButton index={item.id} isDeclined={isDeclined || item.status === "declined"} onPress={handleOnPressDecline}/>
                 </View> 
               </View>

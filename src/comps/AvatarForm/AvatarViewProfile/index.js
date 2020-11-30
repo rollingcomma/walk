@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const AvatarViewProfile = ({textName,  text, profileId}) => {
+const AvatarViewProfile = ({textName, text, profileId}) => {
   const navigation = useNavigation();
   const [userState] = useUserState();
   
@@ -45,7 +45,7 @@ const AvatarViewProfile = ({textName,  text, profileId}) => {
       if(profile) navigation.navigate("WalkerProfile", {profile: profile, isVisitor:true})
     } else {
       const profile = await getDogProfileByOwner(profileId);
-      if(profile) navigation.navigate("OwnerProfile", {profile: profile, isVisitor:true})
+      if(profile) navigation.navigate("OwnerProfile", {profile: profile.value, isVisitor:true})
     }
   }
   return (

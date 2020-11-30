@@ -149,7 +149,7 @@ const InfoText = styled.View`
 const dogpicture = require("./Lucky.png");
 const rightarrow = require("./right.png");
 
-const DashDog = ({dogname, age, breed, likes}) => {
+const DashDog = ({dogProfile}) => {
   return (
     <View>
       <MainCont>
@@ -158,11 +158,11 @@ const DashDog = ({dogname, age, breed, likes}) => {
           <TopInfo>
             <TopCont>
               <ProfPicCont>
-                <ImgCont><Img source={dogpicture}/></ImgCont>
+                <ImgCont><Img source={{uri:dogProfile.avatarUrl}}/></ImgCont>
               </ProfPicCont>
               <ProfTextCont>
-                <Name><Text>{dogname}</Text></Name>
-                <ViewProfile><PText><Text>View full profile</Text></PText><ArrowCont><Arrow source={rightarrow}/></ArrowCont></ViewProfile>
+                <Name><Text>{dogProfile.name}</Text></Name>
+                {/* <ViewProfile><PText><Text>View full profile</Text></PText><ArrowCont><Arrow source={rightarrow}/></ArrowCont></ViewProfile> */}
               </ProfTextCont>
             </TopCont>
           </TopInfo>
@@ -170,15 +170,15 @@ const DashDog = ({dogname, age, breed, likes}) => {
             <BottomCont>
               <AgeCont>
                 <Title><TitleText2><Text>Age</Text></TitleText2></Title>
-                <Info><InfoText><Text>{age}</Text></InfoText></Info>
+                <Info><InfoText><Text>{dogProfile.age}</Text></InfoText></Info>
               </AgeCont>
               <BreedCont>
                 <Title><TitleText2><Text>Breed</Text></TitleText2></Title>
-                <Info><InfoText><Text>{breed}</Text></InfoText></Info>
+                <Info><InfoText><Text>{dogProfile.breed}</Text></InfoText></Info>
               </BreedCont>
-              <LikesCont>
+              {/* <LikesCont>
                 <Title><TitleText2><Text>Likes</Text></TitleText2></Title>
-              </LikesCont>
+              </LikesCont> */}
             </BottomCont>
           </BottomInfo>
         </InfoCont>

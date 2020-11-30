@@ -21,7 +21,6 @@ const SignIn = ({navigation}) => {
     if( user && user.type ) {
       dispatchUser({user});
       if(user.type == "dog owner")
-        
         navigation.navigate("Owner");
       else
         navigation.navigate("Walker")

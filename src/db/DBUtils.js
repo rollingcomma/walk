@@ -14,6 +14,18 @@ import { batch, firestoreFieldValue, auth, firestore } from './firebase';
 import * as Facebook from 'expo-facebook';
 import * as Google from 'expo-google-app-auth';
 
+/**
+ * Description: Log out user
+ */
+export const logout = () => {
+  return auth().signOut()
+        .then(() => {
+          return true;
+        })
+        .catch(error => {
+          console.log("Logout error", error);
+        })
+}
 
 /**
  * Description: Sign In with Google and Firebase
@@ -39,7 +51,7 @@ export const signInWithGoogle = async () => {
             uid: auth().currentUser.uid,
             username: auth().currentUser.displayName,
             email: auth().currentUser.email,
-            // photoURL:auth().currentUser.photoURL
+            photoURL:auth().currentUser.photoURL
           }
         //return currentUser;
         }
@@ -73,7 +85,7 @@ export const signInWithGoogle = async () => {
             uid: auth().currentUser.uid,
             username: auth().currentUser.displayName,
             email: auth().currentUser.email,
-            // photoURL:auth().currentUser.photoURL
+            photoURL:auth().currentUser.photoURL
           }
         }
         return currentUser;
@@ -216,13 +228,14 @@ export const getDogProfile = (dogId) => {
 
 export const getDogProfileByOwner = (ownerId) => {
   if(!ownerId) return;
-
+  console.log("get dog by owner", ownerId)
   return dogProfilesRef.where("owner", "==", ownerId).get()
   .then(data => {
+    let profiles =[];
     data.forEach(doc => {
-      let profiles=[];
       profiles.push({id:doc.id, value:doc.data()})
     })
+    
     return profiles[0];
   })
   .catch(err => {
@@ -260,7 +273,6 @@ export const createDogProfile = (newDogProfile) => {
   return dogProfilesRef.add(newDogProfile)
   .then((doc) => {
     if(doc.id) {
-      //updateDogProfileByProfileId(doc.id, {id: doc.id});
       return doc.id;
     }
   })
@@ -402,7 +414,7 @@ export const getWalkerProfile = (uid) => {
     }
   })
   .catch(err => {
-    console.log("Error get dog profile", err);
+    console.log("Error get walker profile", err);
   });
 }
 
@@ -439,7 +451,7 @@ export const setWalkerProfile = (walkerProfile) => {
     return true;
   })
   .catch(err => {
-    console.log("Error create or update dog profile", err);
+    console.log("Error create or update walker profile", err);
   });
 }
 
@@ -458,7 +470,7 @@ export const deleteWalkerProfile = (uid) => {
     return true;
   })
   .catch(err => {
-    console.log("Error delete dog profile", err);
+    console.log("Error delete walker profile", err);
   });
 }
 
@@ -470,7 +482,6 @@ export const deleteWalkerProfile = (uid) => {
 export const getAllPosts = () => {
   return postsRef.orderBy("createdAt", "asc").get()
   .then(querySnapshot => {
-    console.log("get posting")
     let posts = [];
     querySnapshot.forEach(doc => 
                             posts.push({
@@ -705,7 +716,6 @@ export const getRequestsReceived = (uid) => {
                             id: doc.id, 
                             value: doc.data()
                           }))
-    console.log(requests);
     return requests;
   })
   .catch(err => {
@@ -722,7 +732,7 @@ export const getRequestsReceived = (uid) => {
  */
 export const getRequestsSent = (uid) => {
   if(!uid) return;
-
+  console.log("get request send");
   return requestsRef.where("walker", "==", uid).orderBy("createdAt", "asc").get()
   .then(querySnapshot => {
     let requests = [];
@@ -906,7 +916,7 @@ export const unmarkEvent = (eventId, uid) => {
  */
 export const createChannel = (newChannel, firstMessage) => {
   if(!newChannel || !firstMessage) return;
-  console.log("create channel", newChannel, firstMessage);
+  
   const chRef = channelsRef.doc();
   batch.set(chRef, newChannel);
   const msgRef = chRef.collection("messages").doc();
@@ -931,9 +941,8 @@ export const createChannel = (newChannel, firstMessage) => {
  */
 export const findChannelId = async (channelList, dogId) => {
   if(!channelList || !dogId) return;
-
   const receiver = await findOwnerByProfileId(dogId);
-  console.log("receiver",receiver)
+  
   if (receiver && receiver.channels && receiver.channels.length === 0) return {uid:receiver.uid};
   channelList.forEach(
     channel => { 
@@ -958,7 +967,7 @@ export const findChannelId = async (channelList, dogId) => {
  */
 export const createMessage = (channelId, message) => {
   if(!channelId || !message) return;
-  console.log("create message", channelId, message)
+  
   return channelsRef.doc(channelId).collection("messages").add(message)
   .then((doc) => {return doc.id})
   .catch(err => {
@@ -995,7 +1004,6 @@ export const updateMessage = (channelId, messageId, newMessage) => {
 export const getMessagesByChannelId = (channelId, maxMsg) => {
   if (!channelId) return;
   let channel;
-  console.log("channel Id", channelId);
   return channelsRef.doc(channelId).get()
   .then(doc => {
     if(doc.exists) {
@@ -1038,7 +1046,7 @@ export const getMessagesByChannelId = (channelId, maxMsg) => {
  */
 export const getAllChannelsByUid = (uid, maxMsg) => {
   if(!uid) return;
-  //console.log()
+ 
   return usersRef.doc(uid).get()
   .then(async doc => {
     let channels = [];

@@ -16,24 +16,26 @@ const styles = StyleSheet.create({
   },
 });
 
-const AvatarEdit = ({avatarUrl}) => {
+const AvatarEdit = ({avatarUrl, isVisitor}) => {
+  console.log("avatar", isVisitor);
   const navigation = useNavigation();
   return (
       <View style={styles.container}
       >
         <BasicAvatar
-        image1={{uri:avatarUrl}}
-         width={134}
-         height={134}
-         />
-        <TouchableOpacity opPress={() => {
-          navigation.navigate("OwnerEditProfile");
-        }}>
-          <Image style={styles.icon}
-            source={require('../edit.png')}
-          />
-        </TouchableOpacity> 
-         
+          image1={{uri:avatarUrl}}
+          width={134}
+          height={134}
+        />
+        { !isVisitor && 
+          <TouchableOpacity opPress={() => {
+            navigation.navigate("EditProfile");
+          }}>
+            <Image style={styles.icon}
+              source={require('../edit.png')}
+            />
+          </TouchableOpacity> 
+       }
       </View>
   );
 };

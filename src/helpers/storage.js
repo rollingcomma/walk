@@ -7,20 +7,28 @@ export const _storeData = async (item) => {
         JSON.stringify(item)
       );
   } catch (error) {
-    console.log("error save data", error);
+    console.log("error save data to storage", error);
   }
 };
 
 export const _retrieveData = async (key) => {
   try {
-    // console.log("get item", key)
     const value = await AsyncStorage.getItem(key);
     if (value !== null) {
-      // We have data!!
       return JSON.parse(value);
     }
   } catch (error) {
     // Error retrieving data
-    console.log("error fetch data", error);
+    console.log("error fetch data from storage", error);
   }
 };
+
+export const _clearData = async () => {
+  try {
+    AsyncStorage.clear();
+    return true;
+  } catch (error) {
+    console.log("error clear storage", error);
+  }
+
+}

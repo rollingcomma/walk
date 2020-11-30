@@ -1,6 +1,13 @@
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
-import { Inbox, Chatting,  WalkerProfilePage, OwnerDashPage, WalkerDashPage, LeaveReviewPage} from "../Pages";
+import { 
+  Inbox, 
+  Chatting,  
+  WalkerProfilePage, 
+  DogProfilePage, 
+  OwnerDashPage, 
+  WalkerDashPage, 
+  LeaveReviewPage} from "../Pages";
 import { useUserState } from "../hook/useUserState";
 // import Inbox from "../screens/Inbox"
 const Stack = createStackNavigator();
@@ -21,6 +28,11 @@ export default InboxNavigator = () => {
       <Stack.Screen 
         name="WalkerProfile"
         component={WalkerProfilePage}
+        options={{title:"Walker Profile"}}
+      />
+      <Stack.Screen 
+        name="OwnerProfile"
+        component={DogProfilePage}
         options={{title:"Walker Profile"}}
       />
       <Stack.Screen 

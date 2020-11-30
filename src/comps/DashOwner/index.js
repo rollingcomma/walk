@@ -127,7 +127,7 @@ const InfoText = styled.View`
 `;
 
 const ownerpicture = require("./ethan.jpeg");
-const DashOwner = ({ ownername, ownerphone, owneremail, owneradress }) => {
+const DashOwner = ({ ownerProfile, dogProfile }) => {
   return (
     <View>
       <MainCont>
@@ -139,7 +139,7 @@ const DashOwner = ({ ownername, ownerphone, owneremail, owneradress }) => {
             <TopCont>
               <ProfPicCont>
                 <ImgCont>
-                  <Img source={ownerpicture} />
+                  <Img source={{uri:ownerProfile.photoURL}} />
                 </ImgCont>
               </ProfPicCont>
             </TopCont>
@@ -151,7 +151,7 @@ const DashOwner = ({ ownername, ownerphone, owneremail, owneradress }) => {
                   <TitleText2><Text>Name</Text></TitleText2>
                 </Title>
                 <Info>
-                  <InfoText><Text>{ownername}</Text></InfoText>
+                  <InfoText><Text>{ownerProfile.username}</Text></InfoText>
                 </Info>
               </NameCont>
               <PhoneCont>
@@ -159,7 +159,7 @@ const DashOwner = ({ ownername, ownerphone, owneremail, owneradress }) => {
                   <TitleText2><Text>Phone</Text></TitleText2>
                 </Title>
                 <Info>
-                  <InfoText><Text>{ownerphone}</Text></InfoText>
+                  <InfoText><Text>{dogProfile.phone}</Text></InfoText>
                 </Info>
               </PhoneCont>
               <EmailCont>
@@ -167,7 +167,7 @@ const DashOwner = ({ ownername, ownerphone, owneremail, owneradress }) => {
                   <TitleText2><Text>Email</Text></TitleText2>
                 </Title>
                 <Info>
-                  <InfoText><Text>{owneremail}</Text></InfoText>
+                  <InfoText><Text>{ownerProfile.email}</Text></InfoText>
                 </Info>
               </EmailCont>
               <AdressCont>
@@ -175,7 +175,7 @@ const DashOwner = ({ ownername, ownerphone, owneremail, owneradress }) => {
                   <TitleText2><Text>Address</Text></TitleText2>
                 </Title>
                 <Info>
-                  <InfoText><Text>{owneradress}</Text></InfoText>
+                  <InfoText><Text>{dogProfile.address}</Text></InfoText>
                 </Info>
               </AdressCont>
             </BottomCont>

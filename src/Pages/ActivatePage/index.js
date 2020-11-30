@@ -52,7 +52,6 @@ const ActivatePage = ({}) => {
   useEffect(()=> {
     async function fetchData() {
       const initialChannels = await getAllChannelsByUid(userState.user.uid, 10);
-      
       if(initialChannels) setChannels(initialChannels);
       setIsLoading(false);
      

@@ -33,11 +33,11 @@ const styles = StyleSheet.create({
 
 });
  
-const AvatarDogProfile = ({profile}) => {
+const AvatarDogProfile = ({profile, isVisitor}) => {
   
   return (
       <View style={styles.container}>
-        <AvatarEdit avatarUrl={profile.avatarUrl}/>
+        <AvatarEdit isVisitor={isVisitor} avatarUrl={profile.avatarUrl}/>
         <View style={styles.doginfo}>
           <DogInfo 
             name={profile.name}

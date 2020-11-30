@@ -1,5 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Logout from "../components/Logout";
 import { WalkerProfilePage, EventPage, WalkerEditProfile} from "../Pages";
 
 import Event from "../screens/Event";
@@ -29,8 +30,19 @@ export default WalkerNavigator = () => {
     />
     <Tab.Screen 
       name="Profile"
+      component={WalkerProfilePage}
+      options={
+        {title:"Profile",
+        headerRight: () => <Logout />
+      }}
+    />
+    <Tab.Screen 
+      name="EditProfile"
       component={WalkerEditProfile}
-      options={{title:"Profile"}}
+      options={
+        {title:"Edit Profile"
+       
+      }}
     />
   </Tab.Navigator>
   )

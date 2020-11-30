@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import { View, Text, StyleSheet, ScrollView} from "react-native";
 import Loading from "../../components/Loading";
 import DashDog from "../../comps/DashDog";
 import DashOwner from "../../comps/DashOwner";
 
 import MapPlaceholder from "../../comps/MapPlaceholder";
-// import Map from "../../components/Map";
-// import AvatarViewProfile from '../AvatarForm/AvatarViewProfile';
+import { findUser, getDogProfileByOwner } from "../../db/DBUtils";
 
 const styles = StyleSheet.create({
   app: {
@@ -33,9 +32,27 @@ const styles = StyleSheet.create({
   
 });
 
-const WalkerDashPage = ({}) => {
- 
+const WalkerDashPage = ({route}) => {
+  const {sender, handleCompleteRequest} = route.params;
+
   const [isLoading, setIsLoading] = useState(true);
+  const [ownerProfile, setOwnerProfile] = useState(null);
+  const[dogProfile, setDogProfile] = useState(null);
+
+  useEffect(()=> {
+    async function fetchData(){
+      const owner = await findUser(sender);
+      const dog = await getDogProfileByOwner(sender);
+      console.log("owner", dog);
+      if(dog && owner) {
+        setOwnerProfile(owner);
+        setDogProfile(dog.value);
+      }
+      setIsLoading(false);
+    }
+    fetchData();
+  }, [])
+
   return isLoading? 
     (
       <Loading />
@@ -46,10 +63,10 @@ const WalkerDashPage = ({}) => {
         <ScrollView>
             
           <View style={styles.container}>
-            <MapPlaceholder text="Return Address"/>
+            <MapPlaceholder coords={dogProfile.coords} text="Return Address"/>
             <View style={styles.dashcont}>
-              <DashDog/>
-              <DashOwner/>
+              <DashDog dogProfile={dogProfile}/>
+              <DashOwner dogProfile={dogProfile} ownerProfile={ownerProfile}/>
             </View>
           </View>
         </ScrollView>
