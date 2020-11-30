@@ -152,7 +152,7 @@ const walkerpicture = require("./selfie.jpg");
 const styles = StyleSheet.create({ 
   box: {
     width:353,
-    height:196,
+    height:220,
     backgroundColor:"red",
     backgroundColor: "#FFFFFF",
     borderRadius: 26,
@@ -186,46 +186,29 @@ const styles = StyleSheet.create({
 });
 
 
-const WalkerProfile = ({city, age, bio, name}) => {
+const WalkerProfile = ({profile}) => {
+
   return (
     <View>
       <Text style={styles.text}>Walker Profile</Text>
     <View style={styles.box}>
         <View style={styles.container}>
           <View>
-            <UserInfo/>
-            <Text 
+            <UserInfo profile={profile}/>
+            {/* <Text 
               style={styles.extratext}
-              style={{fontSize:10, marginTop:10}}>View full profile</Text>
+              style={{fontSize:10, marginTop:10}}>View full profile</Text> */}
           </View>
 
           <View style={styles.rightcont}>
           <Avatar07
-              image1={require('../../comps/Avatar/face3.jpg')}/>
+              name={profile.name} image1={{uri:profile.avatarUrl}}/>
           <ReviewStars/>
           </View>
         </View>
         </View>
         
     </View>
-    // <View >
-    //   <MainCont style={global.bg}>
-    //     <LeftCont>
-    //       <Location><TitleText>Location</TitleText><RegText>{city}</RegText></Location>
-    //       <Age><TitleText>Age</TitleText><RegText>{age}</RegText></Age>
-    //       <Bio><TitleText>Bio</TitleText><BioCont><RegText>{bio}</RegText></BioCont></Bio>
-    //       <ViewProfile><ViewText>View full profile</ViewText><ImgCont><Img source={rightimg} /></ImgCont></ViewProfile>
-    //     </LeftCont>
-    //     <RightCont>
-    //       <Cont>
-    //         <ProfImgCont><ProfileImage source={walkerpicture} /></ProfImgCont>
-    //         <Name><Text>{name}</Text></Name>
-    //         <OtherText>Certified Walker</OtherText>
-    //         <Rating></Rating>
-    //       </Cont>
-    //     </RightCont>
-    //   </MainCont>
-    // </View>
   );
 };
 

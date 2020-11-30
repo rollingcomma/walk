@@ -4,21 +4,6 @@ import { View, Text, TouchableOpacity } from "react-native";
 import BasicButton from '../WButton/BasicButton';
 import { useNavigation } from "@react-navigation/native";
 
-// const Buttontext = styled.Text`
-//   color: #fff;
-//   align-items: center;
-//   justify-content: center;
-//   display: flex;
-// `;
-
-// const Buttoncontainer = styled.TouchableOpacity`
-//   background: ${(props) => (props.highlight ? "#565555" : "#C4C4C4")};
-//   width: 137px;
-//   border-radius: 7px;
-//   padding: 12px;
-//   /* bottom: -300px; */
-// `;
-
 const Startext = styled.Text`
   padding-left: 5px;
 `;
@@ -70,11 +55,11 @@ const StarImg = styled.Image`
 const filled = require("./filled.png");
 const unfilled = require("./unfilled.png");
 
-const WriteReview = ({isVisitor, profileId}) => {
-  const [highlight, setHighlight] = useState(true);
+const WriteReview = ({isVisitor, profile}) => {
+  //const [highlight, setHighlight] = useState(true);
+  const navigation = useNavigation();
   const handleReviewButtonClick = () => {
-    const navigation = useNavigation();
-    navigation.navigate("LeaveReview", {profileId: profileId})
+    navigation.navigate("LeaveReview", {profile: profile})
   }
   return (
     <View>
@@ -105,12 +90,6 @@ const WriteReview = ({isVisitor, profileId}) => {
           </Starscontainer>
         </Reviewcontainer>
 
-        {/* <Buttoncontainer
-          onPress={() => {
-            setHighlight(!highlight);
-          }}
-          highlight={highlight}
-        > */}
         { isVisitor && <BasicButton
         text="Write a Review"  
         backgroundColor= "#565555"
@@ -118,17 +97,13 @@ const WriteReview = ({isVisitor, profileId}) => {
         height={45}
         width={137}
           />}
-          {/* <Buttontext>
-            <Text>Write a Review</Text>
-          </Buttontext> */}
-        {/* </Buttoncontainer> */}
       </Main>
     </View>
   );
 };
 
-WriteReview.defaultProps = {
-  onPress: () => {}
-};
+// WriteReview.defaultProps = {
+//   onPress: () => {}
+// };
 
 export default WriteReview; 

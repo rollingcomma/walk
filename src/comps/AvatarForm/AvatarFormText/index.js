@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
 });
 
 const AvatarFormText = ({textName, text, backgroundColor, handleOnPress}) => {
-  console.log("avatarform", textName, text)
   
   return (
       <View style={styles.container}>

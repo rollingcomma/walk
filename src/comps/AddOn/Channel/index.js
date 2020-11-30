@@ -9,17 +9,14 @@ export default function Channel({item}) {
   const [latestMessage, setLatestMessage] = useState(channel.messages[channel.messages.length-1].message);
   const navigation = useNavigation();
   
-  const handleNewMessage = async (channelId, msg) => {
-    const messageId = await createMessage(channelId, msg);
-    if(messageId) {
-      const newChannel = {...channel}
-      newChannel.messages.push({id:messageId, message:msg});
-      setChannel(newChannel);
-    }
+  const handleChannelUpdate = (newMessages) => {
+    const newChannel = { ...channel}
+    newChannel.messages= newMessages;
+    setChannel(newChannel);
   }
 
   const handleOnPress = () => {
-    navigation.navigate("Chatting", {channel: channel, handleNewMessage: handleNewMessage});
+    navigation.navigate("Chatting", {channel: channel, handleChannelUpdate: handleChannelUpdate});
   }
 
   return(
@@ -35,7 +32,6 @@ export default function Channel({item}) {
               text={latestMessage.message}
               backgroundColor={"#53B7BE"}
               handleOnPress={handleOnPress}
-              handleNewMessage={handleNewMessage}
             />
             </View>
     </>

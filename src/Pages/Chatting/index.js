@@ -7,7 +7,9 @@ import Loading from "../../components/Loading";
 import MsgSent from "../../comps/MsgSent";
 import MsgRecieved from "../../comps/MsgRecieved";
 import Texting from "../../comps/Texting";
+
 import { useUserState } from "../../hook/useUserState";
+import { createMessage } from "../../db/DBUtils"
 
 const Main = styled.View`
   height: 100%;
@@ -29,7 +31,7 @@ const Chatting = ({route }) => {
   const [ userState ] = useUserState();
   const [isLoading, setIsLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const {channel, handleMessageSend} = route.params;
+  const {channel, handleChannelUpdate} = route.params;
   const [messages, setMessages] = useState(channel.messages);
   console.log("chatting",messages)
   
@@ -41,11 +43,27 @@ const Chatting = ({route }) => {
   //     <Loading />
   //   ) 
   //   : 
-    
+  
+  const handleNewMessage = async (msg) => {
+    const message = {
+      message: msg,
+      sender:userState.user.uid,
+      createdAt: new Date(),
+    }
+    const messageId = await createMessage(channel.id, message);
+    if(messageId) {
+      const newMessages = [...channel.messages]
+      newMessages.push({id:messageId, message:message});
+      setMessages(newMessages);
+
+      handleChannelUpdate(newMessages);
+    }
+  }
   return (
       <Main>
         <FlatList
         data={messages}
+        extraData={messages}
         keyExtractor={message =>message.id.toString()}
         renderItem={({item}) => 
           //  item.messages[0] &&
@@ -74,7 +92,7 @@ const Chatting = ({route }) => {
             msgRecieve="hello"/>
         </MainCont>
         </ScrollView> */}
-            <Texting onPress={handleMessageSend} />
+            <Texting handleNewMessage={handleNewMessage} />
       </Main>
   );
 };

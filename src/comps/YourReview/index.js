@@ -34,12 +34,13 @@ const StarImg = styled.Image`
 
 const unfilled = require("./bigunfilled.png");
 const filled = require("./bigfilled.png");
-const YourReview = ({ numstar }) => {
-  const [Stars, setStars] = useState(0);
+const YourReview = ({ numstar, handleStarSelect }) => {
+  const [Stars, setStars] = useState(numstar);
 
   useEffect(() => {
-    setStars(numstar);
-  }, [numstar]);
+    //setStars(numstar);
+    handleStarSelect(Stars);
+  }, [Stars]);
   /*
   ()=> {}
   shortcut for a function

@@ -47,7 +47,7 @@
     "name": "string",
     "avatarUrl": "string",
     "picsUrl": "string",
-    "createAt": "date",
+    "createdAt": "date",
     "likes": "array"
   },
   "requests":

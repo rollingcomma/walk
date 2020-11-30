@@ -1,13 +1,9 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { View, Text, StyleSheet, ScrollView} from "react-native";
 import Loading from "../../components/Loading";
-// import DashDog from "../../comps/DashDog";
-// import DashOwner from "../../comps/DashOwner";
 import MapPlaceholder from "../../comps/MapPlaceholder";
-// import TopBar from '../../comps/TopBar';
 import WalkerProfile from "../../comps/WalkerProfile";
-
-// import AvatarViewProfile from '../AvatarForm/AvatarViewProfile';
+import { getWalkerProfile } from "../../db/DBUtils";
 
 const styles = StyleSheet.create({
   app: {
@@ -34,9 +30,20 @@ const styles = StyleSheet.create({
   
 });
 
-const OwnerDashPage = ({}) => {
- const [isLoading, setIsLoading] = useState(true);
+const OwnerDashPage = ({route}) => {
+  
+  const {sender, handleCompleteRequest} = route.params;
+  const [isLoading, setIsLoading] = useState(true);
+  const [profile, setProfile] = useState(null);
 
+ useEffect(()=> {
+  async function fetchData(){
+    const result = await getWalkerProfile(sender);
+    if(result) setProfile(result);
+    setIsLoading(false);
+  }
+  fetchData();
+ }, [])
   return isLoading? 
     (
       <Loading />
@@ -47,9 +54,9 @@ const OwnerDashPage = ({}) => {
         <ScrollView>
             
           <View style={styles.container}>
-            <MapPlaceholder text="Walker Location"/>
+            <MapPlaceholder coords={profile.coords} text="Walker Location"/>
             <View style={styles.dashcont}>
-              <WalkerProfile/>
+              <WalkerProfile profile={profile}/>
             </View>
           </View>
         </ScrollView>

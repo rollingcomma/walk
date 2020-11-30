@@ -214,6 +214,23 @@ export const getDogProfile = (dogId) => {
   });
 }
 
+export const getDogProfileByOwner = (ownerId) => {
+  if(!ownerId) return;
+
+  return dogProfilesRef.where("owner", "==", ownerId).get()
+  .then(data => {
+    data.forEach(doc => {
+      let profiles=[];
+      profiles.push({id:doc.id, value:doc.data()})
+    })
+    return profiles[0];
+  })
+  .catch(err => {
+    console.log("Error get dog profile", err);
+  });
+}
+
+
 /**
  * description: create a dog profile by owner's uid
  * 
@@ -505,7 +522,7 @@ export const getPostsByDogId = (dogId) => {
  *            name: string,
  *            avatarUrl: string,
  *            picsUrl: string,
- *            createAt: date,
+ *            createdAt: date,
  *            likes: array, - list of uid liked the post 
  *           }
  */
@@ -679,7 +696,8 @@ export const updateRequest = (requestId, newRequest) => {
  */
 export const getRequestsReceived = (uid) => {
   if(!uid) return;
-  return requestsRef.where("owner", "==", uid).orderBy("timeStamp", "asc").get()
+  console.log("get request", uid);
+  return requestsRef.where("owner", "==", uid).orderBy("createdAt", "asc").get()
   .then(querySnapshot => {
     let requests = [];
     querySnapshot.forEach(doc => 
@@ -687,6 +705,7 @@ export const getRequestsReceived = (uid) => {
                             id: doc.id, 
                             value: doc.data()
                           }))
+    console.log(requests);
     return requests;
   })
   .catch(err => {
@@ -704,7 +723,7 @@ export const getRequestsReceived = (uid) => {
 export const getRequestsSent = (uid) => {
   if(!uid) return;
 
-  return requestsRef.where("walker", "==", uid).orderBy("timeStamp", "asc").get()
+  return requestsRef.where("walker", "==", uid).orderBy("createdAt", "asc").get()
   .then(querySnapshot => {
     let requests = [];
     querySnapshot.forEach(doc => 
@@ -1072,7 +1091,7 @@ export const createReview = (uid, newReview) => {
  *          sender: "string", (optional)
  *          stars: "int", (optional)
  *          review: "string", (optional)
- *          createAt: "date" (optional)
+ *          createdAt: "date" (optional)
  *        }
  * 
  * @return { boolean } true if succeed

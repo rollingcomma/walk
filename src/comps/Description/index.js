@@ -27,11 +27,17 @@ const styles = StyleSheet.create({
   },
 });
 
-const Description = ({}) => {
+const Description = ({review, handleReviewInput}) => {
   return (
     <View>
       <MainCont style={styles.shadow}>
-        <Input1 multiline placeholder="Type at least 5 words"/>
+        <Input1 
+          value={review}
+          multiline placeholder="Type at least 5 words"
+          onChangeText={(text) => {
+            handleReviewInput(text);
+          }}
+        />
       </MainCont>
     </View>
   );

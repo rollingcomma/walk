@@ -38,12 +38,12 @@ const styles = StyleSheet.create({
 });
 
 
-const MapPlaceholder = ({text}) => {
+const MapPlaceholder = ({text, coords}) => {
   return (
     <View>
       <Text style={styles.text}>{text}</Text>
       <Placeholder style={styles.shadow}>
-        <Map />
+        <Map coords={coords}/>
       </Placeholder>
     </View>
   );

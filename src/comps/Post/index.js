@@ -127,7 +127,7 @@ const Post = ({
     const newMessage = {
           sender:userState.user.uid,
           message:message,
-          timeStamp: Date.now()
+          createdAt: new Date()
         }
     if(userState && userState.user.channels) {
       console.log("channel")
@@ -141,7 +141,7 @@ const Post = ({
             user2: owner.uid,
             user2AvatarUrl: owner.avatarUrl,
             user2Name: owner.name,
-            createAt: Date.now()
+            createdAt: new Date()
           };
         createChannel(channel, newMessage);
       } else { //if current user has channel, verify if channel exist and create message
@@ -157,7 +157,7 @@ const Post = ({
             user2: result.uid,
             user2AvatarUrl:result.avatarUrl,
             user2Name: result.name,
-            createAt: Date.now()
+            createdAt: new Date()
           };
           createChannel(channel, newMessage);
         }

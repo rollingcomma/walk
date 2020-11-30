@@ -46,16 +46,16 @@ const ActivatePage = ({}) => {
   }
 
   const handleRefresh = () => {
-    
+
   }
   
   useEffect(()=> {
     async function fetchData() {
       const initialChannels = await getAllChannelsByUid(userState.user.uid, 10);
-      console.log(initialChannels);
+      
       if(initialChannels) setChannels(initialChannels);
       setIsLoading(false);
-      console.log("initial",initialChannels[0].messages[0])
+     
     }
     fetchData();
   }, [])
@@ -69,6 +69,7 @@ const ActivatePage = ({}) => {
     <View style={styles.container}>
       <FlatList
         data={channels}
+        extraData={channels}
         keyExtractor={channel=>channel.id.toString()}
         renderItem={({item}) => 
           //  item.messages[0] &&

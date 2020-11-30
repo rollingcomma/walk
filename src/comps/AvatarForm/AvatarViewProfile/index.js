@@ -1,5 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet} from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from '@react-navigation/native';
+import { useUserState } from "../../../hook/useUserState";
+import { getDogProfileByOwner, getWalkerProfile } from "../../../db/DBUtils";
 
 const styles = StyleSheet.create({
   container: {
@@ -31,13 +35,27 @@ const styles = StyleSheet.create({
   },
 });
 
-const AvatarViewProfile = ({textName,  text, onPress}) => {
+const AvatarViewProfile = ({textName,  text, profileId}) => {
+  const navigation = useNavigation();
+  const [userState] = useUserState();
   
+  const handleViewProfileClick = async ()=> {
+    if(userState.user.type === "dog owner") {
+      const profile = await getWalkerProfile(profileId);
+      if(profile) navigation.navigate("WalkerProfile", {profile: profile, isVisitor:true})
+    } else {
+      const profile = await getDogProfileByOwner(profileId);
+      if(profile) navigation.navigate("OwnerProfile", {profile: profile, isVisitor:true})
+    }
+  }
   return (
       <View style={styles.container}>
         <View style={styles.textcont}>
             <Text style={styles.text1}>{textName}</Text>
-            <Text style={styles.text2} onPress={onPress}>View Profile</Text>
+            <TouchableOpacity 
+              onPress={() => handleViewProfileClick()}>
+              <Text style={styles.text2}>View Profile</Text>
+            </TouchableOpacity>
             <Text style={styles.text3}>{text}</Text>
         </View>
         <View>

@@ -55,7 +55,7 @@ const BioCont = styled.Text`
 
 `;
 
-const UserInfo = () => {
+const UserInfo = ({profile}) => {
   return (
     <View>
       <TextCont>
@@ -64,7 +64,7 @@ const UserInfo = () => {
             <Text style={{fontWeight:"bold"}}>Location: </Text>
           </LocationTitle>
           <Locationtext>
-            <Text style={{fontSize:12}}>Burnaby, BC</Text>
+            <Text style={{fontSize:12}}>{profile.city}, {profile.province}</Text>
           </Locationtext>
         </LocationCont>
 
@@ -73,7 +73,7 @@ const UserInfo = () => {
             <Text style={{fontWeight:"bold"}}>Age: </Text>
           </AgeTitle>
           <Agetext>
-            <Text style={{fontSize:12}}>22</Text>
+            <Text style={{fontSize:12}}>{profile.age}</Text>
           </Agetext>
         </AgeCont>
 
@@ -83,9 +83,7 @@ const UserInfo = () => {
           </BioTitle>
           <Biotext>
             <Text style={{fontSize:10}}>
-              “Hi there! My name is Ethan and I love all animals. Dogs, cats,
-              birds, you name it. I really love spending time outdoors in nature
-              and ...”
+              {profile.bio}
             </Text>
           </Biotext>
         </BioCont>

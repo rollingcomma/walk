@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/native";
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 
 const InputCont = styled.View`
   /* background-color:#DBB; */
@@ -62,7 +62,9 @@ const TextInput = styled.TextInput`
 const nextarrow = require("./nextarrow.png");
 const plus = require("./plus.png");
 
-const Texting = ({}) => {
+const Texting = ({handleNewMessage}) => {
+  const [message, setMessage] = useState("");
+
   return (
     <View>
       <InputCont>
@@ -77,12 +79,22 @@ const Texting = ({}) => {
             </AddCont>
           </Add>
           <Textbox>
-            <TextInput placeholder="Type a message..." />
+            <TextInput
+              value={message} 
+              placeholder="Type a message..." 
+              onChangeText={(text) => {
+                setMessage(text);
+              }}/>
           </Textbox>
           <NextArrow>
             <ArrowCont
               onPress={() => {
-                alert("Message Sent!");
+                if(message){
+                  handleNewMessage(message);
+                  setMessage('');
+                } else {
+                   alert("Message can't be empty!");
+                }
               }}
             >
               <IconPics source={nextarrow} />

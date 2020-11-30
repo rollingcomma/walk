@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import Loading from "../../components/Loading";
 import UserBio from "../../comps/UserBio";
@@ -6,6 +6,7 @@ import WriteReview from "../../comps/WriteReview";
 import LocationAge from "../../comps/LocationAge";
 import AvatarWithName from "../../comps/Avatar/AvatarWithName";
 import { useUserState } from "../../hook/useUserState"
+import LeaveReview from "../LeaveReviewPage";
 
 const styles = StyleSheet.create({
   app: {
@@ -25,46 +26,53 @@ const styles = StyleSheet.create({
 });
 
 const WalkerProfilePage = ({route}) => {
-  console.log(route.params);
-  const [isLoading, setIsLoading] = useState(true);
-  const [profile, setProfile] = useState(null)
-  const [userState] = useUserState();
-  const isVisitor = route.params.profileId;
-  const profileId  = route.params.profileId || userState.user.uid;
-
-   useEffect(() => {
-    async function fetchData() {
-      const initialProfile = await getWalkerProfile(profileId);
-      if(initialProfile) setProfile(initialProfile);
-      setIsLoading(false);
-    }
-    fetchData();
-  },[])
-
   
-  return isLoading? 
-    (
-      <Loading />
-    ) 
-    :  
-    (
+  const [isLoading, setIsLoading] = useState(true);
+  const [profileState, setProfileState] = useState(null)
+  const [userState] = useUserState();
+  const { profile, isVisitor } = route.params;
+
+
+  const fetchProfile = async(profileId) =>{
+      setIsLoading(true);
+      const initialProfile = await getWalkerProfile(profileId);
+      if(initialProfile) setProfileState(initialProfile);
+    }
+  
+  useEffect(() => {
+    if(profile) {
+    setProfileState({...profile});
+    //console.log("profile", profile)
+    //console.log("profile state", profileState)
+  } else {
+    fetchProfile(userState.user.uid);
+   }
+   setIsLoading(false);
+  },[])
+  
+  return isLoading?
+  (
+    <Loading />
+  )
+  :
+  ( 
     <View style={styles.app}>
       <ScrollView>
         <View style={styles.Cont}>
           <View style={styles.elements}>
-            <AvatarWithName text={profile.name} />
+            <AvatarWithName avatarUrl={{uri:profileState.avatarUrl}} name={profileState.name} />
           </View>
           <View style={styles.elements}>
-            <LocationAge profile={profile}/>
+            <LocationAge profile={profileState}/>
           </View>
           <View style={styles.elements}>
-            <UserBio bio={profile.bio}/>
+            <UserBio bio={profileState.bio}/>
           </View>
           <View style={styles.elements}>
-            <WriteReview isVisitor={isVisitor}/>
+            <WriteReview isVisitor={isVisitor} profile={profileState}/>
           </View>
         </View>
-      </ScrollView>
+      </ScrollView> 
     </View>
   );
 };

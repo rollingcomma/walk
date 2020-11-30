@@ -52,7 +52,7 @@ const DogProfileResultPage = ({route}) => {
   const [profile, setProfile] = useState(null)
   const [userState] = useUserState();
   const [modalVisible, setModalVisible] = useState(false);
-  const [message, setMessage] = useState( "Cute pup, I want to walk him")
+  const [message, setMessage] = useState( '')
 
   const handleRequestPress = () => {
     setModalVisible(true);
@@ -72,7 +72,7 @@ const DogProfileResultPage = ({route}) => {
       walkerAvatarUrl: userState.user.avatarUrl,
       message: message,
       status: "active",
-      createdAt: Date.now()
+      createdAt: new Date(),
     }
     if(createRequest(request)) Alert.alert("Thank You", "Your request is sent!");
   }

@@ -17,21 +17,21 @@ export const users = {
     username: "Sherlyn",
     email:"shallowgrass@gmail.com",
     type:"dog owner",
-    createAt: new Date(),
+    createdAt: new Date(),
   },
   uid2: {
     uid:uids.uid2,
     username: "Alex",
     email:"shallowgrass@gmail.com",
     type:"dog owner",
-    createAt: new Date(),
+    createdAt: new Date(),
   },
   uid3: {
     uid: uids.uid3,
     username: "Lucy",
     email:"test@gmail.com",
     type:"dog owner",
-    createAt: new Date(2019, 12, 15),
+    createdAt: new Date(2019, 12, 15),
   },
   uid4:
   {
@@ -66,14 +66,14 @@ export const users = {
     username:"Bob",
     email:"bobfake@gmail.com",
     type:"walker",
-    createAt: new Date(2020, 9, 10)
+    createdAt: new Date(2020, 9, 10)
   },
   uid9:{
     uid: uids.uid9,
     username:"Josh",
     email:"joshtester2222@gmail.com",
     type:"walker",
-    createAt: new Date(2020, 10, 8)
+    createdAt: new Date(2020, 10, 8)
   },
   uid10:{
     uid: uids.uid10,
@@ -81,7 +81,7 @@ export const users = {
     email:"katyfake@gmail.com",
     type:"walker",
     channels:[],
-    createAt: new Date(2020, 7, 7)
+    createdAt: new Date(2020, 7, 7)
   }
 
 };

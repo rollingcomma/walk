@@ -51,8 +51,8 @@ const RequestPage = ({}) => {
     }
   }
 
-  const handleOnPressActive = (requestId) => {
-    navigation.navigate("Dashboard", {requestId: requestId, handleCompleteRequest:handleCompleteRequest});
+  const handleOnPressActive = (sender) => {
+    navigation.navigate("Dashboard", {sender: sender, handleCompleteRequest:handleCompleteRequest});
     setIsActive(true);
   }
 
@@ -77,6 +77,7 @@ const RequestPage = ({}) => {
       else {
         initialRequests = await getRequestsSent(userState.user.uid);
       }
+      console.log("requests", initialRequests);
       setRequests(initialRequests);
       setIsLoading(false);
     }
@@ -98,19 +99,20 @@ const RequestPage = ({}) => {
             <>
               <View style={styles.container}>
                 <BasicAvatar
-                image1={{uri:userState.user.type="walker"?request.value.walkerAvatarUrl:request.value.ownerAvatarUrl}}
+                image1={userState.user.type==="walker"?{uri:item.value.ownerAvatarUrl}:{uri:item.value.walkerAvatarUrl}}
                 width={64}
                 height={64}/>
                 <AvatarViewProfile
-                textName={userState.user.type="walker"?request.value.walkerName:request.value.ownerName}
+                textName={userState.user.type==="walker"?item.value.ownerName: item.value.walkerName}
                 textView={"View Profile"}
-                text={request.value.message}
+                text={item.value.message}
+                profileId={userState.user.type==="walker"?item.value.owner:item.value.walker}
                 index = {item.id}
                 onPress={handleOnPressViewProfile}
                 />
                 <View style={styles.buttons}>
-                 {request.status != "active" && <ActivateButton onPress={handleOnPressActive}/>}
-                  <DeclineButton index={item.id} isDeclined={isDeclined || request.status === "declined"} onPress={handleOnPressDecline}/>
+                 {item.status != "active" && <ActivateButton sender={item.value.walker} onPress={handleOnPressActive}/>}
+                  <DeclineButton index={item.id} isDeclined={isDeclined || item.status === "declined"} onPress={handleOnPressDecline}/>
                 </View> 
               </View>
               <View style={styles.spacer}>

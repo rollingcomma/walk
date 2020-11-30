@@ -44,6 +44,7 @@ const Feed = () => {
     <Main>
         <FlatList
         data={posts}
+        extraData={posts}
         keyExtractor={post => post.id.toString()}
         renderItem={( { item })=> 
           <Cont>

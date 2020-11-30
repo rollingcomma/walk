@@ -23,13 +23,13 @@ name: {
 }
 });
 
-const AvatarForm05 = ({name}) => {
+const AvatarForm05 = ({name, avatarUrl}) => {
   
   return (
       <View style={styles.container}>
         <View style={styles.avatar}>
             <BasicAvatar 
-            image1={require('../../Avatar/face3.jpg')}
+            image1={avatarUrl}
             width={134}
             height={134}
             />

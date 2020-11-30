@@ -1,5 +1,5 @@
-import React from "react";
-import { View, StyleSheet, ScrollView, Text } from "react-native";
+import React, { useState} from "react";
+import { View, StyleSheet, ScrollView, Text, Alert } from "react-native";
 import styled from "styled-components/native";
 import Loading from "../../components/Loading";
 import YourReview from "../../comps/YourReview";
@@ -9,6 +9,9 @@ import TopBar from "../../comps/TopBar";
 import Description from "../../comps/Description";
 import AvatarForm05 from "../../comps/AvatarForm/AvatarForm05";
 import BasicButton from "../../comps/WButton/BasicButton";
+import UserStateProvider from "../../context/UserStateProvider";
+import { useUserState } from "../../hook/useUserState";
+import { createReview } from "../../db/DBUtils";
 
 const styles = StyleSheet.create({ 
   app: {
@@ -47,24 +50,52 @@ const CancelButtonCont = styled.View`
 const PostButtonCont = styled.View`
 `;
 
-const LeaveReview = () => {
+const LeaveReview = ({route}) => {
+  const [review, setReview] = useState('');
+  const { profile } = route.params;
   const [isLoading, setIsLoading] = useState(true);
-  return isLoading? 
-    (
-      <Loading />
-    ) 
-    : 
-    (
+  const [userState] = useUserState()
+  const [starNum, setStarNum] = useState(5);
+
+  const handleStarSelect = (num) => {
+    setStarNum(num);
+  }
+  const handleReviewInput = (msg) =>{
+    setReview(msg);
+  }
+  // isLoading? 
+  //   (
+  //     <Loading />
+  //   ) 
+  //   : 
+  const handleReviewPost = async() => {
+    if(review.length <= 3) {
+      alert("Your review is too short!")
+    } else {
+      const newReview = {
+        sender: userState.user.uid,
+        stars:starNum,
+        review: review,
+        createdAt: new Date(),
+      }
+      if(await createReview(profile.uid, newReview )) {
+         Alert.alert("Thank you!","Your review is posted");
+      }
+       
+      
+    }
+  }
+    
+  return (
         <View  style={styles.app}>
-          <TopBar title="Leave a Review" />
           <ScrollView>
               <Cont>
                 <AvatarCont>
-                  <AvatarForm05 name="Mason K." />
+                  <AvatarForm05 avatarUrl={{uri:profile.avatarUrl}} name={profile.name} />
                 </AvatarCont>
 
                 <YourReviewCont>
-                  <YourReview numstar={4} />
+                  <YourReview numstar={starNum} handleStarSelect={handleStarSelect}/>
                 </YourReviewCont>
 
                 <ShareFeedbackCont>
@@ -72,7 +103,9 @@ const LeaveReview = () => {
                 </ShareFeedbackCont>
 
                 <TypeCont>
-                  <Description />
+                  <Description 
+                    review={review}
+                    handleReviewInput={handleReviewInput}/>
                 </TypeCont>
 
                 <ButtonCont>
@@ -90,6 +123,7 @@ const LeaveReview = () => {
                     backgroundColor="#565555"
                     height={45}
                     width={137}
+                    onPress={handleReviewPost}
                     />
                   </PostButtonCont>
                 </ButtonCont>
