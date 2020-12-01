@@ -16,7 +16,7 @@ const SignIn = ({navigation}) => {
   const handleDirectUser = async (currentUser) => {
     setIsLoading(true);
     //console.log("direct user")
-    const user =  await findUser(currentUser.uid);
+    let user =  await findUser(currentUser.uid);
     
     if( user && user.type ) {
       dispatchUser({user});

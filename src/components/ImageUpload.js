@@ -17,7 +17,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { createPost, deleteImage, getDogProfile, uploadImageAsync } from '../db/DBUtils';
 import { useUserState } from '../hook/useUserState';
 
-export default ImageUpload = ({text, handleUrlChange, folder}) => {
+export default ImageUpload = ({text, handleUrlChange, folder, uploadImageOnly}) => {
   
   const [uploading, setUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState(null)
@@ -55,7 +55,7 @@ export default ImageUpload = ({text, handleUrlChange, folder}) => {
   }
 
   useEffect(() => {
-    if(!(text && handleUrlChange && folder)) {
+    if(!uploadImageOnly) {
       setIsCreatePost(true);
       text = "Create a New Post";
       folder = "postImages";

@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Avatar06 = ({avatarUrl, isVisitor, handleImageUpload}) => {
+const Avatar06 = ({avatarUrl, handleImageUpload}) => {
   const [uploadShow, setUploadShow] = useState(false);
   const defaultUrl = require("../../../../assets/defaultProfile.png");
   
@@ -53,8 +53,11 @@ const Avatar06 = ({avatarUrl, isVisitor, handleImageUpload}) => {
            <Text style={styles.text}>Change Profile Photo</Text>
           </TouchableOpacity> 
        
-        <CusModal title="Upload your profile picture" handleModalClose={handleModalClose} modalVisible={uploadShow}>
-          <ImageUpload handleUrlChange={handleUrlChange} folder="profileImages" />
+        <CusModal 
+          title="Upload your profile picture" 
+          handleModalClose={handleModalClose} 
+          modalVisible={uploadShow}>
+          <ImageUpload uploadImageOnly handleUrlChange={handleUrlChange} folder="profileImages" />
         </CusModal>
       </View>
   );

@@ -29,7 +29,7 @@ export default function CusModal({children, modalVisible, handleModalClose, titl
 
 const styles = StyleSheet.create({
   modalContainer: {
-    height: (Dimensions.get("window").height)/2.5,
+    height: (Dimensions.get("window").height)/2,
     width: (Dimensions.get("window").width),
     marginTop:220,
     marginRight: "auto",

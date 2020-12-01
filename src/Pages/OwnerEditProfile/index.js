@@ -22,6 +22,7 @@ const Main = styled.View`
 `;
 const MainCont = styled.ScrollView`
   width: 100%;
+  padding-bottom:100px;
 `;
 const FooterCont = styled.View`
   width: 375px;
@@ -90,15 +91,6 @@ const LikesCont = styled.View`
 const PersonalInfo = styled.View`
   width: 100%;
   margin-top:10px;
-`;
-const PostCont = styled.View`
-  width: 100%;
-  /* background-color: #ada; */
-`;
-const AddCont = styled.View`
-  width: 100%;
-  align-items: center;
-  margin-top: 20px;
 `;
 
 const OwnerEditProfile = () => {
@@ -204,8 +196,14 @@ const OwnerEditProfile = () => {
                 height="35px"
                 value={dogAge}
                 onChangeText={(text) => {
-                  if(text)
-                  setDogAge(text);
+                  if(text) {
+                    try{
+                      const newAge = parseInt(t);
+                      setDogAge(newAge);
+                    } catch {
+                      alert("The age can only be number");
+                    }
+                  }
                 }}
                />
               <Input

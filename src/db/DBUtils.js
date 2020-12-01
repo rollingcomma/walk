@@ -173,6 +173,28 @@ export const createUser =  (newUser) => {
 }
 
 /**
+ * description: Update user information without overwriting
+ * 
+ * @param { user} 
+ *        { 
+ *          key: newValue
+ *        }
+ * 
+ * @return { boolean } true if succeed 
+ */
+export const updateUser =  (uid, newValue) => {
+  if(!uid && !newValue) return;
+
+  return usersRef.doc(uid).update(newValue)
+  .then(() => {
+    return true;
+  })
+  .catch(err => {
+    console.log("Error create user", err);
+  });
+}
+
+/**
  * description: delete user by uid
  * 
  * @param { string } uid
@@ -419,6 +441,44 @@ export const getWalkerProfile = (uid) => {
 }
 
 /**
+ * description: create a walker profile by user's uid
+ * 
+ * @param { walkerProfile } 
+ *        {
+  *         uid: string, 
+  *         name: string,
+  *         age: int,
+  *         photoUrl: string,
+  *         bio: string,
+  *         phone: string,
+  *         province: string,
+  *         city: string,
+  *         address: string,
+  *         postalCode: string,
+  *         birthday: date,
+  *         emergencyContactPerson: string,
+  *         emergencyContactTel: string,
+  *         createdAt: date,
+  *       }
+ *  
+ * @return { string } id if succeed
+ */
+export const createWalkerProfile = (walkerProfile) => {
+  if(!walkerProfile) return;
+
+  return walkerProfilesRef.doc(walkerProfile.uid).set(walkerProfile)
+  .then((doc) => {
+    // if(doc.id) {
+    //   return doc.id;
+    // }
+    return true;
+  })
+  .catch(err => {
+    console.log("Error create walker profile", err);
+  });
+}
+
+/**
  * description: create / update a walker profile by user's uid
  * when updating an existing profile, uid is mandatory, other fields are optional 
  * 
@@ -443,10 +503,10 @@ export const getWalkerProfile = (uid) => {
  *  
  * @return { boolean } true if succeed
  */
-export const setWalkerProfile = (walkerProfile) => {
-  if(!walkerProfile) return;
+export const updateWalkerProfile = (profileId, newValue) => {
+  if(!profileId && !newValue) return;
 
-  return walkerProfilesRef.doc(walkerProfile.uid).set(walkerProfile)
+  return walkerProfilesRef.doc(profileId).update(newValue)
   .then(() => {
     return true;
   })
