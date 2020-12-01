@@ -6,9 +6,10 @@ import { View, Text } from "react-native";
 const TextCont = styled.View`
   display: flex;
   align-items:center;
-  /* justify-content:center; */
-  width:100;
-  height:70;
+  justify-content:center;
+  width:150px;
+  height:70px;
+  padding-right:40px;
 `;
 const Titletext = styled.Text`
   color: #000;
@@ -28,11 +29,11 @@ const DogInfo = ({name, breed, age}) => {
   return (
     <View>
       <TextCont>
-        
-          <Titletext>{name}</Titletext>
-          <Description>{breed}</Description>
-          <Description>Age {age}</Description>
-        
+      
+        <Titletext>{name}</Titletext>
+        <Description>{breed}</Description>
+        <Description>Age {age}</Description>
+      
       </TextCont>
     </View>
   );

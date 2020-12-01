@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components/native";
 import { View, Text, StyleSheet } from "react-native";
 
@@ -46,9 +46,18 @@ const styles = StyleSheet.create({
 
 
 const Likes = ({ maintext, likes, handleLikes}) => {
-  const [likeone, setLikeOne] = useState(likes && likes[0] ||"");
-  const [liketwo, setLikeTwo] = useState(likes && likes[1] ||"");
-  const [likethree, setLikeThree] = useState(likes && likes[2] ||"");
+  const [likeone, setLikeOne] = useState("");
+  const [liketwo, setLikeTwo] = useState("");
+  const [likethree, setLikeThree] = useState("");
+
+  useEffect(()=>{
+    // handleLikes([likeone, liketwo, likethree]);
+    if(likes && likes.length >0) {
+      setLikeOne(likes[0]);
+      setLikeTwo(likes[1] || "");
+      setLikeThree(like[2] || "")
+    }
+  },[]);
 
   useEffect(()=>{
     handleLikes([likeone, liketwo, likethree]);
@@ -66,6 +75,7 @@ const Likes = ({ maintext, likes, handleLikes}) => {
             placeholder="Type something..." 
             value={likeone}
             onChangeText={(text)=>{
+              if(text)
               setLikeOne(text);
             }}/>
           </OpOne>
@@ -74,6 +84,7 @@ const Likes = ({ maintext, likes, handleLikes}) => {
             placeholder="Type something..."
             value={liketwo}
             onChangeText={(text)=>{
+              if(text)
               setLikeTwo(text);
             }}/>
           </OpOne>
@@ -82,6 +93,7 @@ const Likes = ({ maintext, likes, handleLikes}) => {
               placeholder="Type something..."
               value={likethree}
               onChangeText={(text)=>{
+                if(text)
                 setLikeThree(text);
             }}/>
           </OpOne>

@@ -12,6 +12,7 @@ import BasicButton from "../../comps/WButton/BasicButton";
 import UserStateProvider from "../../context/UserStateProvider";
 import { useUserState } from "../../hook/useUserState";
 import { createReview } from "../../db/DBUtils";
+import { useNavigation } from "@react-navigation/native";
 
 const styles = StyleSheet.create({ 
   app: {
@@ -50,24 +51,21 @@ const CancelButtonCont = styled.View`
 const PostButtonCont = styled.View`
 `;
 
-const LeaveReview = ({route}) => {
+const LeaveReview = ({route, navigation:{goBack}}) => {
+  // const navigation = useNavigation()
   const [review, setReview] = useState('');
   const { profile } = route.params;
-  const [isLoading, setIsLoading] = useState(true);
   const [userState] = useUserState()
   const [starNum, setStarNum] = useState(5);
 
   const handleStarSelect = (num) => {
     setStarNum(num);
   }
+  
   const handleReviewInput = (msg) =>{
     setReview(msg);
   }
-  // isLoading? 
-  //   (
-  //     <Loading />
-  //   ) 
-  //   : 
+
   const handleReviewPost = async() => {
     if(review.length <= 3) {
       alert("Your review is too short!")
@@ -79,10 +77,9 @@ const LeaveReview = ({route}) => {
         createdAt: new Date(),
       }
       if(await createReview(profile.uid, newReview )) {
-         Alert.alert("Thank you!","Your review is posted");
+        Alert.alert("Thank you!","Your review is posted");
+        goBack();
       }
-       
-      
     }
   }
     

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import styled from "styled-components/native";
 import Loading from "../../components/Loading";
 import Input from "../../comps/Input";
@@ -52,7 +52,6 @@ const ButtonCont = styled.View`
 `;
 
 const addimage = require("./addphoto.png");
-//const addimage = require("../../comps/TopBar/addphoto.png");
 
 const AddEvent = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -65,13 +64,10 @@ const AddEvent = () => {
     ) 
     : 
     (
+       <KeyboardAvoidingView
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+      style={{flex:1}}>
       <Main>
-        {/* <MainCont> */}
-          {/* <TopBar
-            title="Create an Event"
-            imageLeft1={left}
-
-          /> */}
           <ScrollView>
 
           <Cont>
@@ -145,6 +141,7 @@ const AddEvent = () => {
      
         {/* </MainCont> */}
       </Main>
+      </KeyboardAvoidingView>
   );
 };
 

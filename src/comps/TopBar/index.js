@@ -56,19 +56,19 @@ const styles = StyleSheet.create({
   }
 });
 
-const TopBar = ({title, text1, text2, imageLeft1, imageLeft2, imageRight1}) => {
+const TopBar = ({title, textLeft, textRight, onPressLeft, onPressRight}) => {
   return (
       <View style={styles.container}>
         <View style={styles.innerCont}>
         
         <TouchableOpacity 
         style={styles.textLeft}
-        onPress={onPress}>
-        <Text>{text1}</Text>
+        onPress={onPressLeft}>
+        <Text>{textLeft}</Text>
         </TouchableOpacity>
 
         
-        <TouchableOpacity  
+        {/* <TouchableOpacity  
         style={styles.leftArrow} 
         onPress={onPress}>
         <Image
@@ -80,7 +80,7 @@ const TopBar = ({title, text1, text2, imageLeft1, imageLeft2, imageRight1}) => {
         onPress={onPress}>
         <Image
         source={imageLeft2}/>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         </View>
 
@@ -91,20 +91,18 @@ const TopBar = ({title, text1, text2, imageLeft1, imageLeft2, imageRight1}) => {
         <TouchableOpacity >
         <Text 
         style={styles.textRight}
-        onPress={() => {
-          alert("Send picture in the chat");
-          }}>
-          {text2}
+        onPress={onPressRight}>
+          {textRight}
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity 
+        {/* <TouchableOpacity 
         style={styles.rightPlus}
         onPress={onPress}>
         <Image
         source={imageRight1}/>
-        </TouchableOpacity>
-        </View>
+        </TouchableOpacity>*/}
+        </View> 
 
       </View>
   );

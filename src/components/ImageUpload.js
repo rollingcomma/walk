@@ -14,13 +14,53 @@ import {
 } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
-import { uploadImageAsync } from '../db/DBUtils';
+import { createPost, deleteImage, getDogProfile, uploadImageAsync } from '../db/DBUtils';
+import { useUserState } from '../hook/useUserState';
 
-export default ImageUpload = () => {
+export default ImageUpload = ({text, handleUrlChange, folder}) => {
   
   const [uploading, setUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState(null)
+  const [imgRef, setImgRef] = useState(null);
+  const [isCreatePost, setIsCreatePost] = useState(false);
+  const [userState] = useUserState();
 
+
+  const handleCancel = () => {
+   if(deleteImage(imgRef)) {
+     setImgRef(null);
+     setImageUrl(null);
+   }
+  }
+
+  const handleSubmitPost = async () => {
+    const profile = userState.user.profile? userState.user.profile: await getDogProfile(userState.user.profileId);
+    const newPost = {
+      dogId:userState.user.profileId,
+      name: profile.name,
+      avatarUrl: userState.user.avatarUrl,
+      picsUrl:imageUrl,
+      createdAt: new Date(),
+      likes:[]
+    }
+    if(await createPost(newPost))
+      Alert.alert("Well Done", "Your post is created!");
+  }
+  
+  const handleConfirm = () => {
+    if(isCreatePost) 
+      handleSubmitPost();
+    else
+      handleUrlChange(imageUrl);
+  }
+
+  useEffect(() => {
+    if(!(text && handleUrlChange && folder)) {
+      setIsCreatePost(true);
+      text = "Create a New Post";
+      folder = "postImages";
+    }
+  },[])
   
   const handleRenderUploadingOverlay = () => {
     if (uploading) {
@@ -65,13 +105,22 @@ export default ImageUpload = () => {
           }}>
           <Image source={{ uri: imageUrl }} style={{ width: 250, height: 250 }} />
         </View>
-
-        <Text
-          onPress={handleCopyToClipboard}
-          onLongPress={handleShare}
-          style={{ paddingVertical: 10, paddingHorizontal: 10 }}>
-          Click to share
-        </Text>
+        <View style={styles.container}>
+          <TouchableOpacity
+            style={styles.textCancel}
+            onPress={handleCancel}
+            >
+              <Text >Retry</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleConfirm}
+            style={styles.textConfirm}
+          >
+            <Text>Confirm</Text>
+          </TouchableOpacity>
+          
+        </View>
+        
       </View>
     );
   };
@@ -120,10 +169,12 @@ export default ImageUpload = () => {
       setUploading(true);
 
       if (!pickerResult.cancelled) {
-        uploadUrl = await uploadImageAsync(pickerResult.uri);
-        console.log(uploadUrl);
-        setImageUrl(uploadUrl);
-        console.log(imageUrl);
+        const res = await uploadImageAsync(pickerResult.uri, folder);
+        if(res) {
+          
+          setImageUrl(res.imageUrl);
+          setImgRef(res.ref);
+        }
       }
     } catch (e) {
       console.log(e);
@@ -134,8 +185,9 @@ export default ImageUpload = () => {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex:1, alignItems: 'center', justifyContent: 'center' }}>
       {imageUrl ? null : (
+        <>
         <Text
           style={{
             fontSize: 20,
@@ -143,9 +195,9 @@ export default ImageUpload = () => {
             textAlign: 'center',
             marginHorizontal: 15,
           }}>
-          Create a Post
+          {text}
         </Text>
-      )}
+      
       <TouchableOpacity
         onPress={handleImagePicking}
         style={{
@@ -153,7 +205,7 @@ export default ImageUpload = () => {
           padding:10,
           marginBottom:10,
           color:"#38BC64",
-          backgroundColor:"#97D7DA",
+          backgroundColor:"lightgrey",
           borderRadius:10,
         }}>
           <Text>Pick an image from camera roll</Text>
@@ -167,12 +219,13 @@ export default ImageUpload = () => {
           padding: 10,
           marginTop:10,
           color:"#38BC64",
-          backgroundColor:"#97D7DA",
+          backgroundColor:"lightgrey",
           borderRadius:10,
         }}>
           <Text>Take a photo</Text>
         </TouchableOpacity>
-       
+       </>
+       )}
 
       {handleRenderImage()}
       {handleRenderUploadingOverlay()}
@@ -187,5 +240,33 @@ const styles = StyleSheet.create({
   image:{
     width:"100%",
     height:200,
+  },
+  container:{
+    width:250,
+    display:"flex",
+    justifyContent:"space-between",
+    flexDirection:"row",
+    paddingTop:20
+
+  },
+  textConfirm: {
+    width:80,
+    height:30,
+    fontSize:18,
+    // textAlign:"center",
+    justifyContent:"center",
+    alignItems:"center",
+    backgroundColor:"#97D7DA",
+    borderRadius:4
+  },
+  textCancel: {
+    width:80,
+    height:30,
+    fontSize:18,
+    // textAlign:"center",
+    justifyContent:"center",
+    alignItems:"center",
+    backgroundColor:"lightgrey",
+    borderRadius:4
   }
 })

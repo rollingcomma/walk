@@ -5,26 +5,28 @@ import Loading from "../../components/Loading";
 import EventInfo from "../../comps/EventInfo";
 import Spacer from "../../comps/Spacer";
 
-import { getAllEvents } from "../../db/DBUtils"
+import { getAllEvents, getEventsUpdate } from "../../db/DBUtils"
 
 const MainCont = styled.View`
-  width: 100%;
+  /* width: 100%; */
   height: 100%;
 `;
 
 const Cont = styled.View`
+  align-items:center;
 `;
 
 const Section = styled.View`
- margin-top:10px;
-  justify-content:center;
-flex-direction:row;
+  margin-top:10px;
+  /* justify-content:center;*/
+  flex-direction:row;
 `;
 
 const EventsCont = styled.View`
   
   justify-content:center;
   width:170px;
+  align-items:center;
 `;
 
 const SpacerCont = styled.View`
@@ -38,8 +40,8 @@ const EventImg = styled.View`
 const DisplayPic = styled.Image`
   width:200px;
   height:230px;
-  justify-content:center;
-  align-items:center;
+  /* justify-content:center;
+   align-items:center; */
 `;
 
 const Events = ({}) => {
@@ -47,9 +49,15 @@ const Events = ({}) => {
   const [events, setEvents] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   
-  const handleRefresh = () => {
-
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    const newEvents = await getEventsUpdate(events[0].value.createdAt);
+    if(newEvents) {
+      setEvents([...events, ...newEvents]);
+    }
+    setRefreshing(false);
   }
+
   useEffect(() => {
     async function fetchData() {
       const res = await getAllEvents();

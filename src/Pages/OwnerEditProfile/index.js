@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, KeyboardAvoidingView, Platform } from "react-native";
 import styled from "styled-components/native";
 import Loading from "../../components/Loading";
 import Input from "../../comps/Input";
 import Likes from "../../comps/Likes";
+import TopBar from "../../comps/TopBar";
 import AddImage from "../../comps/AddImage";
 import Spacer from "../../comps/Spacer";
 import Avatar06 from "../../comps/Avatar/Avatar06";
 import Dislikes from "../../comps/Dislikes";
 import Province from "../../comps/Province";
 import { useUserState } from "../../hook/useUserState";
+import { getDogProfile } from "../../db/DBUtils";
 
 const Main = styled.View`
   width: 375px;
@@ -100,21 +102,22 @@ const AddCont = styled.View`
 `;
 
 const OwnerEditProfile = () => {
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [dogName, setDogName] = useState("");
+  const [dogAge, setDogAge] = useState("");
+  const [dogBreed, setDogBreed] = useState("");
+  const [dogBio, setDogBio] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [province, setProvince] = useState("");
+  const [zip, setZip] = useState("");
+  const [likes, setLikes] = useState(null);
+  const [dislikes, setDislikes] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userState, dispatchUser] = useUserState();
-  const profile = userState && userState.user.profile? userState.user.Profile:null;
-  const [dogName, setDogName] = useState(profile && profile.name ||"");
-  const [dogAge, setDogAge] = useState(profile && profile.age || "");
-  const [dogBreed, setDogBreed] = useState(profile && profile.breed || "");
-  const [dogBio, setDogBio] = userState(profile && profile.bio || "");
-  const [phone, setPhone] = useState(profile && profile.phone ||"");
-  const [address, setAddress] = useState(profile && profile.address ||"");
-  const [city, setCity] = useState(profile && profile.city||"");
-  const [province, setProvince] = useState(profile && profile.province||"");
-  const [zip, setZip] = useState(profile && profile.postalCode || "");
-  const [likes, setLikes] = useState(profile && profile.likes || null);
-  const [dislikes, setDislikes] = useState(profile && profile.dislikes || null);
-  
+
+  // const defaultProfilePc = require("");
   const handleLikes = (likes) =>{
     setLikes(likes);
   }
@@ -122,6 +125,53 @@ const OwnerEditProfile = () => {
     setDislikes(dislikes);
   }
   
+  const handleImageUpload = (avatarUrl)=> {
+    if(avatarUrl) setAvatarUrl(avatarUrl);
+  } 
+
+  const handleProvinceSelected = ( province) => {
+    setProvince(province);
+  }
+
+  const handleSubmit = () => {
+    // const keyArr = ["name", "age", "city", "province", "zip","phone", "emergency person name", "emergency contact phone"]
+    // const dataArr =  [name, age, city, province, zip, phone, emName, emPhone]
+    // const validated = validate(dataArr);
+    // validate.forEach((element, index) => {
+    //   if(!element) 
+    //     Alert.alert("Error", `The ${keyArr[index]} can not be empty`)
+    // })
+    alert("submit");
+  }
+
+  const handleCancel = () => {
+    alert("Cancel");
+  }
+
+  useEffect(() => {
+    const fetchData = async(profileId)=> {
+      const profile = await getDogProfile(profileId);
+      if(profile) {
+        setAvatarUrl(profile.avatarUrl);
+        setDogName(profile.name);
+        setDogAge(profile.age);
+        setDogBreed(profile.breed);
+        setDogBio(profile.bio);
+        setAddress(profile.address);
+        setCity(profile.city);
+        setProvince(profile.province);
+        setZip(profile.postalCode);
+        setPhone(profile.phone);
+        setLikes(profile.likes);
+        setDislikes(profile.dislikes);
+      }
+    }
+    if(userState.user.type === "dog owner") {
+      fetchData(userState.user.profileId);
+    }
+    setIsLoading(false);
+  }, [])
+
   return isLoading? 
     (
       <Loading />
@@ -131,13 +181,12 @@ const OwnerEditProfile = () => {
       behavior={Platform.OS == "ios" ? "padding" : "height"}
       style={{flex:1}}
     >
-      <Main>
+      {/* <Main> */}
         <MainCont>
-         
+          <TopBar title="Edit Profile" textLeft="Cancel" textRight="Done" onPressLeft={handleCancel} onPressRight={handleSubmit} />
           <Cont>
-           
             <Top>
-              <Avatar06 />
+              <Avatar06 avatarUrl={avatarUrl} isVisitor={userState.user.type} handleImageUpload={handleImageUpload}/>
             </Top>
             <Spacer />
             <BasicInfo>
@@ -146,15 +195,16 @@ const OwnerEditProfile = () => {
                 height="35px"
                 value= {dogName}
                 onChangeText={(text) => {
-                  setDogName(text);
+                  if(text)
+                   setDogName(text);
                 }}
-               
               />
               <Input
                 text="Age"
                 height="35px"
                 value={dogAge}
                 onChangeText={(text) => {
+                  if(text)
                   setDogAge(text);
                 }}
                />
@@ -163,6 +213,7 @@ const OwnerEditProfile = () => {
                 height="35px"
                 value={dogBreed}
                 onChangeText={(text) => {
+                  if(text)
                   setDogBreed(text);
                 }}
               />
@@ -173,9 +224,10 @@ const OwnerEditProfile = () => {
               <InputCont>
                 <Input
                   text="Bio"
-                  height="48px"
+                  height="60px"
                   value={dogBio}
                   onChangeText={(text) => {
+                    if(text)
                     setDogBio(text);
                   }}
                    multiline={true}
@@ -202,6 +254,7 @@ const OwnerEditProfile = () => {
                   text="Phone" height="35px"
                   value={phone}
                   onChangeText={(text) => {
+                    if(text)
                     setPhone(text);
                   }}
                 />
@@ -210,7 +263,8 @@ const OwnerEditProfile = () => {
                   height="35px"
                   value={address}
                   onChangeText={(text) => {
-                    // alert(t);
+                    if(text)
+                    
                     setAddress(text);
                   }}
                 />
@@ -219,16 +273,19 @@ const OwnerEditProfile = () => {
                   height="35px"
                   value={city}
                   onChangeText={(text) => {
+                    if(text)
                     setCity(text);
                   }}
                 />
-                <Province text="Province" />
+                
+                <Province text="Province" province={province} handleProvinceSelected={handleProvinceSelected} />
                 <Input
                   text="Zip Code"
                   height="35px"
                   value={zip}
                   onChangeText={(text) => {
                     // alert(t);
+                    if(text)
                     setZip(text);
                   }}
                 />
@@ -236,18 +293,11 @@ const OwnerEditProfile = () => {
             </PersonalInfo>
             
             <Spacer />
-            {/* // <PostCont>
-            //   <TitleText><Text>Posts</Text></TitleText>
-            //   <TitleText2><Text>Add pup pics here!</Text></TitleText2>
-            //   <AddCont>
-            //     <AddImage />
-            //   </AddCont>
-            // </PostCont> */}
           </Cont>
           
         </MainCont>
         
-      </Main>
+      {/* </Main> */}
     </KeyboardAvoidingView>
   );
 };

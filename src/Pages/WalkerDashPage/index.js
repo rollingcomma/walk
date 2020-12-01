@@ -43,7 +43,7 @@ const WalkerDashPage = ({route}) => {
     async function fetchData(){
       const owner = await findUser(sender);
       const dog = await getDogProfileByOwner(sender);
-      console.log("owner", dog);
+      //console.log("owner", dog);
       if(dog && owner) {
         setOwnerProfile(owner);
         setDogProfile(dog.value);

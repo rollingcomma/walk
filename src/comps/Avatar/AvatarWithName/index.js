@@ -1,6 +1,7 @@
-import { Row } from "native-base";
 import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity} from "react-native";
+import { View, Text, Image, StyleSheet} from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 import BasicAvatar from "../BasicAvatar";
 
 const styles = StyleSheet.create({
@@ -23,6 +24,13 @@ const styles = StyleSheet.create({
 });
 
 const AvatarWithName = ({name, avatarUrl, isVisitor}) => {
+  const navigation = useNavigation();
+
+  const handleNavigate = () => {
+    console.log("edit clicked")
+    navigation.navigate("EditProfile");
+  };
+
   return (
       <View style={styles.container}
       >
@@ -33,9 +41,7 @@ const AvatarWithName = ({name, avatarUrl, isVisitor}) => {
           height={134}
         />
         { !isVisitor && 
-          <TouchableOpacity opPress={() => {
-            navigation.navigate("EditProfile");
-          }}>
+          <TouchableOpacity onPress={()=>handleNavigate()}>
             <Image style={styles.icon}
               source={require('../edit.png')}
             />

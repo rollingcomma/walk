@@ -200,7 +200,7 @@ export const deleteUser = (uid) => {
  *          {
  *            owner: string,
  *            name: string,
- *            photoUrl: string,
+ *            avatarUrl: string,
  *            age: int,
  *            breed: string,
  *            bio: string,
@@ -480,7 +480,29 @@ export const deleteWalkerProfile = (uid) => {
  * @return { array }  [{id:postId, value:post}...] single post format refers to getPost
  */
 export const getAllPosts = () => {
-  return postsRef.orderBy("createdAt", "asc").get()
+  return postsRef.orderBy("createdAt", "desc").get()
+  .then(querySnapshot => {
+    let posts = [];
+    querySnapshot.forEach(doc => 
+                            posts.push({
+                              id: doc.id,
+                              value: doc.data()
+                            })
+                          )
+    return posts;
+  })
+  .catch(err => {
+    console.log("Error get all posts", err);
+  });
+}
+
+/**
+ * description: fetch all new posts created after startTime
+ *  
+ * @return { array }  [{id:postId, value:post}...] single post format refers to getPost
+ */
+export const getPostsUpdate = (startTime) => {
+  return postsRef.where("createdAt", ">", startTime).orderBy("createdAt", "desc").get()
   .then(querySnapshot => {
     let posts = [];
     querySnapshot.forEach(doc => 
@@ -567,10 +589,10 @@ export const getPost = (postId) => {
  */
 export const createPost = (newPost) => {
   if(!newPost) return;
-
+  console.log("new post" , newPost);
   return postsRef.add(newPost) 
   .then(doc => {
-    if(doc.exists) 
+    //if(doc.exists) 
       return doc.id;
   })
   .catch(err => {
@@ -825,7 +847,27 @@ export const getEvent = (eventId) => {
  * @return { array } [{id: eventId, value: event}...]
  */
 export const getAllEvents = () => {
-  return eventsRef.orderBy("createdAt", "asc").get()
+  return eventsRef.orderBy("createdAt", "desc").get()
+  .then(querySnapshot => {
+    let events = [];
+    querySnapshot.forEach(doc => 
+                          events.push({
+                            id: doc.id, 
+                            value: doc.data()}));
+    return events;
+  })
+  .catch(err => {
+    console.log("Error get all events", err);
+  });
+}
+
+/**
+ * Description: fetch new events created after startTime
+ * 
+ * @return { array } [{id: eventId, value: event}...]
+ */
+export const getEventsUpdate = (startTime) => {
+  return eventsRef.where("createdAt", ">", startTme ).orderBy("createdAt", "desc").get()
   .then(querySnapshot => {
     let events = [];
     querySnapshot.forEach(doc => 
@@ -1139,7 +1181,8 @@ export const getReviewsByUid = (uid) => {
   })
 }
 
-export const uploadImageAsync = async (uri) => {
+export const uploadImageAsync = async (uri, folder) => {
+  if(!uri && !folder) return;
   // Why are we using XMLHttpRequest? See:
   // https://github.com/expo/expo/issues/2402#issuecomment-443726662
   const blob = await new Promise((resolve, reject) => {
@@ -1157,11 +1200,24 @@ export const uploadImageAsync = async (uri) => {
   });
   const name = uuidv4();
   const ref = storageRef
-    .child(`postImages/${name}`);
+    .child(`${folder}/${name}`);
   const snapshot = await ref.put(blob);
 
   // close and release blob
   blob.close();
-
-  return await snapshot.ref.getDownloadURL();
+  const res = {imageUrl:await snapshot.ref.getDownloadURL(), ref:ref}
+  return res;
 }
+
+export const deleteImage = async(ref) => {
+  if(!ref) return;
+  ref.delete()
+  .then(() => {
+    console.log("File is deleted successfully");
+    return true;
+  })
+  .catch((err) =>{
+     console.log("Error deleting file", err);
+  })
+}
+

@@ -39,10 +39,6 @@ export default WalkerNavigator = () => {
     <Tab.Screen 
       name="EditProfile"
       component={WalkerEditProfile}
-      options={
-        {title:"Edit Profile"
-       
-      }}
     />
   </Tab.Navigator>
   )

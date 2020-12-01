@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import { View, Text, Image, StyleSheet} from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import BasicAvatar from "../BasicAvatar";
-
+import CusModal from "../../../components/CusModal";
+import ImageUpload from "../../../components/ImageUpload"
 const styles = StyleSheet.create({
   container: {
     // flexDirection: "row",
@@ -24,16 +26,36 @@ const styles = StyleSheet.create({
   },
 });
 
-const Avatar06 = ({text, image1}) => {
+const Avatar06 = ({avatarUrl, isVisitor, handleImageUpload}) => {
+  const [uploadShow, setUploadShow] = useState(false);
+  const defaultUrl = require("../../../../assets/defaultProfile.png");
+  
+  const handleUrlChange = (avatarUrl) =>{
+    handleImageUpload(avatarUrl);
+    setUploadShow(false);
+  }
+
+  const handleModalClose = () => {
+    setUploadShow(false);
+  }
   return (
       <View style={styles.container}
       >
         <BasicAvatar
-        image1={require('../dog4.jpg')}
-         width={85}
-         height={85}
+          image1={avatarUrl?{uri:avatarUrl}: defaultUrl}
+          width={85}
+          height={85}
          />
-        <Text style={styles.text}>Change Profile Photo</Text>
+        
+          <TouchableOpacity onPress={() => {
+            setUploadShow(true);
+          }}>
+           <Text style={styles.text}>Change Profile Photo</Text>
+          </TouchableOpacity> 
+       
+        <CusModal title="Upload your profile picture" handleModalClose={handleModalClose} modalVisible={uploadShow}>
+          <ImageUpload handleUrlChange={handleUrlChange} folder="profileImages" />
+        </CusModal>
       </View>
   );
 };

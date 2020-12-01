@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigation } from '@react-navigation/native';
-import { FlatList } from "react-native";
+import { FlatList, KeyboardAvoidingView, Platform } from "react-native";
 import styled from "styled-components/native";
 
 import Loading from "../../components/Loading";
@@ -33,7 +33,7 @@ const Chatting = ({route }) => {
   const [refreshing, setRefreshing] = useState(false);
   const {channel, handleChannelUpdate} = route.params;
   const [messages, setMessages] = useState(channel.messages);
-  console.log("chatting",messages)
+  //console.log("chatting",messages)
   
   const handleRefresh = () => {
     
@@ -60,6 +60,9 @@ const Chatting = ({route }) => {
     }
   }
   return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+      style={{flex:1}}>
       <Main>
         <FlatList
         data={messages}
@@ -94,6 +97,7 @@ const Chatting = ({route }) => {
         </ScrollView> */}
             <Texting handleNewMessage={handleNewMessage} />
       </Main>
+      </KeyboardAvoidingView>
   );
 };
 

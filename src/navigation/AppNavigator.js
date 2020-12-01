@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 
 export default AppNavigator = () => {
   const [userState] = useUserState();
-  console.log(userState);
+  //console.log(userState);
   return (
     <Stack.Navigator>
 

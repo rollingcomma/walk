@@ -29,8 +29,18 @@ const styles = StyleSheet.create({
   },
 });
 
-const ContinueAsPage = () => {
-  
+
+
+const ContinueAsPage = ({navigation}) => {
+
+  const handleDogOwnerClick = () => {
+    navigation.navigate("NewOwner");
+  }
+
+  const handleWalkerClick = () => {
+    navigation.navigate("NewWalker");
+  }
+
   return (
     <View style={styles.app}>
       <View style={styles.text}>
@@ -44,6 +54,7 @@ const ContinueAsPage = () => {
         width={242}
         height={55}
         size={18}
+        onPress={handleDogOwnerClick}
         />
       <BasicButton 
         text="Dog Walker"  
@@ -51,6 +62,7 @@ const ContinueAsPage = () => {
         width={242}
         height={55}
         size={18}
+        onPress={handleWalkerClick}
         />
         </View>
     </View>

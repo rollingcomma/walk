@@ -12,6 +12,7 @@ import FooterBarOwner from '../comps/FooterBarOwner'
 const Tab = createBottomTabNavigator();
 
 export default function OwnerNavigator() {
+  
   return(
     <Tab.Navigator tabBar={props => <FooterBarOwner {...props} />}>
       <Tab.Screen 
@@ -45,10 +46,6 @@ export default function OwnerNavigator() {
       <Tab.Screen 
       name="EditProfile"
       component={OwnerEditProfile}
-      options={
-        {title:"Edit Profile"
-       
-      }}
     />
     </Tab.Navigator>
   )

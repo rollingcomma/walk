@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
 });
 
 const DogProfileResultPage = ({route}) => {
-  console.log(route.params);
+  //console.log(route.params);
   const [isLoading, setIsLoading] = useState(true);
   const { profileId } = route.params;
   //const [requestBtnVisible, setRequestBtnVisible] = useState(true);

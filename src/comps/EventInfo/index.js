@@ -6,32 +6,33 @@ import { useUserState } from "../../hook/useUserState";
 import { updateEvent } from "../../db/DBUtils";
 
 const EventCont = styled.View`
-  /* align-items:center; */
+  /* align-items:center; 
   justify-content:center;
-  display: flex;
+  display: flex;*/
  
 `;
 const ButtonBox = styled.TouchableOpacity`
   background: ${(props) => (props.isInterested ? "#959494" : "#53B7BE")};
   border-radius: 4px;
-  width: 107px;
-  padding: 10px;
+  width: 140px;
+  height:30px;
   margin-top: 8px;
-  margin-left: 30px;
+  align-items:center;
+  justify-content:center;
 `;
 
 const ButtonText = styled.Text` 
   color: #fff;
   font-size:16px;
-  margin-left:5px;
+  
 `;
 
 const Details = styled.View`
   display: flex;
   /* justify-content: left; */
   /* align-items: left; */
-  font-size:13px;
-  margin-top: 5px;
+  /* font-size:13px; */
+  margin-top: 10px;
   margin-bottom: 5px;
   flex-direction: column;
 `;
@@ -47,16 +48,10 @@ const AttendCont = styled.View`
 const Paw = styled.View`
   width: 30px;
   height: 30px;
-  display: flex;
-  justify-content:center;
-  align-items:center;
+  /* display: flex; */
+  /* justify-content:center; */
+  /* align-items:center; */
   margin-left: 5px;
-
-  /* img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  } */
 `;
 
 const PawImg = styled.Image`
@@ -74,13 +69,15 @@ const Number = styled.Text`
 
 const Subhead = styled.Text`
   color: #53b7be;
-  padding-top: 5px;
+  margin:5px 0;
   font-size:13px;
+  font-weight:bold;
 `;
 
 const Title = styled.Text`
   font-weight: bold;
   font-size:18px;
+  width:150px;
 `;
 
 const ImageCont = styled.View``;

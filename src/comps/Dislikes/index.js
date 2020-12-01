@@ -44,13 +44,22 @@ const styles = StyleSheet.create({
 
 
 const Dislikes = ({ maintext, dislikes, handleDislikes}) => {
-  const [dislikeone, setDislikeOne] = useState(dislikes && dislikes[0] ||"");
-  const [disliketwo, setDislikeTwo] = useState(dislikes && dislikes[1] ||"");
-  const [dislikethree, setDislikeThree] =useState(dislikes && dislikes[2] ||"");
+  const [dislikeone, setDislikeOne] = useState("");
+  const [disliketwo, setDislikeTwo] = useState("");
+  const [dislikethree, setDislikeThree] =useState("");
   
   useEffect(()=>{
-    handleDislike([dislikeone, disliketwo, dislikethree]);
+    if(dislikes && dislikes.length > 0 ) {
+      setDislikeOne(dislikes[0] || "");
+      setDislikeTwo(dislikes[1] || "");
+      setDislikeThree(dislikes[2] || "");
+  }
+  },[]);
+
+  useEffect(()=>{
+    handleDislikes([dislikeone, disliketwo, dislikethree]);
   },[dislikeone, disliketwo, dislikethree]);
+
   return (
     <View>
       <MainCont>

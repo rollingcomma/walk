@@ -123,11 +123,15 @@ width:100%;
 height:100%;
 `;
 const downarrow = require("./downarrow.png");
-const Birthday = ({onPress}) => {
+const Birthday = ({handleDateSelected}) => {
   const [expandM, setExpandM] = useState(true)
   const [expandD, setExpandD] = useState(true)
   const [expandY, setExpandY] = useState(true)
   
+  
+  useEffect(() => {
+
+  }, [expandM, expandd])
   return (
     <View>
       <MainCont>
@@ -164,7 +168,7 @@ const Birthday = ({onPress}) => {
               <Arrow source={downarrow} />
             </ImgCont>
           </ChildDay>
-          <DayDrop expandD={expandD}>
+          <DayDrop expandD={expandD}> 
             <DayOption><Text>1</Text></DayOption>
             <DayOption><Text>2</Text></DayOption>
             <DayOption><Text>3</Text></DayOption>

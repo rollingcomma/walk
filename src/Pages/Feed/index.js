@@ -6,7 +6,7 @@ import {format} from "date-fns/";
 import Post from "../../comps/Post";
 import AvatarEdit from "../../comps/Avatar/AvatarEdit";
 
-import { getAllPosts } from "../../db/DBUtils"
+import { getAllPosts, getPostsUpdate } from "../../db/DBUtils"
 
 const Main = styled.View`
   width:100%;
@@ -21,17 +21,22 @@ const Feed = () => {
   const [posts, setPosts] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  
-  const handleRefresh = () => {
 
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    const newPosts = await getPostsUpdate(posts[0].value.createdAt);
+    if(newPosts) {
+      setPosts([...posts, ...newPosts]);
+    }
+    setRefreshing(false);
   }
+
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () =>{
       const res = await getAllPosts();
-      //console.log("post", res)
       if(res) setPosts(res);
       setIsLoading(false);
-    }
+    };
     fetchData();
   },[])
 

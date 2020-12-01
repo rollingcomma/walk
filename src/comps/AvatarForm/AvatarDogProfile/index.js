@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Image, StyleSheet} from "react-native";
 import BasicAvatar from '../../Avatar/BasicAvatar';
-import AvatarEdit from '../../Avatar/AvatarEdit';
+import AvatarWithName from '../../Avatar/AvatarWithName';
 import DogDislikes from "../../DogDislikes";
 import DogInfo from "../../DogInfo";
 import DogLikes from "../../DogLikes";
@@ -37,7 +37,7 @@ const AvatarDogProfile = ({profile, isVisitor}) => {
   
   return (
       <View style={styles.container}>
-        <AvatarEdit isVisitor={isVisitor} avatarUrl={profile.avatarUrl}/>
+        <AvatarWithName isVisitor={isVisitor} avatarUrl={{uri:profile.avatarUrl}}/>
         <View style={styles.doginfo}>
           <DogInfo 
             name={profile.name}

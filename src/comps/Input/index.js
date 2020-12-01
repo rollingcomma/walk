@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components/native";
 import { View, Text, StyleSheet } from "react-native";
 
@@ -7,8 +7,10 @@ const InputCont = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 268px;
-  height: 48px;
+  width: 300px;
+  /*height: 48px;*/
+  padding-top:5px;
+  padding-bottom:5px;
   /*shadow-color: #000;
   shadow-offset: {width: 0, height: 2};
   shadow-opacity: 0.8;
@@ -32,11 +34,11 @@ const InputBox = styled.View`
   display: flex;
   width:194px;
   /* background-color:#DDD; */
-  height:${props=>props.height ? props.height : "27px"};
+  minHeight:${props=>props.height ? props.height : "37px"};
 `;
 const TextInput = styled.TextInput`
   width:100%;
-  height:${props=>props.height ? props.height : "27px"};
+  minHeight:${props=>props.height ? props.height : "37px"};
   border:1px solid #DDD;
 `;
 
@@ -47,7 +49,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const Input = ({ text, placeholder, height, onChangeText, width, multiline}) => {
+const Input = ({ value, text, placeholder, onChangeText, multiline}) => {
+  // const [contentHeight, setContentHeight] = useState(height);
   return (
     <View>
       <InputCont>
@@ -55,8 +58,16 @@ const Input = ({ text, placeholder, height, onChangeText, width, multiline}) => 
           <Text style={styles.text}>{text}</Text>
         </InputTitle>
         {/* <Spacer /> */}
-        <InputBox  height={height}>
-          <TextInput onChangeText={onChangeText} placeholder={placeholder}  width={width} height={height} multiline={multiline}/>
+        <InputBox >
+          <TextInput 
+            value={value}
+            onChangeText={onChangeText} 
+            placeholder={placeholder} 
+            multiline={multiline}
+            // onChange={(e) => {
+            //   setContentHeight(e.nativeEvent.contentSize.height);
+            // }}
+            />
         </InputBox>
       </InputCont>
     </View>

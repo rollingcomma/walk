@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Image, StyleSheet} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import BasicAvatar from "../BasicAvatar";
@@ -16,26 +16,34 @@ const styles = StyleSheet.create({
   },
 });
 
-const AvatarEdit = ({avatarUrl, isVisitor}) => {
+const AvatarEdit = ({avatarUrl, isVisitor, handleImageUpload}) => {
   console.log("avatar", isVisitor);
   const navigation = useNavigation();
+  const [uploadShow, setUploadShow] = useState(false);
+  const defaultUrl = require("../../../../assets/defaultProfile.png");
+  
+  const handleUrlChange = (avatarUrl) =>{
+    handleImageUpload(avatarUrl);
+    setUploadShow(false);
+  }
   return (
       <View style={styles.container}
       >
         <BasicAvatar
-          image1={{uri:avatarUrl}}
+          image1={avatarUrl?{uri:avatarUrl}:defaultUrl}
           width={134}
           height={134}
         />
         { !isVisitor && 
           <TouchableOpacity opPress={() => {
-            navigation.navigate("EditProfile");
+            setUploadShow(true);
           }}>
             <Image style={styles.icon}
               source={require('../edit.png')}
             />
           </TouchableOpacity> 
        }
+        {uploadShow && <ImageUpload text="Upload your profile picture" handleUrlChange={handleUrlChange} folder="profileImages" />}
       </View>
   );
 };
