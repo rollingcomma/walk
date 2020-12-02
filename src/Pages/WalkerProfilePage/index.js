@@ -70,7 +70,7 @@ const WalkerProfilePage = ({route}) => {
   :
   ( 
     <View style={styles.app}>
-      <TopBar title="Profile" textRight="Logout" onPressRight={handleLogout} />
+      {userState.user.uid === profileState.uid && <TopBar title="Profile" textRight="Logout" onPressRight={handleLogout} />}
       <ScrollView>
         <View style={styles.Cont}>
           <View style={styles.elements}>

@@ -1002,6 +1002,11 @@ export const unmarkEvent = (eventId, uid) => {
   eventsRef.doc(eventId).update({participants: firestoreFieldValue.arrayRemove(uid)})
 }
 
+/**
+ * Description: User Channels message listener
+ * @param {*} setter 
+ * @param {*} channels 
+ */
 export  const channelCollectionListener = (setter, channels) => {
   channels.forEach(channel => {
     channelsRef.doc(channel).collection("messages").onSnapshot((snapshot)=>{
@@ -1027,6 +1032,20 @@ export  const channelCollectionListener = (setter, channels) => {
       })
     })
   }
+
+
+  /**
+ * Description: User Channels message listener detach
+ * @param {*} setter 
+ * @param {*} channels 
+ */
+export  const channelCollectionListenerUnsubscribe = (channels) => {
+  channels.forEach(channel => {
+    channelsRef.doc(channel).collection("messages").onSnapshot(() => {
+      //
+    });
+  })
+}
 
 /**
  * Description: Create a channel and insert the first message
@@ -1194,7 +1213,7 @@ export const getAllChannelsByUid = (uid, maxMsg) => {
     return channels;
   })
   .catch(err => {
-    console.log("Error get all events", err);
+    console.log("Error get all channels", err);
   });
 }
 

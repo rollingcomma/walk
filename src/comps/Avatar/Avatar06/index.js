@@ -4,6 +4,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import BasicAvatar from "../BasicAvatar";
 import CusModal from "../../../components/CusModal";
 import ImageUpload from "../../../components/ImageUpload"
+import { useUserState } from "../../../hook/useUserState";
 const styles = StyleSheet.create({
   container: {
     // flexDirection: "row",
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
 
 const Avatar06 = ({avatarUrl, handleImageUpload}) => {
   const [uploadShow, setUploadShow] = useState(false);
+  const [userState] = useUserState();
   const defaultUrl = require("../../../../assets/defaultProfile.png");
   
   const handleUrlChange = (avatarUrl) =>{
@@ -50,7 +52,7 @@ const Avatar06 = ({avatarUrl, handleImageUpload}) => {
           <TouchableOpacity onPress={() => {
             setUploadShow(true);
           }}>
-           <Text style={styles.text}>Change Profile Photo</Text>
+           <Text style={styles.text}>{userState && userState.user.type?"Change Profile Photo":"Upload your profile picture"}</Text>
           </TouchableOpacity> 
        
         <CusModal 

@@ -29,21 +29,21 @@ const ActivatePage = ({}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [channels, setChannels] = useState(null);
-  const [channel, setChannel] = useState(null);
-  const navigation = useNavigation();
+  // const [channel, setChannel] = useState(null);
+  // const navigation = useNavigation();
   const [ userState ] = useUserState();
 
-  const handleOnPress = (channelId) => {
-    channel = channels.filter(channel=> channel.id == channelId)
-    navigation.navigate("Chatting", {channel: channel});
-  }
+  // const handleOnPress = (channelId) => {
+  //   channel = channels.filter(channel=> channel.id == channelId)
+  //   navigation.navigate("Chatting", {channel: channel});
+  // }
 
-  const handleNewMessage = async (channelId, msg) => {
-    const messageId = await createMessage(channelId, msg);
-    if(messageId) {
-      channel = channels.filter(channel=> channel.id == channelId)
-    }
-  }
+  // const handleNewMessage = async (channelId, msg) => {
+  //   const messageId = await createMessage(channelId, msg);
+  //   if(messageId) {
+  //     channel = channels.filter(channel=> channel.id == channelId)
+  //   }
+  // }
 
   const handleRefresh = () => {
 
@@ -51,6 +51,7 @@ const ActivatePage = ({}) => {
   
   useEffect(()=> {
     async function fetchData() {
+      
       const initialChannels = await getAllChannelsByUid(userState.user.uid, 10);
       if(initialChannels) setChannels(initialChannels);
       setIsLoading(false);

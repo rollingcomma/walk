@@ -60,7 +60,7 @@ const DogProfilePage = ({route, navigation}) => {
     :
     ( 
       <View style={styles.app}>
-        <TopBar title="Profile" textRight="Logout" onPressRight={handleLogout} />
+        {userState.user.uid === profileState.owner && <TopBar title="Profile" textRight="Logout" onPressRight={handleLogout} />}
         <ScrollView>
           <View style={styles.AvatarDogProfile}>
            <AvatarDogProfile isVisitor={isVisitorState} profile={profileState}/>
