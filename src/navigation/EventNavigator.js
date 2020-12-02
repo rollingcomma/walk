@@ -16,7 +16,7 @@ export default EventNavigator = ({navigation}) => {
         component={EventPage}
         options={{
           title:"Event",
-          headerRight: () => (userState && userState.type == "dog owner"? 
+          headerRight: () => (userState && userState.user.type == "dog owner"? 
                           <View style={styles.container}>
                             <AddButton onPress={()=>navigation.navigate("AddEvent")} /> 
                           </View>

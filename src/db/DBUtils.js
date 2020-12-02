@@ -13,6 +13,7 @@ import {v4 as uuidv4} from 'uuid';
 import { batch, firestoreFieldValue, auth, firestore } from './firebase';
 import * as Facebook from 'expo-facebook';
 import * as Google from 'expo-google-app-auth';
+import { onChange } from 'react-native-reanimated';
 
 /**
  * Description: Log out user
@@ -921,19 +922,23 @@ export const getAllEvents = () => {
   });
 }
 
+
 /**
  * Description: fetch new events created after startTime
  * 
  * @return { array } [{id: eventId, value: event}...]
  */
 export const getEventsUpdate = (startTime) => {
-  return eventsRef.where("createdAt", ">", startTme ).orderBy("createdAt", "desc").get()
+  if(!startTime) return;
+  
+  return eventsRef.where("createdAt", ">", startTime ).orderBy("createdAt", "desc").get()
   .then(querySnapshot => {
     let events = [];
-    querySnapshot.forEach(doc => 
-                          events.push({
-                            id: doc.id, 
-                            value: doc.data()}));
+    querySnapshot.forEach(doc=>
+      events.push({
+        id: doc.id, 
+        value: doc.data()})
+    );
     return events;
   })
   .catch(err => {
@@ -996,6 +1001,32 @@ export const unmarkEvent = (eventId, uid) => {
   if(!eventId || !uid) return;
   eventsRef.doc(eventId).update({participants: firestoreFieldValue.arrayRemove(uid)})
 }
+
+export  const channelCollectionListener = (setter, channels) => {
+  channels.forEach(channel => {
+    channelsRef.doc(channel).collection("messages").onSnapshot((snapshot)=>{
+        snapshot.docChanges().forEach((change) => {
+
+          if(change.type === "added") {
+            setter(items => items.add(change))
+          }
+
+          if(change.type === "modified") {
+            setter(items => items.map((element)=>{
+              if(element.id === change.id) {
+                return change
+              }
+              return element
+            }))
+          }
+
+          if(change.type === "removed") {
+            setter(items => items.filter(element => element.id !== change.id))
+          }
+        })
+      })
+    })
+  }
 
 /**
  * Description: Create a channel and insert the first message

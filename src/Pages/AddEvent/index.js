@@ -1,30 +1,37 @@
 import React, { useState } from "react";
-import { View, Text, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
+import { View, Text, ScrollView, KeyboardAvoidingView, Platform, Alert } from "react-native";
 import styled from "styled-components/native";
-import Loading from "../../components/Loading";
+
 import Input from "../../comps/Input";
 import BasicButton from "../../comps/WButton/BasicButton";
 import EventTime from "../../comps/EventTime";
 
+import Loading from "../../components/Loading";
+import CusModal from "../../components/CusModal";
+import ImageUpload from "../../components/ImageUpload";
+import { validate } from "../../helpers/tools";
+import { createEvent } from "../../db/DBUtils";
+import { useUserState} from "../../hook/useUserState";
+import { useNavigation } from "@react-navigation/native";
 
 const Main = styled.View`
   display: flex;
   flex-direction: column;
-  height:100%;
+  padding-bottom:100px;
 `;
 const Cont = styled.View`
   height: 100%;
 
 `;
 const InputCont = styled.View`
-  height: 300px;
+  height: 360px;
   align-items: center;
   justify-content: center;
   
 `;
 const Upload = styled.View`
   width: 100%;
-  height: 230px;
+  height: 150px;
   display: flex;
   align-items: center;
   border: 1px solid #e8e8e8;
@@ -39,8 +46,12 @@ const Image = styled.Image`
   width: 50px;
   height: 50px;
 `;
-const ImgCont = styled.View`
-  height: 90%;
+const Preview =styled.Image `
+  /*max-width:200px; */
+  height:140px;
+`
+const ImgCont = styled.TouchableOpacity`
+  height: 70%;
   justify-content: center;
 `;
 const ButtonCont = styled.View`
@@ -55,15 +66,63 @@ const addimage = require("./addphoto.png");
 
 const AddEvent = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [eventAdress, setEventAdress] = useState("");
-  const [eventCity, setEventCity] = useState("");
-  
-  return isLoading? 
-    (
-      <Loading />
-    ) 
-    : 
-    (
+  const [name, setName] = useState("");
+  const [date, setDate] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("")
+  const [location, setLocation] = useState("");
+  const [detail, setDetail] = useState("");
+  const [pictureUrl, setPictureUrl] = useState("");
+  const [uploadShow, setUploadShow] = useState(false);
+  const [userState] = useUserState()
+  const navigation = useNavigation();
+
+  const handleImageUpload = (pictureUrl)=> {
+    if(pictureUrl) setPictureUrl(pictureUrl);
+  } 
+
+  const handleModalClose = () => {
+    setUploadShow(false);
+  }
+
+  const handleStartTime = (time) => {
+    setStartTime(time)
+  }
+
+  const handleEndTime = (time) => {
+    setEndTime(time)
+  }
+
+  const handleSubmit = async () => {
+    const keyArr = ["name", "date","location","startTime", "detail", "pictureUrl"]
+    const dataArr =  [name, date, location, startTime, detail, pictureUrl]
+    const validated = validate(dataArr);
+
+    validated.forEach((element, index) => {
+      if(!element) 
+        Alert.alert("Error", `The ${keyArr[index]} can not be empty`)
+    })
+    
+    const newEvent = {
+      organizer: userState.user.uid,
+      name,
+      date, 
+      address:location, 
+      startTime,
+      endTime,
+      participants:[],
+      details:[detail],
+      pictureUrl,
+      createdAt: new Date(),
+    }
+    
+    if(await createEvent(newEvent)) {
+      Alert.alert("Great", "You just create a new event!")
+      navigation.goBack();
+    }
+  }
+
+  return (
        <KeyboardAvoidingView
       behavior={Platform.OS == "ios" ? "padding" : "height"}
       style={{flex:1}}>
@@ -77,18 +136,17 @@ const AddEvent = () => {
                 height={37}
                 width={200}
                 onChangeText={(t) => {
-                  alert(t);
-                  eventAdress(setEventAdress);
+                  setName(t)
                 }}
               />
-              
               <Input
                 text="Date"
                 height={37}
                 width={200}
                 onChangeText={(t) => {
-                  alert(t);
-                  eventCity(setEventCity);
+                  
+                  setDate(t)
+                  
                 }}
               />
               <Input
@@ -96,8 +154,7 @@ const AddEvent = () => {
                 height={37}
                 width={200}
                 onChangeText={(t) => {
-                  alert(t);
-                  eventCity(setEventCity);
+                  setLocation(t)
                 }}
               />
               <Input
@@ -105,11 +162,10 @@ const AddEvent = () => {
                 height={37}
                 width={200}
                 onChangeText={(t) => {
-                  alert(t);
-                  eventAdress(setEventAdress);
+                  setDetail(t)
                 }}
               />
-              <EventTime />
+              <EventTime handleStartTime={handleStartTime} handleEndTime={handleEndTime} />
             </InputCont>
 
             <Upload>
@@ -118,28 +174,39 @@ const AddEvent = () => {
               </UpTitle>
               <ImgCont
                 onPress={() => {
-                  alert("Add 1 Photo from Camera Roll to fill Upload const");
+                  setUploadShow(true);
                 }}
               >
-                <Image source={addimage} />
+                {
+                  pictureUrl?
+                    <Preview source ={{uri:pictureUrl}} />
+                  :
+                    <Image source={addimage} />
+                }
+               
+                
               </ImgCont>
             </Upload>
 
         <ButtonCont>
         <BasicButton 
-        text="Add Event"  
-        backgroundColor= "#53B7BE" 
-        height={46}
-        width={137}
-        size={16}
+          text="Add Event"  
+          backgroundColor= "#53B7BE" 
+          height={46}
+          width={137}
+          size={16}
+          onPress={handleSubmit}
         />
         </ButtonCont>
           </Cont>
           
-                </ScrollView>
-            {/* <FooterBar /> */}
-     
-        {/* </MainCont> */}
+      </ScrollView>
+        <CusModal 
+          title="Upload an event picture" 
+          handleModalClose={handleModalClose} 
+          modalVisible={uploadShow}>
+          <ImageUpload handleModalClose={handleModalClose} uploadImageOnly handleUrlChange={handleImageUpload} folder="eventImages" />
+        </CusModal>
       </Main>
       </KeyboardAvoidingView>
   );

@@ -54,9 +54,9 @@ const LineCont = styled.View`
   display: flex;
   justify-content: center;
 `;
-const EventTime = () => {
-  const [eventStartTime, setEventStartTime] = useState("");
-  const [eventEndTime, setEventEndTime] = useState("");
+const EventTime = ({handleStartTime, handleEndTime}) => {
+  // const [eventStartTime, setEventStartTime] = useState("");
+  // const [eventEndTime, setEventEndTime] = useState("");
   return (
     <View>
       <MainCont>
@@ -66,8 +66,7 @@ const EventTime = () => {
         <Start>
           <StartInput
             onChangeText={(t) => {
-              alert(t);
-              eventStartTime(setEventStartTime);
+              handleStartTime(t);
             }}
           />
         </Start>
@@ -77,8 +76,7 @@ const EventTime = () => {
         <End>
           <EndInput
             onChangeText={(t) => {
-              alert(t);
-              eventEndTime(setEventEndTime);
+              handleEndTime(t)
             }}
           />
         </End>
