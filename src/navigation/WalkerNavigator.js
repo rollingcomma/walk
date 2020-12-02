@@ -39,6 +39,7 @@ export default WalkerNavigator = () => {
     <Tab.Screen 
       name="EditProfile"
       component={WalkerEditProfile}
+      options={{headerShown: false}} 
     />
   </Tab.Navigator>
   )

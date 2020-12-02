@@ -13,7 +13,7 @@ import * as Google from 'expo-google-app-auth';
     else
       query=`street=${encodeURIComponent(addr.address)}&city=${encodeURIComponent(addr.city)}&state=${encodeURIComponent(addr.province)}&country=canada`
     //const urlEncodedAddr = encodeURIComponent(addr);
-    console.log(query)
+    //console.log(query)
     return fetch(`${apiUrl}${query}`)
           .then(res => res.json())
           .then(result =>{

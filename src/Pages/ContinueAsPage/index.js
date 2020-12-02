@@ -34,11 +34,11 @@ const styles = StyleSheet.create({
 const ContinueAsPage = ({navigation}) => {
 
   const handleDogOwnerClick = () => {
-    navigation.navigate("NewOwner");
+    navigation.navigate("NewOwner", {newUser:true});
   }
 
   const handleWalkerClick = () => {
-    navigation.navigate("NewWalker");
+    navigation.navigate("NewWalker", {newUser:true});
   }
 
   return (

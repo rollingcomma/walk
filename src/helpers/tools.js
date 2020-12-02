@@ -8,5 +8,5 @@ export const DateDiff = (date1, date2) => {
 }
 
 export const validate = (dataArr) => {
-  return dataArr.map(data=> data? true:false)
+  return dataArr.map(data=> (data.trim())? true:false)
 }

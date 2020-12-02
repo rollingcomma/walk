@@ -11,7 +11,11 @@ import Avatar06 from "../../comps/Avatar/Avatar06";
 import Dislikes from "../../comps/Dislikes";
 import Province from "../../comps/Province";
 import { useUserState } from "../../hook/useUserState";
-import { getDogProfile } from "../../db/DBUtils";
+import { getDogProfile, createDogProfile, updateDogProfileByProfileId, updateUser } from "../../db/DBUtils";
+import { validate } from "../../helpers/tools"
+import { getGeocode } from "../../helpers/api";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+
 
 const Main = styled.View`
   width: 375px;
@@ -93,7 +97,7 @@ const PersonalInfo = styled.View`
   margin-top:10px;
 `;
 
-const OwnerEditProfile = () => {
+const OwnerEditProfile = ({route, navigation}) => {
   const [avatarUrl, setAvatarUrl] = useState("");
   const [dogName, setDogName] = useState("");
   const [dogAge, setDogAge] = useState("");
@@ -125,24 +129,88 @@ const OwnerEditProfile = () => {
     setProvince(province);
   }
 
-  const handleSubmit = () => {
-    // const keyArr = ["name", "age", "city", "province", "zip","phone", "emergency person name", "emergency contact phone"]
-    // const dataArr =  [name, age, city, province, zip, phone, emName, emPhone]
-    // const validated = validate(dataArr);
-    // validate.forEach((element, index) => {
-    //   if(!element) 
-    //     Alert.alert("Error", `The ${keyArr[index]} can not be empty`)
-    // })
-    alert("submit");
+  const handleSubmit = async () => {
+    const keyArr = ["dogName", "dogAge", "dogBreed","city", "province", "zip","phone"]
+    const dataArr =  [dogName, dogAge, dogBreed, city, province, zip, phone]
+    const validated = validate(dataArr);
+
+    validated.forEach((element, index) => {
+      if(!element) 
+        Alert.alert("Error", `The ${keyArr[index]} can not be empty`)
+    })
+    
+    const newProfile = {
+      owner: userState.user.uid,
+      name:dogName,
+      age: dogAge,
+      breed: dogBreed,
+      avatarUrl,
+      dogBio,
+      phone,
+      province,
+      city,
+      address,
+      postalCode:zip,
+      likes,
+      dislikes,
+      createdAt:new Date(),
+    }
+    
+    if(route.params.newUser)
+    {
+      const profileId = await createDogProfile(newProfile);
+      if((profileId) && (await(updateUser(userState.user.uid, {type:"dog owner", profileId: profileId})))){
+        dispatchUser(
+          {
+            type:"dog owner",
+            profile:newProfile,
+          })
+        handleUserLocationUpdate(profileId);
+        navigation.navigate("Owner");
+      }
+    } else {
+      if(await updateDogProfileByProfileId(userState.user && userState.user.profileId, newProfile)) {
+        alert("updated saved");
+        navigation.goBack();
+      }
+    }
+  }
+
+  const handleUserLocationUpdate = async (profileId) =>{
+    const addr = {
+      address,
+      city,
+      province,
+      zip
+    };
+      
+    const geoLocation = await getGeocode(addr);
+    if(geoLocation && await(updateDogProfileByProfileId(profileId, {coords:geoLocation}))) {
+     
+      let newProfile = {...userState.user.profile};
+      console.log(newProfile)
+      newProfile.coords = geoLocation;
+      dispatchUser(
+        {
+          profile: newProfile,
+        }
+      )
+    }
   }
 
   const handleCancel = () => {
-    alert("Cancel");
+    navigation.goBack();
   }
 
   useEffect(() => {
     const fetchData = async(profileId)=> {
-      const profile = await getDogProfile(profileId);
+      let profile;
+      if(userState.user.profile) {
+        profile= userState.user.profile
+      } else {
+        profile = await getDogProfile(profileId);
+      }
+
       if(profile) {
         setAvatarUrl(profile.avatarUrl);
         setDogName(profile.name);
@@ -158,9 +226,7 @@ const OwnerEditProfile = () => {
         setDislikes(profile.dislikes);
       }
     }
-    if(userState.user.type === "dog owner") {
-      fetchData(userState.user.profileId);
-    }
+    fetchData(userState.user.profileId);
     setIsLoading(false);
   }, [])
 
@@ -187,18 +253,17 @@ const OwnerEditProfile = () => {
                 height="35px"
                 value= {dogName}
                 onChangeText={(text) => {
-                  if(text)
                    setDogName(text);
                 }}
               />
               <Input
                 text="Age"
                 height="35px"
-                value={dogAge}
+                value={dogAge.toString()}
                 onChangeText={(text) => {
                   if(text) {
                     try{
-                      const newAge = parseInt(t);
+                      const newAge = parseInt(text);
                       setDogAge(newAge);
                     } catch {
                       alert("The age can only be number");
@@ -211,7 +276,6 @@ const OwnerEditProfile = () => {
                 height="35px"
                 value={dogBreed}
                 onChangeText={(text) => {
-                  if(text)
                   setDogBreed(text);
                 }}
               />
@@ -225,7 +289,6 @@ const OwnerEditProfile = () => {
                   height="60px"
                   value={dogBio}
                   onChangeText={(text) => {
-                    if(text)
                     setDogBio(text);
                   }}
                    multiline={true}
@@ -252,7 +315,6 @@ const OwnerEditProfile = () => {
                   text="Phone" height="35px"
                   value={phone}
                   onChangeText={(text) => {
-                    if(text)
                     setPhone(text);
                   }}
                 />
@@ -261,8 +323,6 @@ const OwnerEditProfile = () => {
                   height="35px"
                   value={address}
                   onChangeText={(text) => {
-                    if(text)
-                    
                     setAddress(text);
                   }}
                 />
@@ -271,7 +331,6 @@ const OwnerEditProfile = () => {
                   height="35px"
                   value={city}
                   onChangeText={(text) => {
-                    if(text)
                     setCity(text);
                   }}
                 />
@@ -283,7 +342,6 @@ const OwnerEditProfile = () => {
                   value={zip}
                   onChangeText={(text) => {
                     // alert(t);
-                    if(text)
                     setZip(text);
                   }}
                 />

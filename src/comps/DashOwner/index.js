@@ -128,6 +128,7 @@ const InfoText = styled.View`
 
 const ownerpicture = require("./ethan.jpeg");
 const DashOwner = ({ ownerProfile, dogProfile }) => {
+  const defaultUrl = require("../../../assets/defaultProfile.png")
   return (
     <View>
       <MainCont>
@@ -139,7 +140,7 @@ const DashOwner = ({ ownerProfile, dogProfile }) => {
             <TopCont>
               <ProfPicCont>
                 <ImgCont>
-                  <Img source={{uri:ownerProfile.photoURL}} />
+                  <Img source={ownerProfile.photoURL?{uri:ownerProfile.photoURL}:defaultUrl} />
                 </ImgCont>
               </ProfPicCont>
             </TopCont>

@@ -6,14 +6,12 @@ import Input from "../../comps/Input";
 import Province from "../../comps/Province";
 import Spacer from "../../comps/Spacer";
 import TopBar from "../../comps/TopBar";
-import AvatarEdit from "../../comps/Avatar/AvatarEdit";
+
 import { useUserState } from "../../hook/useUserState";
 import { createUser, createWalkerProfile, getWalkerProfile, updateUser, updateWalkerProfile } from "../../db/DBUtils";
 
 import Birthday from "../../components/Birthday";
 import Avatar06 from "../../comps/Avatar/Avatar06";
-import CusModal from "../../components/CusModal";
-import CusDateTimePicker from "../../components/CusDateTimePicker";
 import { validate } from "../../helpers/tools"
 import { getGeocode } from "../../helpers/api";
 
@@ -112,8 +110,7 @@ const Scont = styled.View`
   margin-top:50px;
   background-color:#ACA;
 `;
-const WalkerEditProfile = ({navigation}) => {
-  const [profile, setProfile] = useState(null);
+const WalkerEditProfile = ({route, navigation}) => {
   const [avatarUrl, setAvatarUrl] = useState("");
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
@@ -147,10 +144,12 @@ const WalkerEditProfile = ({navigation}) => {
     const keyArr = ["name", "age", "city", "province", "zip","phone", "emergency person name", "emergency contact phone"]
     const dataArr =  [name, age, city, province, zip, phone, emName, emPhone]
     const validated = validate(dataArr);
+
     validated.forEach((element, index) => {
       if(!element) 
         Alert.alert("Error", `The ${keyArr[index]} can not be empty`)
-    })
+    });
+
     const newProfile = {
       uid:userState.user.uid,
       name,
@@ -167,16 +166,25 @@ const WalkerEditProfile = ({navigation}) => {
       emergencyContactTel:emPhone,
       createdAt:new Date(),
     }
-    if((await createWalkerProfile(newProfile)) && (await(updateUser(userState.user.uid, {type:"walker"})))){
-      dispatchUser(
-        {
+    
+    if(route.params.newUser)
+    {
+      if((await createWalkerProfile(newProfile)) && (await(updateUser(userState.user.uid, {type:"walker"})))){
+        dispatchUser({
           type:"walker",
           profile:newProfile,
         })
-      handleUserLocationUpdate(userState.user.uid);
+        handleUserLocationUpdate(userState.user.uid);
+        navigation.navigate("Walker");
+      }
+    } else {
+      if(await updateWalkerProfile(userState.user.uid, newProfile)){
+        alert("updated saved");
+        navigation.goBack();
+      }
     }
-    navigation.goBack();
   }
+  
 
   const handleUserLocationUpdate = async (profileId) =>{
     const addr = {
@@ -271,16 +279,14 @@ const WalkerEditProfile = ({navigation}) => {
               value={name}
               height= "37px"
               onChangeText={(t)=>{
-                // alert(t)
-                if(t.trim())
-                  setName(t.trim());
+                  setName();
             }}/>
             <Input 
               text="Age" 
               value={age.toString()}
               height= "37px"
               onChangeText={(t)=>{
-                if(t.trim())
+                if(t)
                 {
                   try{
                     const newAge = parseInt(t);
@@ -296,17 +302,15 @@ const WalkerEditProfile = ({navigation}) => {
               value={address}
               height= "37px"
               onChangeText={(t)=>{
-                // alert(t)
-                if(t.trim())
-                  setAddress(t.trim());
+                  setAddress(t);
             }}/>
             <Input 
               text="City"
               value={city}
               height= "37px"
               onChangeText={(t)=>{
-                if(t.trim())
-                  setCity(t.trim());
+               
+                  setCity(t);
             }}/>
             <Province text="Province" province={province} handleProvinceSelected={handleProvinceSelected} />
             <Input 
@@ -314,9 +318,7 @@ const WalkerEditProfile = ({navigation}) => {
               value={zip}
               height= "37px"
               onChangeText={(t)=>{
-                // alert(t)
-                if(t.trim())
-                  setZip(t.trim());
+                  setZip(t);
             }}/>
             <Input 
               text="Bio" 
@@ -324,9 +326,7 @@ const WalkerEditProfile = ({navigation}) => {
               height="60px"
               multiline={true}
               onChangeText={(t)=>{
-                // alert(t)
-                if(t.trim())
-                  setBio(t.trim());
+                  setBio(t);
             }}/>
           </BasicInfo>
           <Spacer />
@@ -338,9 +338,7 @@ const WalkerEditProfile = ({navigation}) => {
                 value={phone}
                 height= "37px"
                 onChangeText={(t)=>{
-                  // alert(t)
-                  if(t.trim())
-                    setPhone(t.trim());
+                    setPhone(t);
               }}/>
               <Bcont>
                 {/* <CusDateTimePicker mode="date" /> */}
@@ -364,18 +362,14 @@ const WalkerEditProfile = ({navigation}) => {
                     value={emName}
                     height= "37px"
                     onChangeText={(t)=>{
-                      // alert(t)
-                      if(t.trim())
-                        setEmName(t.trim());
+                        setEmName(t);
                       }}/>
                   <Input 
                     text="Phone"
                     value={emPhone}
                     height= "37px"
                     onChangeText={(t)=>{
-                    // alert(t)
-                      if(t.trim())
-                        setEmPhone(t.trim());
+                        setEmPhone(t);
                   }}/>
                   </InputCont2>
               </EmergencyInfo>

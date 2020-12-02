@@ -22,7 +22,7 @@ const walker = {
     type:"walker",
     username:"Josh"
 }
-const initialUserState = owner;
+const initialUserState = null;
 
 export const UserContext =  createContext({user:initialUserState});
 export const DispatchUserContext = createContext(undefined);

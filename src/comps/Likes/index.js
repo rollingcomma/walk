@@ -55,7 +55,7 @@ const Likes = ({ maintext, likes, handleLikes}) => {
     if(likes && likes.length >0) {
       setLikeOne(likes[0]);
       setLikeTwo(likes[1] || "");
-      setLikeThree(like[2] || "")
+      setLikeThree(likes[2] || "")
     }
   },[]);
 

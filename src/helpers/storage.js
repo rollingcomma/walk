@@ -25,7 +25,8 @@ export const _retrieveData = async (key) => {
 
 export const _clearData = async () => {
   try {
-    AsyncStorage.clear();
+    const keys = await AsyncStorage.getAllKeys();
+    await AsyncStorage.multiRemove(keys);
     return true;
   } catch (error) {
     console.log("error clear storage", error);

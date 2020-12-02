@@ -46,6 +46,7 @@ export default function OwnerNavigator() {
       <Tab.Screen 
       name="EditProfile"
       component={OwnerEditProfile}
+      options={{headerShown: false}} 
     />
     </Tab.Navigator>
   )

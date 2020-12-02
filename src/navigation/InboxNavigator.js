@@ -40,7 +40,7 @@ export default InboxNavigator = () => {
         component={LeaveReviewPage}
         options={{title:"Leave a Review"}}
       />
-      {userState.user.type === "dog owner"?
+      {userState && userState.user.type === "dog owner"?
         <Stack.Screen 
           name="Dashboard"
           component={OwnerDashPage}

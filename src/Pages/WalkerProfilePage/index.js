@@ -4,9 +4,10 @@ import Loading from "../../components/Loading";
 import UserBio from "../../comps/UserBio";
 import WriteReview from "../../comps/WriteReview";
 import LocationAge from "../../comps/LocationAge";
+import TopBar from "../../comps/TopBar";
 import AvatarWithName from "../../comps/Avatar/AvatarWithName";
 import { useUserState } from "../../hook/useUserState"
-import { getWalkerProfile } from "../../db/DBUtils";
+import { getWalkerProfile, logout } from "../../db/DBUtils";
 import LeaveReview from "../LeaveReviewPage";
 
 const styles = StyleSheet.create({
@@ -33,6 +34,11 @@ const WalkerProfilePage = ({route}) => {
   const [userState, dispatchUser] = useUserState();
   const [isVisitorState, setIsVisitorState] = useState(false);
   let profile = null, isVisitor= false;
+
+  const handleLogout = () => {
+    if(logout())
+    dispatchUser(null);
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -64,6 +70,7 @@ const WalkerProfilePage = ({route}) => {
   :
   ( 
     <View style={styles.app}>
+      <TopBar title="Profile" textRight="Logout" onPressRight={handleLogout} />
       <ScrollView>
         <View style={styles.Cont}>
           <View style={styles.elements}>
