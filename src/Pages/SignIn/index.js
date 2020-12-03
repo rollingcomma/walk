@@ -5,7 +5,7 @@ import Loading from "../../components/Loading";
 import Title from "../../comps/Title";
 import GoogleButton from "../../comps/GoogleButton";
 import FacebookButton from "../../comps/FacebookButton";
-import { signInWithGoogle, signInWithFacebook, findUser, createUser} from "../../db/DBUtils";
+import { signInWithGoogle, signInWithFacebook, findUser, createUser, getDogProfileByOwner, getWalkerProfile} from "../../db/DBUtils";
 import { useUserState } from "../../hook/useUserState"
 import { usersRef } from "../../db/DBRefs";
 
@@ -20,10 +20,15 @@ const SignIn = ({navigation}) => {
     
     if( user && user.type ) {
       dispatchUser({user});
-      if(user.type == "dog owner")
+      if(user.type == "dog owner") {
+        const dogProfile = await getDogProfileByOwner(user.uid);
+        if(dogProfile) dispatchUser({...user, profile:dogProfile});
         navigation.navigate("Owner");
-      else
-        navigation.navigate("Walker")
+      } else {
+        const walkerProfile = await getWalkerProfile(user.uid);
+        if(walkerProfile) dispatchUser({...user, profile:walkerProfile});
+        navigation.navigate("Walker");
+      }
       setIsLoading(false);
       //console.log("userState",userState);
       return; 
