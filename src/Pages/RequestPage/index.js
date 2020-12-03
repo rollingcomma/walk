@@ -53,7 +53,8 @@ const RequestPage = ({}) => {
 
   const handleOnPressDecline = async (requestId) => {
     const request = requests.filter(req => req.id === requestId);
-    const newRequest = request.value
+    const newRequest = {...request.value}
+    console.log(newRequest);
     newRequest.status = "declined";
     if(await updateRequest(requestId, newRequest)) {
       setIsDeclined(true);
@@ -105,8 +106,8 @@ const RequestPage = ({}) => {
                 index = {item.id}
                 />
                 <View style={styles.buttons}>
-                 {item.status != "active" && <ActivateButton sender={userState.user.type==="walker"?item.value.owner:item.value.walker} onPress={handleOnPressActive}/>}
-                  <DeclineButton index={item.id} isDeclined={isDeclined || item.status === "declined"} onPress={handleOnPressDecline}/>
+                 {item.status !== "active" && !isDeclined && <ActivateButton sender={userState.user.type==="walker"?item.value.owner:item.value.walker} onPress={handleOnPressActive}/>}
+                  <DeclineButton index={item.id} isDeclined={isDeclined || item.status === "declined"} onPress={isDeclined? null:handleOnPressDecline}/>
                 </View> 
               </View>
               <View style={styles.spacer}>

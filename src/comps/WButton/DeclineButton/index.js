@@ -17,13 +17,14 @@ const DeclineButton = ({isDeclined, onPress, index}) => {
   return (
       <View style={styles.cont} >
         <BasicButton 
-        text={isDeclined? "Decline":"Declined"}  
+        text={isDeclined? "Declined":"Decline"}  
         backgroundColor= {isDeclined? "#959494":"#C74C33" } 
         height={26}
         width={91}
         size={14}
         index={index}
-        onPress={isDeclined?null:onPress}
+        disabled={isDeclined}
+        onPress={onPress}
         />
       </View>
     

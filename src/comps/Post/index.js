@@ -132,7 +132,6 @@ const Post = ({
           createdAt: new Date()
         }
     if(userState && userState.user.channels) {
-      console.log("channel", userState);
       //if current user has no channel, create channel and first message
       if(userState.user.channels.length === 0) {  
         const owner = await findOwnerByProfileId(post.dogId);
@@ -148,7 +147,6 @@ const Post = ({
         createChannel(channel, newMessage);
       } else { //if current user has channel, verify if channel exist and create message
         const result = await findChannelId(userState.user.channels, post.dogId );
-        console.log("result", result)
         if(result.channelId) { // channel exists
           createMessage(result.channelId, newMessage);
         } else  { //channel does not exist
@@ -161,7 +159,6 @@ const Post = ({
             user2Name: post.name,
             createdAt: new Date()
           };
-          console.log("create channel")
           createChannel(channel, newMessage);
         }
       }

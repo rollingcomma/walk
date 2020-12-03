@@ -59,6 +59,7 @@ const SignIn = ({navigation}) => {
     if(currentUser)
     await handleDirectUser(currentUser);
   };
+  
   // isLoading? 
     // (
     //   <Loading />

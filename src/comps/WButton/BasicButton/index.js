@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const BasicButton = ({text, size, backgroundColor, height, width, onPress, index}) => {
+const BasicButton = ({text, size, backgroundColor, height, width, onPress, index, disabled}) => {
   
   const fontSize = [{ fontSize: size ? size : 16}] ;
   const widthstyles = [{ width: width ? width : null} , { height: height ? height : 50}] ;
@@ -22,7 +22,9 @@ const BasicButton = ({text, size, backgroundColor, height, width, onPress, index
   const fontstyle = [styles.text, fontSize];
   
   return (
-      <TouchableOpacity onPress={()=> {
+      <TouchableOpacity 
+      disabled={disabled}
+      onPress={()=> {
         if(index)
           onPress(index);
         else
