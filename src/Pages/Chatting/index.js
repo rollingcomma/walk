@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigation } from '@react-navigation/native';
-import { FlatList, KeyboardAvoidingView, Platform } from "react-native";
+import { FlatList, KeyboardAvoidingView, Platform, View } from "react-native";
 import styled from "styled-components/native";
 
 import Loading from "../../components/Loading";
@@ -9,14 +9,21 @@ import MsgRecieved from "../../comps/MsgRecieved";
 import Texting from "../../comps/Texting";
 
 import { useUserState } from "../../hook/useUserState";
-import { createMessage } from "../../db/DBUtils"
+import { createMessage, channelListener } from "../../db/DBUtils"
 
 const Main = styled.View`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  flex: 1;
+ 
 `;
+const Inner = styled.View`
+  flex:1;
+  /* flex-direction: column; */
+  justify-content:flex-end;
+  
+  
+`
 const MainCont = styled.View`
+
 `;
 
 const Cont = styled.View`
@@ -29,20 +36,14 @@ const Cont = styled.View`
 
 const Chatting = ({route }) => {
   const [ userState ] = useUserState();
-  const [isLoading, setIsLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const {channel, handleChannelUpdate} = route.params;
-  const [messages, setMessages] = useState(channel.messages);
-  //console.log("chatting",messages)
-  
+  const [channel] = useState(route.params.channel);
+  const [messages, setMessages] = useState(route.params.channel.messages);
+  const {handleChannelUpdate} = route.params;
+
   const handleRefresh = () => {
     
   }
-  // isLoading? 
-  //   (
-  //     <Loading />
-  //   ) 
-  //   : 
   
   const handleNewMessage = async (msg) => {
     const message = {
@@ -50,26 +51,34 @@ const Chatting = ({route }) => {
       sender:userState.user.uid,
       createdAt: new Date(),
     }
-    const messageId = await createMessage(channel.id, message);
-    if(messageId) {
-      const newMessages = [...channel.messages]
-      newMessages.push({id:messageId, message:message});
-      setMessages(newMessages);
-
-      handleChannelUpdate(newMessages);
-    }
+    await createMessage(channel.id, message);
   }
-  return (
+
+  useEffect(()=> {
+    console.log("channel")
+    const unsubscribe = channelListener(setMessages, channel.id);
+    return () => unsubscribe();
+    
+  }, [])
+
+  useEffect(() => {
+    if(messages)
+      handleChannelUpdate(messages[0].message);
+      console.log("message",messages[0].message)
+  }, [messages])
+
+  return(
     <KeyboardAvoidingView
       behavior={Platform.OS == "ios" ? "padding" : "height"}
       style={{flex:1}}>
       <Main>
+        <Inner>
         <FlatList
+        inverted
         data={messages}
         extraData={messages}
         keyExtractor={message =>message.id.toString()}
         renderItem={({item}) => 
-          //  item.messages[0] &&
           <MainCont>
             { item.message.sender == userState.user.uid?
             <MsgSent 
@@ -87,6 +96,7 @@ const Chatting = ({route }) => {
         handleRefresh();
       }}
       />
+    
         {/* <ScrollView>
         <MainCont>
             <MsgSent 
@@ -95,7 +105,10 @@ const Chatting = ({route }) => {
             msgRecieve="hello"/>
         </MainCont>
         </ScrollView> */}
-            <Texting handleNewMessage={handleNewMessage} />
+        
+        <Texting handleNewMessage={handleNewMessage} />
+        <View style={{flex:1}} />
+          </Inner>
       </Main>
       </KeyboardAvoidingView>
   );

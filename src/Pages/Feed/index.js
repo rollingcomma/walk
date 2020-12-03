@@ -26,7 +26,7 @@ const Feed = () => {
     setRefreshing(true);
     const newPosts = await getPostsUpdate(posts[0].value.createdAt);
     if(newPosts) {
-      setPosts([...posts, ...newPosts]);
+      setPosts([...newPosts, ...posts]);
     }
     setRefreshing(false);
   }

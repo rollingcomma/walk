@@ -1008,44 +1008,24 @@ export const unmarkEvent = (eventId, uid) => {
  * @param {*} channels 
  */
 export  const channelCollectionListener = (setter, channels) => {
-  channels.forEach(channel => {
-    channelsRef.doc(channel).collection("messages").onSnapshot((snapshot)=>{
-        snapshot.docChanges().forEach((change) => {
-
-          if(change.type === "added") {
-            setter(items => items.add(change))
-          }
-
-          if(change.type === "modified") {
-            setter(items => items.map((element)=>{
-              if(element.id === change.id) {
-                return change
-              }
-              return element
-            }))
-          }
-
-          if(change.type === "removed") {
-            setter(items => items.filter(element => element.id !== change.id))
-          }
+  if(!setter && !channels) return;
+  console.log("listener");
+  let updateChannels =[];
+  let unsubscribes = [];
+  channels.forEach(async (channel, index) => {
+    const newChannel = await channelsRef.doc(channel).get();
+    unsubscribes[index] = channelsRef.doc(channel).collection("messages").onSnapshot((querySnapshot)=>{
+        querySnapshot.forEach((doc) => {
+          newChannel.messages = [{id:doc.id, message:doc.data()}, ...newChannel.messages]
+          console.log(doc.data());
+          updateChannels[index] = newChannel;
+          setter(updateChannels);
         })
       })
     })
+    return unsubscribes;
   }
-
-
-  /**
- * Description: User Channels message listener detach
- * @param {*} setter 
- * @param {*} channels 
- */
-export  const channelCollectionListenerUnsubscribe = (channels) => {
-  channels.forEach(channel => {
-    channelsRef.doc(channel).collection("messages").onSnapshot(() => {
-      //
-    });
-  })
-}
+ 
 
 /**
  * Description: Create a channel and insert the first message
@@ -1087,6 +1067,54 @@ export const createChannel = (newChannel, firstMessage) => {
 };
 
 /**
+ * Description: Channel real time message listener
+ * 
+ * @param {*} setter 
+ * @param {*} channel 
+ */
+export const channelListener = (setter, channelId) => {
+  if(!setter && !channelId) return;
+  
+  return channelsRef.doc(channelId)
+  .collection("messages")
+  .orderBy("createdAt", "desc")
+  .onSnapshot((querySnapshot) => {
+    let messages = [];
+    querySnapshot.forEach((doc) => {
+      
+      messages = [...messages, {id:doc.id, message:doc.data()}];
+    }) 
+    
+    setter(messages);
+  })
+}
+  // if(change.type === "added") {
+  //   console.log(change);
+  //   setter(items.add({id:change.id, message:change.data()}))
+  // }
+
+  // if(change.type === "modified") {
+  //   setter(items.map((element)=>{
+  //     if(element.id === change.id) {
+  //       return {id:change.id, message:change.data()}
+  //     }
+  //     return element
+  //   }))
+  // }
+  // if(change.type === "removed") {
+  //   setter(items.filter(element => element.id !== change.id))
+  // }
+
+
+export const getChannel = (channelId) => {
+  if(!channelId) return;
+  return channelsRef.doc(channelId).get()
+  .then(doc => doc.data())
+  .catch(err => {
+    console.log("err get channel", err);
+  })
+}
+/**
  * 
  * @param {*} channelList 
  * @param {*} receiver 
@@ -1094,11 +1122,11 @@ export const createChannel = (newChannel, firstMessage) => {
 export const findChannelId = async (channelList, dogId) => {
   if(!channelList || !dogId) return;
   const receiver = await findOwnerByProfileId(dogId);
-  
+  console.log("receiver",receiver)
   if (receiver && receiver.channels && receiver.channels.length === 0) return {uid:receiver.uid};
   channelList.forEach(
     channel => { 
-      if(receiver.channels.includes(channel)) return {channelId:channel, uid:receiver.uid};
+      if(receiver.channels.includes(channel)) return {channelId:channel};
     }
   )
   return {uid: receiver.uid};
@@ -1162,7 +1190,7 @@ export const getMessagesByChannelId = (channelId, maxMsg) => {
       channel = doc.data();
       let ref;
       if(maxMsg) {
-        ref = channelsRef.doc(channelId).collection("messages").orderBy("createdAt", "asc").limit(maxMsg);
+        ref = channelsRef.doc(channelId).collection("messages").orderBy("createdAt", "desc").limit(maxMsg);
       } else {
         ref = channelsRef.doc(channelId).collection("messages").orderBy("createdAt", "asc");
       }

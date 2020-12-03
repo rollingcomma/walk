@@ -27,7 +27,7 @@ const AvatarWithName = ({name, avatarUrl, isVisitor}) => {
   const navigation = useNavigation();
 
   const handleNavigate = () => {
-    console.log("edit clicked")
+    
     navigation.navigate("EditProfile");
   };
 

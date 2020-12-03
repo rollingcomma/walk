@@ -22,7 +22,10 @@ const styles = StyleSheet.create({
     // marginBottom:0,
     // marginTop:10,
     marginLeft:30,
-    flexDirection:"row"
+    flexDirection:"row",
+    alignContent:"center",
+    justifyContent:"center",
+
   },
   detailcont: {
     justifyContent:"center",

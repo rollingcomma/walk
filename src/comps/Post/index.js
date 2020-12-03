@@ -116,7 +116,9 @@ const Post = ({
   }
   
   const handleMessageChange = (msg) => {
+    console.log(msg);
     setMessage(msg);
+
   }
 
   const handleSubmit = async () => {
@@ -137,10 +139,10 @@ const Post = ({
         const channel = { 
             user1: userState.user.uid,
             user1AvatarUrl: userState.user.avatarUrl,
-            user1Name: userState.user.name,
+            user1Name:  userState.user.profile.name,
             user2: owner.uid,
-            user2AvatarUrl: owner.avatarUrl,
-            user2Name: owner.name,
+            user2AvatarUrl: post.avatarUrl,
+            user2Name: post.name,
             createdAt: new Date()
           };
         createChannel(channel, newMessage);
@@ -153,12 +155,13 @@ const Post = ({
           const channel = { 
             user1: userState.user.uid,
             user1AvatarUrl:userState.user.avatarUrl,
-            user1Name: userState.user.name,
+            user1Name: userState.user.profile.name,
             user2: result.uid,
-            user2AvatarUrl:result.avatarUrl,
-            user2Name: result.name,
+            user2AvatarUrl:post.avatarUrl,
+            user2Name: post.name,
             createdAt: new Date()
           };
+          console.log("create channel")
           createChannel(channel, newMessage);
         }
       }

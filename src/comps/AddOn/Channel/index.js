@@ -1,24 +1,25 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {View, StyleSheet} from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import AvatarFormText from '../../AvatarForm/AvatarFormText';
 import BasicAvatar from "../../Avatar/BasicAvatar";
+import { channelListener } from "../../../db/DBUtils";
+import Loading from "../../../components/Loading";
+import { useUserState } from "../../../hook/useUserState";
 
 export default function Channel({item}) {
   const [ channel, setChannel] = useState(item);
-  const [latestMessage, setLatestMessage] = useState(channel.messages[channel.messages.length-1].message);
+  const [latestMessage,setLatestMessage] = useState(item.messages[0].message);
   const navigation = useNavigation();
   
-  const handleChannelUpdate = (newMessages) => {
-    const newChannel = { ...channel}
-    newChannel.messages= newMessages;
-    setChannel(newChannel);
+  const handleLastMsgUpdate = (newMessages) => {
+    setLatestMessage(newMessages);
   }
 
   const handleOnPress = () => {
-    navigation.navigate("Chatting", {channel: channel, handleChannelUpdate: handleChannelUpdate});
+    navigation.navigate("Chatting", {channel: channel, handleChannelUpdate: handleLastMsgUpdate});
   }
-
+  
   return(
     <>
       <View style={styles.avatarcont}>
@@ -35,7 +36,7 @@ export default function Channel({item}) {
             />
             </View>
     </>
-  )
+    )
 }
 const styles = StyleSheet.create({
   avatarcont: {

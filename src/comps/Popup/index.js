@@ -113,22 +113,14 @@ const Popup = ({
             onPress={() => handleModalClose()}/>
         </Exit>
         <TextDisplay><Text >Send a Message</Text></TextDisplay>
-        <Formik  
-            initialValues={{
-              message:"",
-            }}
-            onSubmit = {async values => {
-              console.log("form submitted");
-            }}>
-            {({handleChange, handleBlur, handleReset,  values, touched, errors, isSubmitting}) => {
-              return(
+        
                 <>
                 <Inputs>
                   <InputsCont>
                     <TextInput>
                       <InputT 
                         placeholder="Type a Message..."
-                        handleTextChange={(text) => {
+                        onChangeText={(text) => {
                           handleMessageChange(text);
                         }}
 
@@ -145,10 +137,7 @@ const Popup = ({
                       />
                   </InputsCont>
                 </Inputs>
-                 </>
-              );
-            }}
-          </Formik>
+              </>
       </PopupCont>
       </View>
     </Modal>

@@ -53,7 +53,7 @@ const Events = ({}) => {
     setRefreshing(true);
     const newEvents = await getEventsUpdate(events[0].value.createdAt);
     if(newEvents) {
-      setEvents([...events, ...newEvents]);
+      setEvents([...newEvents, ...events]);
     }
     setRefreshing(false);
   }

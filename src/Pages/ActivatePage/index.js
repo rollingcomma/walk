@@ -6,10 +6,9 @@ import AvatarFormText from '../../comps/AvatarForm/AvatarFormText';
 import BasicAvatar from "../../comps/Avatar/BasicAvatar";
 import Spacer from "../../comps/Spacer";
 import { useNavigation } from '@react-navigation/native';
-import { createMessage, getAllChannelsByUid } from "../../db/DBUtils";
+import { getAllChannelsByUid, channelCollectionListener, getChannel } from "../../db/DBUtils";
 import { useUserState } from "../../hook/useUserState";
 import { FlatList } from "react-native-gesture-handler";
-import { set } from "react-native-reanimated";
 
 const styles = StyleSheet.create({
   container: {
@@ -29,35 +28,29 @@ const ActivatePage = ({}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [channels, setChannels] = useState(null);
-  // const [channel, setChannel] = useState(null);
-  // const navigation = useNavigation();
   const [ userState ] = useUserState();
-
-  // const handleOnPress = (channelId) => {
-  //   channel = channels.filter(channel=> channel.id == channelId)
-  //   navigation.navigate("Chatting", {channel: channel});
-  // }
-
-  // const handleNewMessage = async (channelId, msg) => {
-  //   const messageId = await createMessage(channelId, msg);
-  //   if(messageId) {
-  //     channel = channels.filter(channel=> channel.id == channelId)
-  //   }
-  // }
 
   const handleRefresh = () => {
 
   }
+  const handleUpdateChannels = (channelId, channel) =>{
+    const newChs = channels.map(ch => ch.id === channelId? channel : ch )
+    setChannels(newChs);
+  }
   
   useEffect(()=> {
     async function fetchData() {
-      
-      const initialChannels = await getAllChannelsByUid(userState.user.uid, 10);
-      if(initialChannels) setChannels(initialChannels);
-      setIsLoading(false);
-     
+      initialChannels= await getAllChannelsByUid(userState.user.uid, 1);
+      if(initialChannels) {
+        setChannels(initialChannels);
+        setIsLoading(false);
+        console.log("activate", initialChannels)
+      }
     }
-    fetchData();
+     fetchData();
+     
+    
+    
   }, [])
   
   return isLoading? 
@@ -72,9 +65,8 @@ const ActivatePage = ({}) => {
         extraData={channels}
         keyExtractor={channel=>channel.id.toString()}
         renderItem={({item}) => 
-          //  item.messages[0] &&
           <View>
-            <Channel item={item} />
+            <Channel item={item} handleUpdateChannels={handleUpdateChannels}/>
           <View style={styles.spacer}>
             <Spacer />
           </View>
