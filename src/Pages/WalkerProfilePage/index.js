@@ -5,9 +5,11 @@ import UserBio from "../../comps/UserBio";
 import WriteReview from "../../comps/WriteReview";
 import LocationAge from "../../comps/LocationAge";
 import TopBar from "../../comps/TopBar";
+import Review from "../../comps/Review"
 import AvatarWithName from "../../comps/Avatar/AvatarWithName";
 import { useUserState } from "../../hook/useUserState"
-import { getWalkerProfile, logout } from "../../db/DBUtils";
+import { getReviewsByUid, getWalkerProfile, logout } from "../../db/DBUtils";
+
 import LeaveReview from "../LeaveReviewPage";
 
 const styles = StyleSheet.create({
@@ -16,7 +18,6 @@ const styles = StyleSheet.create({
   },
   Cont: {
     marginLeft:20,
-    // height:"100%",
     display:"flex",
     flexDirection: "column",
     justifyContent:"space-between"
@@ -30,8 +31,10 @@ const styles = StyleSheet.create({
 const WalkerProfilePage = ({route}) => {
   
   const [isLoading, setIsLoading] = useState(true);
-  const [profileState, setProfileState] = useState(null)
+  const [profileState, setProfileState] = useState(null);
+  const [reviews, setReviews] = useState(null);
   const [userState, dispatchUser] = useUserState();
+  
   const [isVisitorState, setIsVisitorState] = useState(false);
   let profile = null, isVisitor= false;
 
@@ -51,17 +54,31 @@ const WalkerProfilePage = ({route}) => {
         setIsVisitorState(isVisitor);
       } else {
         //await fetchProfile(userState.user.uid);
+        
         const initialProfile = await getWalkerProfile(userState.user.uid);
         if(initialProfile) setProfileState(initialProfile);
         const newUserState = {...userState};
         newUserState.user.profile = initialProfile;
         dispatchUser(newUserState);
       }
-      setIsLoading(false);
+      
     }
     fetchData(); 
    
   },[])
+
+  useEffect(() => {
+    async function fetchData() {
+      if(profileState) {
+        const rvs = await getReviewsByUid(profileState.uid);
+        console.log(rvs)
+        setReviews(rvs);
+        setIsLoading(false);
+      }
+     
+    }
+      fetchData();
+  }, [profileState])
   
   return isLoading?
   (
@@ -83,7 +100,10 @@ const WalkerProfilePage = ({route}) => {
             <UserBio bio={profileState.bio}/>
           </View>
           <View style={styles.elements}>
-            <WriteReview isVisitor={isVisitorState} profile={profileState}/>
+            <WriteReview num={reviews && reviews.length} isVisitor={isVisitorState} profile={profileState}/>
+          </View>
+          <View>
+            {reviews && reviews.map(review => <Review key={review.id} review={review} />)}
           </View>
         </View>
       </ScrollView> 

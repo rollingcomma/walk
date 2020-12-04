@@ -118,7 +118,6 @@ const Post = ({
   const handleMessageChange = (msg) => {
     console.log(msg);
     setMessage(msg);
-
   }
 
   const handleSubmit = async () => {
@@ -144,11 +143,11 @@ const Post = ({
           user2Name: post.name,
           createdAt: new Date()
         };
-        createChannel(channel, newMessage);
+        await createChannel(channel, newMessage);
       } else { //if current user has channel, verify if channel exist and create message
         const result = await findChannelId(userState.user.channels, post.dogId );
         if(result.channelId) { // channel exists
-          createMessage(result.channelId, newMessage);
+          await createMessage(result.channelId, newMessage);
         } else  { //channel does not exist
           const channel = { 
             user1: userState.user.uid,
@@ -159,9 +158,11 @@ const Post = ({
             user2Name: post.name,
             createdAt: new Date()
           };
-          createChannel(channel, newMessage);
+         await createChannel(channel, newMessage);
+
         }
       }
+      Alert.alert("Great", "your message is sent!")
     }
   } 
   return (

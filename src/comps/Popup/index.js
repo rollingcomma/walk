@@ -85,11 +85,8 @@ const InputT = styled.TextInput`
   height:100%;
 `;
 
-
-
 const nextarrow = require("./nextarrow.png");
 const close = require("./close.png");
-
 
 const Popup = ({
   modalVisible,

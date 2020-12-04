@@ -10,7 +10,8 @@ export default App= () => {
       "Expected style",
       "Non-serializable values were found in the navigation state",
       "Setting a timer for a long period of time",
-      "Warning: Failed prop type"
+      "Warning: Failed prop type",
+      "Warning: Can't perform a React state update on an unmounted component"
     ]);
     return (
     <UserStateProvider>

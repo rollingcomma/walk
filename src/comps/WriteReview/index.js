@@ -55,7 +55,7 @@ const StarImg = styled.Image`
 const filled = require("./filled.png");
 const unfilled = require("./unfilled.png");
 
-const WriteReview = ({isVisitor, profile}) => {
+const WriteReview = ({isVisitor, profile, num}) => {
   //const [highlight, setHighlight] = useState(true);
   const navigation = useNavigation();
   const handleReviewButtonClick = () => {
@@ -85,7 +85,7 @@ const WriteReview = ({isVisitor, profile}) => {
               <StarImg source={unfilled} />
             </Star5>
             <Startext>
-              <Text>(30)</Text>
+              <Text>({num || 4})</Text>
             </Startext>
           </Starscontainer>
         </Reviewcontainer>

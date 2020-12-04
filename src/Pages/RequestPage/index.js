@@ -90,6 +90,7 @@ const RequestPage = ({}) => {
       <View style={styles.app}>
         <FlatList
           data={requests}
+          extraData={requests}
           keyExtractor={request => request.id.toString()}
           renderItem={( { item })=> 
             <>
@@ -107,7 +108,7 @@ const RequestPage = ({}) => {
                 />
                 <View style={styles.buttons}>
                  {item.status !== "active" && !isDeclined && <ActivateButton sender={userState.user.type==="walker"?item.value.owner:item.value.walker} onPress={handleOnPressActive}/>}
-                  <DeclineButton index={item.id} isDeclined={isDeclined || item.status === "declined"} onPress={isDeclined? null:handleOnPressDecline}/>
+                  <DeclineButton index={item.id} isDeclined={isDeclined || item.status === "declined"} isWalker={userState.user.type==="walker"} onPress={isDeclined? null:handleOnPressDecline}/>
                 </View> 
               </View>
               <View style={styles.spacer}>

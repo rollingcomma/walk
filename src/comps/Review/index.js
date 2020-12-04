@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components/native";
 import { View, Text } from "react-native";
 
-
+const {DateTime} = require("luxon");
 
 const Star5 = styled.View``;
 
@@ -44,31 +44,31 @@ const Reviewtext = styled.Text`
 const unfilled = require("./unfilled.png");
 const filled = require("./filled.png");
 
-const Review = ({date, text}) => {
+const Review = ({review}) => {
+  console.log(typeof review.value.stars)
   return (
-    <View>
-      <Starscontainer>
+    <View style={{padding:10, marginLeft:20, marginRight:20, borderTopColor:"lightgrey", borderWidth:1}}>
+      <Starscontainer style={{padding:10}}>
         <Star1>
-          <StarImg source={filled} />
+          <StarImg source={(review.value.stars >= 1)? filled:unfilled} />
         </Star1>
         <Star2>
-          <StarImg source={filled} />
+          <StarImg source={(review.value.stars >= 2)? filled:unfilled} />
         </Star2>
         <Star3>
-          <StarImg source={filled} />
+          <StarImg source={(review.value.stars >= 3)?filled:unfilled} />
         </Star3>
         <Star4>
-          <StarImg source={filled} />
+          <StarImg source={(review.value.stars >= 4)? filled:unfilled} />
         </Star4>
         <Star5>
-          <StarImg source={unfilled} />
+          <StarImg source={(review.value.stars = 5)? filled:unfilled} />
         </Star5>
         <Startext>
-          <Text>{date}</Text>
         </Startext>
       </Starscontainer>
         <Reviewtext>
-          <Text>{text}</Text>
+          <Text>{review.value.review}</Text>
         </Reviewtext>
     </View>
   );

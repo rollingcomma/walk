@@ -104,6 +104,7 @@ const AgeCont = styled.View`
   /* background-color:#BBB; */
   width:100%;
   display:flex;
+  
   flex-direction:row;
 `;
 const BreedCont = styled.View`
@@ -111,7 +112,9 @@ const BreedCont = styled.View`
   /* background-color:#AAA; */
   width:100%;
   display:flex;
-  flex-direction:row;
+  justify-content:flex-start;
+  align-items:flex-start;
+  flex-direction:column;
 `;
 const LikesCont = styled.View`
   flex:1;
@@ -169,12 +172,12 @@ const DashDog = ({dogProfile}) => {
           <BottomInfo>
             <BottomCont>
               <AgeCont>
-                <Title><TitleText2><Text>Age</Text></TitleText2></Title>
-                <Info><InfoText><Text>{dogProfile.age}</Text></InfoText></Info>
+                <Title><TitleText2><Text>Age:</Text></TitleText2></Title>
+                <Info><InfoText><Text> {dogProfile.age}</Text></InfoText></Info>
               </AgeCont>
               <BreedCont>
-                <Title><TitleText2><Text>Breed</Text></TitleText2></Title>
-                <Info><InfoText><Text>{dogProfile.breed}</Text></InfoText></Info>
+                <Title><TitleText2><Text>Breed:</Text></TitleText2></Title>
+                <Info><InfoText><Text> {dogProfile.breed}</Text></InfoText></Info>
               </BreedCont>
               {/* <LikesCont>
                 <Title><TitleText2><Text>Likes</Text></TitleText2></Title>

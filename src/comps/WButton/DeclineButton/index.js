@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const DeclineButton = ({isDeclined, onPress, index}) => {
+const DeclineButton = ({isDeclined, onPress, index, isWalker}) => {
   return (
       <View style={styles.cont} >
         <BasicButton 
@@ -23,7 +23,7 @@ const DeclineButton = ({isDeclined, onPress, index}) => {
         width={91}
         size={14}
         index={index}
-        disabled={isDeclined}
+        disabled={isDeclined || isWalker}
         onPress={onPress}
         />
       </View>

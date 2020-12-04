@@ -10,6 +10,7 @@ const TextCont = styled.View`
   width:150px;
   height:70px;
   padding-right:40px;
+  
 `;
 const Titletext = styled.Text`
   color: #000;
@@ -18,6 +19,7 @@ const Titletext = styled.Text`
 `;
 const Description = styled.Text`
   color: #000;
+  flex:1;
   font-size:16;
   justify-content:center;
   align-items:center;

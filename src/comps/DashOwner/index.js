@@ -76,29 +76,35 @@ const NameCont = styled.View`
   flex: 1;
   /* background-color:#BBB; */
   width: 100%;
+  margin-bottom:8px;
   display: flex;
-  flex-direction: row;
+  align-items:flex-start;
+  flex-direction: column;
 `;
 const PhoneCont = styled.View`
   flex: 1;
   /* background-color:#BBB; */
   width: 100%;
   display: flex;
-  flex-direction: row;
+  align-items:flex-start;
+  margin-bottom:8px;
+  flex-direction: column;
 `;
 const EmailCont = styled.View`
   flex: 1;
   /* background-color:#BBB; */
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 `;
 const AdressCont = styled.View`
   flex: 1;
   /* background-color:#BBB; */
   width: 100%;
+  margin-bottom:8px;
   display: flex;
-  flex-direction: row;
+  align-items:flex-start;
+  flex-direction: column;
 `;
 const Title = styled.View`
   height: 100%;
@@ -149,7 +155,7 @@ const DashOwner = ({ ownerProfile, dogProfile }) => {
             <BottomCont>
               <NameCont>
                 <Title>
-                  <TitleText2><Text>Name</Text></TitleText2>
+                  <TitleText2><Text>Name: </Text></TitleText2>
                 </Title>
                 <Info>
                   <InfoText><Text>{ownerProfile.username}</Text></InfoText>
@@ -157,23 +163,23 @@ const DashOwner = ({ ownerProfile, dogProfile }) => {
               </NameCont>
               <PhoneCont>
                 <Title>
-                  <TitleText2><Text>Phone</Text></TitleText2>
+                  <TitleText2><Text>Phone:</Text></TitleText2>
                 </Title>
                 <Info>
                   <InfoText><Text>{dogProfile.phone}</Text></InfoText>
                 </Info>
               </PhoneCont>
-              <EmailCont>
+              {/* <EmailCont>
                 <Title>
                   <TitleText2><Text>Email</Text></TitleText2>
                 </Title>
                 <Info>
                   <InfoText><Text>{ownerProfile.email}</Text></InfoText>
                 </Info>
-              </EmailCont>
+              </EmailCont> */}
               <AdressCont>
                 <Title>
-                  <TitleText2><Text>Address</Text></TitleText2>
+                  <TitleText2><Text>Address:</Text></TitleText2>
                 </Title>
                 <Info>
                   <InfoText><Text>{dogProfile.address}</Text></InfoText>
