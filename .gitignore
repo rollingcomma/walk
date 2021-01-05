@@ -12,5 +12,5 @@ web-build/
 src/db/firebase.js
 # macOS
 .DS_Store
-google*.json
-Google*.plist
+google-services.json
+GoogleService-info.plist
