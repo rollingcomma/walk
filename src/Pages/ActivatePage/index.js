@@ -43,14 +43,12 @@ const ActivatePage = ({}) => {
       initialChannels= await getAllChannelsByUid(userState.user.uid, 1);
       if(initialChannels) {
         setChannels(initialChannels);
-        setIsLoading(false);
+        
         console.log("activate", initialChannels)
       }
+      setIsLoading(false);
     }
      fetchData();
-     
-    
-    
   }, [])
   
   return isLoading? 
@@ -59,7 +57,8 @@ const ActivatePage = ({}) => {
     ) 
     : 
     (
-    <View style={styles.container}>
+    <View style={styles.container}>{
+      channels &&
       <FlatList
         data={channels}
         extraData={channels}
@@ -76,7 +75,7 @@ const ActivatePage = ({}) => {
       onRefresh={() => {
         handleRefresh();
       }}
-      />
+      />}
     </View>)
   
 };
